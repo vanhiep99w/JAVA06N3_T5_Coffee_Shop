@@ -1,0 +1,15 @@
+===========================
+category(idcategory,nameType)
+drinks(idDrink,nameDrink,price)
+statusDrink(idstatus,status{con,het})
+table(idTable,numberTable,idStatusTable)
+statustable(idStatusTable,Status{empty,full,order})
+===============================================
+order(idOrder,timeOrder,idEmployee,idtable,time(thời gian lập))
+detailOrder(idOrder,idDrink,amount,idStatusOrder)
+statusOrder(idStatusOrder,status{danglam,dagiao,dahuy})
+bill(idBill,idOrder,time,VAT,sum)
+==================================================
+employee(idEmployee,name,phone,idWork,idShift)
+work(idWork,nameWork,salary)  -> (1,thu ngan),(2,phuc vu tang 1),....
+shift(idShift,nameShift,time)  ->(1,Ca 1,7h-12h)
