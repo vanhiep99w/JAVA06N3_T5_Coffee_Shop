@@ -1,0 +1,8 @@
+Loaithucan(id,tên)
+Food(id,ten,idLoai,price,hinhanh,status(het,con))
+Table(id,ten,vitri(Tầng),status(trống,đã ngồi))
+order(id,idtable,idFood,tổng tiền,idEmployee,idTrangthai)
+TrangThai(id,name(đang chờ, đã order, cung ứng))
+hoadon(id,idOrder,VAT,mã giảm giá,tiền thanh toán,thoigianlaphoadon)
+employee(id,name,vitri,idCaLamViec,sdt)
+caLamViec(id,thoigian,vitri(tầng))
