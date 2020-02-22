@@ -17,10 +17,13 @@ public class ConnectDB {
 		
 		return ConnectionHelper.instance;
 	} 
+	
+	// Nhớ đổi username password và port trước khi chạy 
+	
 	public Connection getConnection() {
 		try {
 			connection = DriverManager.getConnection(Config.URL.getValue(), Config.USER.getValue(), Config.PASS.getValue());
-			System.out.println("Connect th�nh c�ng ");
+			System.out.println("Connect thành công ");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
