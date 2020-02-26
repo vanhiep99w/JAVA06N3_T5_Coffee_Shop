@@ -19,7 +19,7 @@ DROP SCHEMA IF EXISTS `coffee_shop` ;
 -- Schema coffee_shop
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `coffee_shop` DEFAULT CHARACTER SET utf8 ;
-USE `coffee_shop` ;
+
 
 -- -----------------------------------------------------
 -- Table `coffee_shop`.`work`
@@ -28,7 +28,7 @@ DROP TABLE IF EXISTS `coffee_shop`.`work` ;
 
 CREATE TABLE IF NOT EXISTS `coffee_shop`.`work` (
   `id_work` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `name_work` VARCHAR(45) NOT NULL,
   `salary_an_hour` FLOAT NOT NULL,
   PRIMARY KEY (`id_work`))
 ENGINE = InnoDB
@@ -49,7 +49,7 @@ DROP TABLE IF EXISTS `coffee_shop`.`employee` ;
 
 CREATE TABLE IF NOT EXISTS `coffee_shop`.`employee` (
   `id_employee` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `name_employee` VARCHAR(45) NOT NULL,
   `phone` VARCHAR(45) NOT NULL,
   `id_work` INT(11) NOT NULL,
   PRIMARY KEY (`id_employee`),
@@ -130,12 +130,12 @@ DROP TABLE IF EXISTS `coffee_shop`.`table` ;
 
 CREATE TABLE IF NOT EXISTS `coffee_shop`.`table` (
   `id_table` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
-  `id_status_table` INT(11) NOT NULL,
+  `name_table` VARCHAR(45) NOT NULL,
+  `id_table_status` INT(11) NOT NULL,
   PRIMARY KEY (`id_table`),
-  INDEX `fk_table_table_status1_idx` (`id_status_table` ASC) VISIBLE,
+  INDEX `fk_table_table_status1_idx` (`id_table_status` ASC) VISIBLE,
   CONSTRAINT `fk_table_table_status`
-    FOREIGN KEY (`id_status_table`)
+    FOREIGN KEY (`id_table_status`)
     REFERENCES `coffee_shop`.`table_status` (`id_table_status`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -201,7 +201,7 @@ DROP TABLE IF EXISTS `coffee_shop`.`category` ;
 
 CREATE TABLE IF NOT EXISTS `coffee_shop`.`category` (
   `id_category` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `name_category` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id_category`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
@@ -220,7 +220,7 @@ DROP TABLE IF EXISTS `coffee_shop`.`product` ;
 
 CREATE TABLE IF NOT EXISTS `coffee_shop`.`product` (
   `id_product` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `name_product` VARCHAR(45) NOT NULL,
   `price` FLOAT NOT NULL,
   `id_category` INT(11) NOT NULL,
   PRIMARY KEY (`id_product`),
@@ -293,7 +293,7 @@ DROP TABLE IF EXISTS `coffee_shop`.`shift` ;
 
 CREATE TABLE IF NOT EXISTS `coffee_shop`.`shift` (
   `id_shift` INT(11) NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(45) NOT NULL,
+  `name_shift` VARCHAR(45) NOT NULL,
   `start_time` TIME NOT NULL,
   `end_time` TIME NOT NULL,
   PRIMARY KEY (`id_shift`))
@@ -337,3 +337,4 @@ UNLOCK TABLES;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+USE `coffee_shop` ;
