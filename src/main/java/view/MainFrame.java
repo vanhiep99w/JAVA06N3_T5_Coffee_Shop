@@ -70,6 +70,7 @@ public class MainFrame extends javax.swing.JFrame {
                 button.setSelected(true);
                 cardLayout.show(pnMain, button.getText());
                 Arrays.stream(buttonComponents)
+                        .filter(t -> ( t instanceof JButton))
                         .map(t -> (JButton)t )
                         .forEach(t -> {
                             if(t != button){
