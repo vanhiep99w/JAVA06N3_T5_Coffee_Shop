@@ -9,7 +9,6 @@ import java.awt.CardLayout;
 import view.sub.QuanLyPanel;
 import view.sub.DatMonPanel;
 import view.sub.TablePanel;
-import view.sub.NhanVienPanel;
 import view.sub.KhoPanel;
 import java.awt.Color;
 import java.awt.Component;
@@ -20,7 +19,9 @@ import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import render.combobox.Positon;
 import util.ImageUtils;
+import view.sub.NhanVien.NhanVienPanel;
 import view.sub.ThongKePanel;
 import view.sub.TroGiupPanel;
 
@@ -70,7 +71,7 @@ public class MainFrame extends javax.swing.JFrame {
                 button.setSelected(true);
                 cardLayout.show(pnMain, button.getText());
                 Arrays.stream(buttonComponents)
-                        .filter(t -> ( t instanceof JButton))
+                        .filter(t -> (t instanceof JButton))
                         .map(t -> (JButton)t )
                         .forEach(t -> {
                             if(t != button){
@@ -185,7 +186,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(otherInforPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(435, Short.MAX_VALUE))
+                .addContainerGap(500, Short.MAX_VALUE))
         );
         otherInforPanelLayout.setVerticalGroup(
             otherInforPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -261,7 +262,7 @@ public class MainFrame extends javax.swing.JFrame {
             pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnCenterLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pnMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnMain, javax.swing.GroupLayout.DEFAULT_SIZE, 1485, Short.MAX_VALUE)
                 .addContainerGap())
         );
         pnCenterLayout.setVerticalGroup(
@@ -388,6 +389,8 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void initMainPanelComponent() {
+        
+        System.out.println("1"+ Positon.BAOVE.getIcon());
         
         DatMonPanel datMonPanel = new DatMonPanel();
         KhoPanel khoPanel = new KhoPanel();
