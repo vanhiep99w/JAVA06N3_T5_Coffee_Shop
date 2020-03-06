@@ -25,6 +25,12 @@ public class Employee {
         this.phone = phone;
         this.work = work;
     }
+    public void copy(Employee employee){
+        this.id = employee.getId();
+        this.name = employee.getName();
+        this.phone = employee.getPhone();
+        this.work = employee.getWork();
+    }
 
     public Integer getId() {
         return id;
