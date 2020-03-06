@@ -6,47 +6,41 @@
 package render.table;
 
 import entities.Employee;
-import java.awt.Color;
 import java.awt.Component;
-import javax.swing.JButton;
 import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
-import render.combobox.Positon;
-import util.ImageUtils;
+import javax.swing.table.DefaultTableCellRenderer;
+import render.comboboxbutton.Positon;
+
 
 /**
  *
  * @author Admin
  */
-public class TableCellRender extends JButton implements TableCellRenderer{
+public class TableCellRender extends DefaultTableCellRenderer{
 
     public TableCellRender() {
+     
+    }
+
+    @Override
+    protected void setValue(Object value) {
+        Employee employee = (Employee)value;
+        setText(" "+employee.getName());
         
     }
     
     
-
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-        
-        this.setBorderPainted(false);
-        this.setFocusPainted(false);
+       
         
         Employee employee = (Employee)value;
         
         Positon p = Positon.values()[employee.getWork().getId()];
         
-        this.setText(employee.getName());
         this.setIcon(p.getIcon());
         
-        
-        
-        if(isSelected){
-            setBackground(new Color(39, 130, 192));
-        }else{
-            setBackground(new Color(240,240,240));
-        }
-        return this;
+        return super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

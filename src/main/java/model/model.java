@@ -5,10 +5,19 @@
  */
 package model;
 
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
  */
-public class model {
+public class model extends DefaultTableModel{
+
+    @Override
+    public void setDataVector(Object[][] dataVector, Object[] columnIdentifiers) {
+        super.setDataVector(dataVector, columnIdentifiers); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
     
 }
