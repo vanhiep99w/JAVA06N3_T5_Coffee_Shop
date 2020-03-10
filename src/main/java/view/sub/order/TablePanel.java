@@ -6,13 +6,16 @@
 package view.sub.order;
 
 import entities.Table;
+import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import service.table.TableService;
 import service.table.TableServiceImpl;
-
 
 /**
  *
@@ -20,43 +23,42 @@ import service.table.TableServiceImpl;
  */
 public class TablePanel extends JPanel {
 
-    private final TableService tableService;
-    private final GridLayout gridLayout ;
-    //private final Container container = getContentPane();
-    
-    private final List<Table> tables;
-    public int n;
-    
-    public TablePanel(){
-        gridLayout = new GridLayout(5,4);
-        tableService = new TableServiceImpl();
+    private final TableService tableService = new TableServiceImpl();
+    private final GridLayout gridLayout;
+    private List<Table> tables = new ArrayList<>();
+    private JButton[] btTables;
+
+    public TablePanel() {
+        gridLayout = new GridLayout(5, 4);
         tables = tableService.getAll();
-        n = tables.size();
+        btTables = new JButton[tables.size()];
         initComponents();
+        initEvents();
     }
-    
+
+    public JButton[] getTables() {
+        return this.btTables;
+    }
+
     private void initComponents() {
-        //setDefaultCloseOperation(3);
         setSize(500, 500);
-        //setLocationRelativeTo(null);
-
-        //container.setLayout(gridLayout);
         setLayout(gridLayout);
-
-        //cols = numberOfComponents/rows
         gridLayout.setHgap(20);
         gridLayout.setVgap(20);
 
-        drawTables();
+        initTables();
     }
-    
-    private void drawTables() {
-        for (int i = 0; i < tables.size(); i++) {
-            JButton btTable = new JButton();
-            btTable.setText("Table " + tables.get(i).getName() );
-            //container.add(btTable);
-            add(btTable);
+
+    private void initEvents() {
+    }
+
+    private void initTables() {
+        Font font = new Font("Tahoma", 1, 30);
+        for (int i = 0; i < btTables.length; i++) {
+            btTables[i] = new JButton(tables.get(i).getName());
+            btTables[i].setFont(font);
+            add(btTables[i]);
         }
     }
-    
+
 }

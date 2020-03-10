@@ -5,18 +5,34 @@
  */
 package view.sub.order;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JTable;
+import model.ProductOrderTableModel;
+
 /**
  *
  * @author Admin
  */
 public class DatMonPanel extends javax.swing.JPanel {
 
+    TablePanel tablePanel = new TablePanel();
+    InformationPanel informationPanel = new InformationPanel();
+    ProductOrderTableModel productOrderTableModel;
+    JButton[] buttonTables;
+    JTable tableOrdered;
+    JLabel labelTableName;
+    String nameTable;
     /**
      * Creates new form DatMonPanel
      */
     public DatMonPanel() {
         initComponents();
         setPnLeft();
+        setPnRight();
+        initEvents();
         
     }
 
@@ -40,17 +56,7 @@ public class DatMonPanel extends javax.swing.JPanel {
         pnLeft.setLayout(new javax.swing.OverlayLayout(pnLeft));
         jSplitPane1.setLeftComponent(pnLeft);
 
-        javax.swing.GroupLayout pnRightLayout = new javax.swing.GroupLayout(pnRight);
-        pnRight.setLayout(pnRightLayout);
-        pnRightLayout.setHorizontalGroup(
-            pnRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 714, Short.MAX_VALUE)
-        );
-        pnRightLayout.setVerticalGroup(
-            pnRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 743, Short.MAX_VALUE)
-        );
-
+        pnRight.setLayout(new javax.swing.OverlayLayout(pnRight));
         jSplitPane1.setRightComponent(pnRight);
 
         add(jSplitPane1);
@@ -64,7 +70,33 @@ public class DatMonPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void setPnLeft() {
-        TablePanel tablePanel = new TablePanel();
         pnLeft.add(tablePanel);
+        //InformationPanel informationPanel = new InformationPanel();
+        //pnLeft.add(informationPanel);
+    }
+    
+    private void setPnRight(){      
+        pnRight.add(informationPanel);
+    }
+    
+    private void initEvents(){
+        initEventTableOfTablePanel();
+    }
+    
+    private void initEventTableOfTablePanel(){
+        buttonTables = tablePanel.getTables();
+        tableOrdered = informationPanel.getTableFromInformationPanel();
+        labelTableName = informationPanel.getLabelFromInformationPanel();
+        for (JButton btTable : buttonTables) {
+            btTable.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    nameTable = btTable.getText().trim();
+                    productOrderTableModel = new ProductOrderTableModel(tableOrdered, nameTable);
+                    productOrderTableModel.loadDataTable();
+                    labelTableName.setText("Bàn "+nameTable);
+                }
+            });
+        }
     }
 }

@@ -30,7 +30,7 @@ public class TableDaoImpl implements TableDao {
 		final List<Table> tables = new ArrayList<Table>();
 		String query = "SELECT t.*,s.status FROM coffee_shop.table t \r\n" + 
 				"left join coffee_shop.table_status s \r\n" + 
-				"on t.id_table_status = s.id_table_status;";
+				"on t.id_table_status = s.id_table_status order by t.id_table ;";
 
 		try {
 			statement = connection.createStatement();
