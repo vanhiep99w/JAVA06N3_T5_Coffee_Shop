@@ -14,13 +14,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import render.comboboxbutton.Positon;
 import util.ImageUtils;
+import util.URL_Factory;
 import view.sub.Employee.NhanVienPanel;
 import view.sub.data.ThongKePanel;
 import view.sub.helper.TroGiupPanel;
@@ -40,16 +38,15 @@ public class MainFrame extends javax.swing.JFrame {
     private JLabel picLogo = new JLabel();
     private Component[] buttonComponents;
     
-    private JPanel panelKho;
-    private JPanel panelNhanVien;
-    private JPanel panelQuanLy;
-    private JPanel panelThongKe;
-    private JPanel panelTroGiup;
-    private JPanel panelDatMon;
+//    private JPanel panelKho;
+//    private JPanel panelNhanVien;
+//    private JPanel panelQuanLy;
+//    private JPanel panelThongKe;
+//    private JPanel panelTroGiup;
+//    private JPanel panelDatMon;
     private CardLayout cardLayout;
     
     
-    private final String sourcePath = new File("").getAbsolutePath();
     
     
     public MainFrame() {
@@ -377,7 +374,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void setIcon() {
-        final String imageDirectoryPath = sourcePath+"\\images";
+        final String imageDirectoryPath = URL_Factory.IMAGE_FOLDER_URL;
         
         btDatMon.setIcon(ImageUtils.loadImage(imageDirectoryPath+"\\icons8_food_40px.png")); 
         btThongKe.setIcon(ImageUtils.loadImage(imageDirectoryPath+"\\icons8_activity_history_40px.png"));
@@ -391,7 +388,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void initMainPanelComponent() {
         
-        System.out.println("1"+ Positon.BAOVE.getIcon());
         
         DatMonPanel datMonPanel = new DatMonPanel();
         KhoPanel khoPanel = new KhoPanel();

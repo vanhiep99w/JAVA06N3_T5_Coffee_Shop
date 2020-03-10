@@ -16,7 +16,7 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import render.comboboxbutton.ButtonRender;
+import render.comboboxbutton.work.ButtonRender;
 import render.table.TableCellRender;
 import service.employee.EmployeeService;
 import service.employee.EmployeeServiceImpl;
@@ -32,32 +32,30 @@ public class NhanVienPanel extends javax.swing.JPanel {
     /**
      * Creates new form NhanVienPanel
      */
-    
     private final WorkService workService;
     private final EmployeeService employeeService;
-    private final List<Work> works ;
+    private final List<Work> works;
     private final List<Employee> employees;
     private static final DefaultTableModel tableModel;
     private final Employee selectedEmployee;
-    
-    static{
-        tableModel = new DefaultTableModel(){
+
+    static {
+        tableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
-            
+
         };
     }
-    
-    
+
     public NhanVienPanel() {
         workService = new WorkServiceImpl();
         employeeService = new EmployeeServiceImpl();
         works = workService.getAll();
         employees = employeeService.getAll();
         selectedEmployee = new Employee();
-        
+
         initComponents();
         setComboBox();
         setTable();
@@ -435,24 +433,24 @@ public class NhanVienPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void setComboBox() {
-        
+
         DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
         Work work = new Work();
         work.setId(0);
-        comboBoxModel.addElement(work);  
+        comboBoxModel.addElement(work);
         addElementModel(comboBoxModel);
         cbWork.setModel(comboBoxModel);
         cbWork.setRenderer(new ButtonRender());
-        
+
         DefaultComboBoxModel comboBoxModel1 = new DefaultComboBoxModel();
         addElementModel(comboBoxModel1);
         cbWork1.setModel(comboBoxModel1);
         cbWork1.setRenderer(new ButtonRender());
         cbWork1.setFont(new Font("Tahoma", Font.PLAIN, 26));
-          
+
     }
-    
-    private void addElementModel(DefaultComboBoxModel comboBoxModel){
+
+    private void addElementModel(DefaultComboBoxModel comboBoxModel) {
         works.forEach(t -> {
             comboBoxModel.addElement(t);
         });
@@ -463,8 +461,8 @@ public class NhanVienPanel extends javax.swing.JPanel {
         tableModel.setColumnIdentifiers(new Object[]{""});
         //Object[][] objectses = employees.stream().map(t -> new Object[]{t}).toArray(Object[][] :: new);
         setTableData();
-        
-        tbEmployee.getColumnModel().getColumn(0).setCellRenderer(new TableCellRender());   
+
+        tbEmployee.getColumnModel().getColumn(0).setCellRenderer(new TableCellRender());
     }
 
     private void setEvent() {
@@ -477,37 +475,37 @@ public class NhanVienPanel extends javax.swing.JPanel {
     }
 
     private void setTableEvent() {
-        
+
         tbEmployee.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 int selectedIndex = tbEmployee.getSelectedRow();
                 //System.out.println(selectedIndex);
-                Employee employee = (Employee)tableModel.getValueAt(selectedIndex, 0);
+                Employee employee = (Employee) tableModel.getValueAt(selectedIndex, 0);
                 System.out.println(employee.getName());
                 selectedEmployee.copy(employee);
                 //System.out.println(selectedEmployee.getId());
                 tfName.setText(employee.getName());
                 tfPhoneNumber.setText(employee.getPhone());
-               
-                cbWork1.setSelectedItem(employee.getWork());  
+
+                cbWork1.setSelectedItem(employee.getWork());
                 btEdit.setEnabled(true);
                 btRemove.setEnabled(true);
-                
-            }   
-        }); 
+
+            }
+        });
     }
 
     private void setComboBoxEvent() {
         cbWork.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Work work = (Work)cbWork.getSelectedItem();
+                Work work = (Work) cbWork.getSelectedItem();
                 tableModel.setRowCount(0);
                 employees.clear();
-                if(work.getId() == 0){
-                    employees.addAll(employeeService.getAll()); 
-                }else{
+                if (work.getId() == 0) {
+                    employees.addAll(employeeService.getAll());
+                } else {
                     employees.addAll(employeeService.getALl(work.getId()));
                 }
                 setTableData();
@@ -523,49 +521,47 @@ public class NhanVienPanel extends javax.swing.JPanel {
         btAdd.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                
+
                 new AddDialog(true).setVisible(true);
-            }   
-        });  
+            }
+        });
     }
 
     private void setbtEditEvent() {
         btEdit.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if(btEdit.isEnabled()){
+                if (btEdit.isEnabled()) {
                     tfName.setEditable(true);
                     tfPhoneNumber.setEditable(true);
                     btConfirm.setEnabled(true);
                     cbWork1.setEnabled(true);
                     btRemove.setEnabled(false);
-                }              
-            } 
+                }
+            }
         });
-        
+
     }
 
     private void setbtConfirmEvent() {
         btConfirm.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if(btConfirm.isEnabled()){
+                if (btConfirm.isEnabled()) {
                     tfName.setEditable(false);
                     tfPhoneNumber.setEditable(false);
                     btConfirm.setEnabled(false);
-                    cbWork1.setEnabled(false);       
-                
+                    cbWork1.setEnabled(false);
+
                     selectedEmployee.setName(tfName.getText());
                     selectedEmployee.setPhone(tfPhoneNumber.getText());
-                    selectedEmployee.setWork((Work)cbWork1.getSelectedItem());
-                
+                    selectedEmployee.setWork((Work) cbWork1.getSelectedItem());
+
                     employeeService.update(selectedEmployee);
                 }
-            }     
+            }
         });
     }
-    
-    
 
     private void setbtRemoveEvent() {
         btRemove.addMouseListener(new MouseAdapter() {
@@ -574,17 +570,17 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 if (btRemove.isEnabled()) {
                     // 0=yes, 1=no, 2=cancel
                     int selected = JOptionPane.showConfirmDialog(null, "Xóa Nhân Viên");
-                    if(selected == 0){
+                    if (selected == 0) {
                         employeeService.remove(selectedEmployee.getId());
                         tableModel.removeRow(tbEmployee.getSelectedRow());
                     }
-                    
-                } 
-            }    
+
+                }
+            }
         });
     }
-    
-   public static DefaultTableModel getTableModel(){
-       return tableModel;
-   }
+
+    public static DefaultTableModel getTableModel() {
+        return tableModel;
+    }
 }

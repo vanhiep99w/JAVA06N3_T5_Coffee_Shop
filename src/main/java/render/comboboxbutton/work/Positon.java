@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package render.comboboxbutton;
+package render.comboboxbutton.work;
 
 import java.io.File;
 import javax.swing.ImageIcon;
+import util.URL_Factory;
 
 /**
  *
@@ -15,7 +16,7 @@ import javax.swing.ImageIcon;
 public enum Positon {
     TATCA("Tất Cả"),LETAN("Lễ Tân"),ORDER("Order"),VESINH("Vệ Sinh"),BAOVE("Bảo Vệ"),PHACHE("Pha Chế");
     
-    private final String sourcePath = new File("").getAbsolutePath()+"\\images";
+    private final String sourcePath = URL_Factory.IMAGE_FOLDER_URL;
     
     private ImageIcon icon;
     private String text;

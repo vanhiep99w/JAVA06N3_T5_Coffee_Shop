@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import connection.ConnectDB;
-import entities.Category;
-import entities.Product;
 import entities.Table;
 import entities.TableStatus;
 
