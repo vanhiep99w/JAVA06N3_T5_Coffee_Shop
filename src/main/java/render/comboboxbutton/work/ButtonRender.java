@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package render.comboboxbutton;
+package render.comboboxbutton.work;
 
 import entities.Work;
 import java.awt.Color;
@@ -12,6 +12,7 @@ import java.io.File;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import util.URL_Factory;
 
 
 /**
@@ -20,7 +21,7 @@ import javax.swing.JList;
  */
 public class ButtonRender extends DefaultListCellRenderer{
     
-    private final String sourcePath = new File("").getAbsolutePath()+"\\images";
+    private final String sourcePath = URL_Factory.IMAGE_FOLDER_URL;
     
     @Override
     public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
