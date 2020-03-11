@@ -29,5 +29,8 @@ public class ImageUtils {
         }
         return loadImage(path).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
     }
-    
+    public static ImageIcon loadImageIcon(String path, int width, int height) {
+        Image image = loadImage(path).getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        return new ImageIcon(image);
+    }
 }

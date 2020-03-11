@@ -27,4 +27,19 @@ public class ProductServiceImpl implements ProductService {
     public List<Product> getAll(String name_Product) {
         return productDao.getAll(name_Product);
     }
+    
+    @Override
+    public boolean insert(Product product) {
+        return productDao.insert(product);
+    }
+
+    @Override
+    public void update(int id1, int id, String name, float price, String NameCategory) {
+
+    }
+
+    @Override
+    public boolean delete(Integer id) {
+        return productDao.delete(id);
+    }
 }
