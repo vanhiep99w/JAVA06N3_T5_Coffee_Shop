@@ -19,7 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import util.ImageUtils;
 import util.URL_Factory;
-import view.sub.Employee.NhanVienPanel;
+import view.sub.employee.NhanVienPanel;
 import view.sub.data.ThongKePanel;
 import view.sub.helper.TroGiupPanel;
 

@@ -5,12 +5,15 @@
  */
 package view.sub.order;
 
+import entities.Table;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import model.ProductOrderTableModel;
+import service.table.TableService;
+import service.table.TableServiceImpl;
 
 /**
  *
@@ -21,6 +24,8 @@ public class DatMonPanel extends javax.swing.JPanel {
     TablePanel tablePanel = new TablePanel();
     InformationPanel informationPanel = new InformationPanel();
     ProductOrderTableModel productOrderTableModel;
+    private final Table selectedTable; 
+    private final TableService tableService;
     JButton[] buttonTables;
     JTable tableOrdered;
     JLabel labelTableName;
@@ -29,6 +34,8 @@ public class DatMonPanel extends javax.swing.JPanel {
      * Creates new form DatMonPanel
      */
     public DatMonPanel() {
+        selectedTable = new Table();
+        tableService = new TableServiceImpl();
         initComponents();
         setPnLeft();
         setPnRight();
@@ -81,6 +88,8 @@ public class DatMonPanel extends javax.swing.JPanel {
     
     private void initEvents(){
         initEventTableOfTablePanel();
+        btAddEvent();
+        
     }
     
     private void initEventTableOfTablePanel(){
@@ -92,11 +101,27 @@ public class DatMonPanel extends javax.swing.JPanel {
                 @Override
                 public void mousePressed(MouseEvent e) {
                     nameTable = btTable.getText().trim();
+                    selectedTable.copy(tableService.getOne(nameTable));
+                    informationPanel.getbtAdd().setEnabled(true);
                     productOrderTableModel = new ProductOrderTableModel(tableOrdered, nameTable);
                     productOrderTableModel.loadDataTable();
                     labelTableName.setText("Bàn "+nameTable);
                 }
             });
         }
+    }
+
+    private void btAddEvent() {
+        final JButton btAdd = informationPanel.getbtAdd();
+        btAdd.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(btAdd.isEnabled()){
+                    new AddMealDialog(true, selectedTable).setVisible(true);
+                }
+               
+            }
+            
+        });
     }
 }

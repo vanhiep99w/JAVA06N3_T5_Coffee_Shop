@@ -60,8 +60,8 @@ public class ProductDaoImpl implements ProductDao {
             e.printStackTrace();
         } finally {
             try {
-                statement.close();
                 resultSet.close();
+                statement.close();    
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -89,8 +89,8 @@ public class ProductDaoImpl implements ProductDao {
             e.printStackTrace();
         } finally {
             try {
-                statement.close();
                 resultSet.close();
+                statement.close();
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -120,8 +120,8 @@ public class ProductDaoImpl implements ProductDao {
             e.printStackTrace();
         } finally {
             try {
-                statement.close();
                 resultSet.close();
+                statement.close(); 
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

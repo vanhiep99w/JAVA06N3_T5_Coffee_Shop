@@ -6,6 +6,7 @@
 package view.sub.order;
 
 import entities.Product;
+import entities.Product_Order;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -33,17 +34,26 @@ public class InforMealPanel extends javax.swing.JPanel {
      * Creates new form InforMealPanel
      */
     
-    private final Product product;
+    private final Product_Order product_Order;
     private final Locale locale = new Locale("vi", "VN");
     private final NumberFormat format = NumberFormat.getNumberInstance(locale);
+    private int amount;
+   
     
-    public InforMealPanel(Product product) {
-        this.product = product;
+    public InforMealPanel(Product_Order product_Order) {
+        this.product_Order = product_Order;
+        amount = product_Order.getAmount();
         initComponents();
         setComponents();
         setEvent();
     }
 
+    public Product_Order getProduct_Order() {
+        return product_Order;
+    }
+
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,7 +64,7 @@ public class InforMealPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         btRemove = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        lbName = new javax.swing.JLabel();
         tfNode = new javax.swing.JTextField();
         lbPrice = new javax.swing.JLabel();
         spAmount = new javax.swing.JSpinner();
@@ -70,8 +80,8 @@ public class InforMealPanel extends javax.swing.JPanel {
         btRemove.setBorderPainted(false);
         btRemove.setFocusPainted(false);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbName.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lbName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         tfNode.setFont(new java.awt.Font("Tahoma", 2, 16)); // NOI18N
         tfNode.setForeground(new java.awt.Color(153, 153, 153));
@@ -105,7 +115,7 @@ public class InforMealPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(tfNode)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE))
+                    .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -123,7 +133,7 @@ public class InforMealPanel extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btRemove, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lbName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(tfNode, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
@@ -142,7 +152,7 @@ public class InforMealPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btRemove;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lbName;
     private javax.swing.JLabel lbPrice;
     private javax.swing.JLabel lbSum;
     private javax.swing.JSpinner spAmount;
@@ -153,26 +163,33 @@ public class InforMealPanel extends javax.swing.JPanel {
         return btRemove;
     }
     
+    public JSpinner getspAmount(){
+        return spAmount;
+    }
+    
 
     private void setComponents() {
         setspAmount();
         setlbSum();
         setlbPrice();
         setIcon();
+        setlbName();
     }
 
     private void setlbSum() {
-        int amount = (Integer)spAmount.getValue();
-        Float sum = product.getPrice()*amount;
+        amount = (Integer)spAmount.getValue();
+        Float sum = product_Order.getProduct().getPrice()*amount;
         lbSum.setText(format.format(sum));
         
     }
 
     private void setlbPrice() {
-        lbPrice.setText(format.format(product.getPrice()));
+        
+        lbPrice.setText(format.format(product_Order.getProduct().getPrice()));
     }
 
-    private void setspAmount() {
+    public void setspAmount() {
+        spAmount.setValue(amount);
         spAmount.setFont(new Font("Tahoma",Font.PLAIN , 26));
         JComponent editor = spAmount.getEditor();
         if (editor instanceof JSpinner.DefaultEditor) {
@@ -194,6 +211,8 @@ public class InforMealPanel extends javax.swing.JPanel {
         spAmount.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
+                
+                amount = (Integer)spAmount.getValue();
                 setlbSum();
             }
         });
@@ -222,4 +241,15 @@ public class InforMealPanel extends javax.swing.JPanel {
         btRemove.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\close2.png"));
     }
 
+    private void setlbName() {
+        lbName.setText(product_Order.getProduct().getName());
+    }
+    
+    public int getAmount(){
+        return amount;
+    }
+    public void setAmount(int amount){
+        this.amount = (amount >= 1) ? amount :1;
+    }
+    
 }

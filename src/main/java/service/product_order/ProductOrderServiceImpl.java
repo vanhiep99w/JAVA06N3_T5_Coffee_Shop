@@ -10,6 +10,7 @@ import dao.product.ProductDaoImpl;
 import dao.product_order.ProductOrderDao;
 import dao.product_order.ProductOrderDaoImpl;
 import entities.ProductOrder;
+import entities.Product_Order;
 import java.util.List;
 
 /**
@@ -18,7 +19,7 @@ import java.util.List;
  */
 public class ProductOrderServiceImpl implements ProductOrderService {
 
-    private ProductOrderDao productOrderDao;
+    private final ProductOrderDao productOrderDao;
 
     public ProductOrderServiceImpl() {
         productOrderDao = new ProductOrderDaoImpl();
@@ -27,6 +28,11 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     @Override
     public List<ProductOrder> getProductOrderDetail(String nameTable) {
         return productOrderDao.getProductOrderDetail(nameTable);
+    }
+
+    @Override
+    public List<Product_Order> getAll(Integer id_Table) {
+        return productOrderDao.getAll(id_Table);
     }
 
 }

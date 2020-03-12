@@ -7,13 +7,20 @@ package dao.product_order;
 
 import connection.ConnectDB;
 import entities.ProductOrder;
+import entities.Product_Order;
+import entities.Order;
+import entities.Product;
+import entities.Table;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -30,6 +37,33 @@ public class ProductOrderDaoImpl implements ProductOrderDao {
         connection = ConnectDB.getInstance().getConnection();
     }
 
+    public Product_Order setData(ResultSet resultSet) throws SQLException {
+
+        Integer id_Order = resultSet.getInt("id_order");
+        Integer id_Table = resultSet.getInt("id_table");
+        String name_Table = resultSet.getString("name_table");
+        Table table = new Table();
+        table.setId(id_Table);
+        table.setName(name_Table);
+        Order order = new Order();
+        order.setId_Order(id_Order);
+        order.setTable(table);
+
+        Integer id_Product = resultSet.getInt("id_product");
+        String name_product = resultSet.getString("name_product");
+        Float price = resultSet.getFloat("price");
+        Product product = new Product();
+        product.setId(id_Product);
+        product.setName(name_product);
+        product.setPrice(price);
+
+        Integer amount = resultSet.getInt("amount");
+        LocalDateTime time = resultSet.getTimestamp("time_product_order").toLocalDateTime();
+
+        Product_Order product_Order = new Product_Order(order, amount, time, product);
+        return product_Order;
+    }
+
     @Override
     public List<ProductOrder> getProductOrderDetail(String nameTable) {
         List<ProductOrder> productOrders = new ArrayList<>();
@@ -43,6 +77,7 @@ public class ProductOrderDaoImpl implements ProductOrderDao {
         try {
             preStatement = connection.prepareStatement(query);
             preStatement.setString(1, nameTable);
+            
             resultSet = preStatement.executeQuery();
             while (resultSet.next()) {
                 productOrder = new ProductOrder(resultSet.getString("name_table"),
@@ -58,7 +93,6 @@ public class ProductOrderDaoImpl implements ProductOrderDao {
             try {
                 resultSet.close();
                 preStatement.close();
-                connection.close();
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -71,4 +105,42 @@ public class ProductOrderDaoImpl implements ProductOrderDao {
         }
     }
 
+    @Override
+    public List<Product_Order> getAll(Integer id_Table) {
+        
+        final List<Product_Order> product_Orders = new ArrayList<>();
+        String query = "select po.*,p.name_product,p.price,o.id_table,t.name_table from coffee_shop.product_order po \n"
+                + "left join coffee_shop.order o on po.id_order = o.id_order\n"
+                + "left join coffee_shop.table t on o.id_table = t.id_table\n"
+                + "left join coffee_shop.product p on po.id_product = p.id_product \n"
+                + "where t.id_table = ?;";
+
+        try {
+            preStatement = connection.prepareStatement(query);
+            
+            preStatement.setInt(1, id_Table);
+            resultSet = preStatement.executeQuery();
+            while (resultSet.next()) {
+                product_Orders.add(setData(resultSet));  
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                resultSet.close();
+                preStatement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return product_Orders;
+    }
+
+    @Override
+    public boolean delete(Integer id_Order) {
+        return false;
+    }
+    
+    
 }

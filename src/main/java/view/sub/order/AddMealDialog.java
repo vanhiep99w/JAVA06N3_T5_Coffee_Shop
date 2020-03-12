@@ -7,10 +7,12 @@ package view.sub.order;
 
 import entities.Category;
 import entities.Product;
+import entities.Product_Order;
 import entities.Table;
 import entities.TableStatus;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
+import service.product_order.ProductOrderService;
 import util.ImageUtils;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -32,10 +34,12 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import render.comboboxbutton.category.ButtonRender;
 import service.category.CategoryService;
 import service.category.CategoryServiceImpl;
+import service.product_order.ProductOrderServiceImpl;
 import util.URL_Factory;
 
 /**
@@ -56,16 +60,36 @@ public class AddMealDialog extends javax.swing.JDialog {
     private Component[] buttons;
     private final ProductService productService;
     private final CategoryService categoryService;
+    private final ProductOrderService productOrderService;
     private final List<Product> products;
     private final ButtonGroup btGroup = new ButtonGroup();
     private final Table table;
     private final List<Category> categorys;
+    private final List<Product_Order> product_Orders;
 
     public AddMealDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        //table data
-        this.table = new Table(1, "Bàn 10", new TableStatus(1, "abc"));
-        //
+        
+        productOrderService = new ProductOrderServiceImpl();
+        this.table = null;
+        product_Orders = productOrderService.getAll(table.getId());
+        productService = new ProductServiceImpl();
+        categoryService = new CategoryServiceImpl();
+        products = productService.getAll();
+        categorys = categoryService.getAll();
+        initComponents();
+        cardLayout = (CardLayout) pnProduct.getLayout();
+        buttons = null;
+        setComponents();
+        setEvent();
+    }
+
+    public AddMealDialog(boolean modal, Table table) {
+        this.setModal(modal);
+      
+        productOrderService = new ProductOrderServiceImpl();
+        this.table = table;
+        product_Orders = productOrderService.getAll(table.getId());
         productService = new ProductServiceImpl();
         categoryService = new CategoryServiceImpl();
         products = productService.getAll();
@@ -439,19 +463,21 @@ public class AddMealDialog extends javax.swing.JDialog {
         SubAddMealPanel subAddMealPanel = new SubAddMealPanel();
         currentAmount++;
         JRadioButton radioBt = new JRadioButton();
+        int maxComponent = subAddMealPanel.MAX_COMPONENT_AMOUNT;
 
-        if (mealPanels.size() <= 18) {
+        if (mealPanels.size() <= maxComponent) {
             subAddMealPanel.addComponens(mealPanels);
             addNewPage(subAddMealPanel, radioBt);
         }
-        if (mealPanels.size() > 18) {
-            List<MealPanel> addedList = mealPanels.subList((currentAmount - 1) * 18, currentAmount * 18);
+        if (mealPanels.size() > maxComponent) {
+            List<MealPanel> addedList = mealPanels.subList((currentAmount - 1) * maxComponent, currentAmount * maxComponent);
             subAddMealPanel.addComponens(addedList);
             addNewPage(subAddMealPanel, radioBt);
             mealPanels.removeAll(addedList);
             addComponentsIn_pnProduct(mealPanels);
         }
         radioBt.addMouseListener(RadioBtEvent(radioBt.getActionCommand()));
+        pnProductEvent();
     }
 
     private MouseListener RadioBtEvent(String actionCommand) {
@@ -477,14 +503,13 @@ public class AddMealDialog extends javax.swing.JDialog {
 
     private void setEvent() {
         btRightEvent();
-        btLeftEvent();
-        pnInforEvent();
-        pnProductEvent();
+        btLeftEvent();  
         tfSearchEvent();
         cbKindEvent();
         cbSortEvent();
         btReverseEvent();
-      
+        pnInforEvent();
+        
     }
 
     private void btRightEvent() {
@@ -500,9 +525,7 @@ public class AddMealDialog extends javax.swing.JDialog {
                         }
                     }
                 }
-
             }
-
         });
     }
 
@@ -524,11 +547,9 @@ public class AddMealDialog extends javax.swing.JDialog {
     }
 
     private void setpnInfor() {
-        Product product = new Product(1, "Caffee Sữa", 20000f, new Category(1, "abc"));
-        pnInfor.add(new InforMealPanel(product));
-        pnInfor.add(new InforMealPanel(product));
-        pnInfor.add(new InforMealPanel(product));
-       
+        
+        product_Orders.forEach(t -> pnInfor.add(new InforMealPanel(t)));
+
     }
 
     private MouseListener removeListener(Component component) {
@@ -577,20 +598,45 @@ public class AddMealDialog extends javax.swing.JDialog {
             Component[] productPanel = subAddMealPanel.getComponents();
             Arrays.stream(productPanel).forEach(p -> {
                 MealPanel mealPanel = (MealPanel) p;
-                mealPanel.getbtMinus().addMouseListener(btMinusEvent());
-                mealPanel.getbtPlus().addMouseListener(btPlusEvent());
+                Product selectedProduct = mealPanel.getProduct();
+
+                mealPanel.getbtMinus().addMouseListener(btMinusEvent(selectedProduct));
+                mealPanel.getbtPlus().addMouseListener(btPlusEvent(selectedProduct));
             });
 
         });
     }
 
-    private MouseListener btPlusEvent() {
+    private MouseListener btPlusEvent(Product selectedProduct) {
         return new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Component[] components = pnInfor.getComponents();
+                Arrays.stream(components).forEach(t -> {
+                    InforMealPanel inforMealPanel = (InforMealPanel) t;
+                    if (inforMealPanel.getProduct_Order().getProduct().equals(selectedProduct)) {
+                        inforMealPanel.setAmount(inforMealPanel.getAmount() + 1);
+                        inforMealPanel.setspAmount();
+                    }
+                });
+            }
         };
+        
     }
 
-    private MouseListener btMinusEvent() {
+    private MouseListener btMinusEvent(Product selectedProduct) {
         return new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                Component[] components = pnInfor.getComponents();
+                Arrays.stream(components).forEach(t -> {
+                    InforMealPanel inforMealPanel = (InforMealPanel) t;   
+                    if (inforMealPanel.getProduct_Order().getProduct().equals(selectedProduct)) {
+                        inforMealPanel.setAmount(inforMealPanel.getAmount() - 1);
+                        inforMealPanel.setspAmount();
+                    }
+                });
+            }
         };
     }
 
@@ -643,19 +689,19 @@ public class AddMealDialog extends javax.swing.JDialog {
         tfSearch.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode() == KeyEvent.VK_ENTER){
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     String searchString = tfSearch.getText();
                     String regex = "\\s*";
-                    if(!searchString.matches(regex)){
+                    if (!searchString.matches(regex)) {
                         products.clear();
                         products.addAll(productService.getAll(searchString));
                         UpdateComponet_pnProduct();
                     }
-                    
+
                 }
             }
-            
         });
+        
     }
 
     private void cbKindEvent() {
@@ -672,6 +718,7 @@ public class AddMealDialog extends javax.swing.JDialog {
                 UpdateComponet_pnProduct();
             }
         });
+        
     }
 
     private void UpdateComponet_pnProduct() {
@@ -700,13 +747,15 @@ public class AddMealDialog extends javax.swing.JDialog {
                 if ("Theo Giá".equals(string)) {
                     products.sort(Comparator.comparing(Product::getPrice));
                     UpdateComponet_pnProduct();
-                } if("Không".equals(string)) {
+                }
+                if ("Không".equals(string)) {
                     products.clear();
                     products.addAll(productService.getAll());
                     UpdateComponet_pnProduct();
                 }
             }
         });
+        
     }
 
     private void btReverseEvent() {
@@ -716,7 +765,7 @@ public class AddMealDialog extends javax.swing.JDialog {
                 Collections.reverse(products);
                 UpdateComponet_pnProduct();
             }
-            
+
         });
     }
 

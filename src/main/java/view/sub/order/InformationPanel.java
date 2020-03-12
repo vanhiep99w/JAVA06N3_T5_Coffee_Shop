@@ -10,6 +10,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import model.ProductOrderTableModel;
@@ -47,6 +48,7 @@ public class InformationPanel extends javax.swing.JPanel {
 
     private void initEvents() {
         initPayEvent();
+        
     }
 
     private void initPayEvent() {
@@ -88,8 +90,10 @@ public class InformationPanel extends javax.swing.JPanel {
         jsListProductOrdered.setViewportView(tbListProductOrdered);
 
         btnAdd.setText("Thêm");
+        btnAdd.setEnabled(false);
 
         btnPay.setText("Thanh toán");
+        btnPay.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -133,4 +137,8 @@ public class InformationPanel extends javax.swing.JPanel {
     private javax.swing.JLabel lbNameTable;
     private javax.swing.JTable tbListProductOrdered;
     // End of variables declaration//GEN-END:variables
+
+    public JButton getbtAdd(){
+        return btnAdd;
+    }
 }

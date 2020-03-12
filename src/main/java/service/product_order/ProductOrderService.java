@@ -6,6 +6,7 @@
 package service.product_order;
 
 import entities.ProductOrder;
+import entities.Product_Order;
 import java.util.List;
 
 /**
@@ -15,4 +16,6 @@ import java.util.List;
 public interface ProductOrderService {
 
     public List<ProductOrder> getProductOrderDetail(String nameTable);
+    
+    public List<Product_Order> getAll(Integer id_Table);
 }
