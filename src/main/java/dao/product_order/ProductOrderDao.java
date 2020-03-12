@@ -14,9 +14,9 @@ import java.util.List;
  * @author PC
  */
 public interface ProductOrderDao {
-    public List<ProductOrder> getProductOrderDetail(String nameTable);
     
-    public List<Product_Order> getAll(Integer id_Table);
+    
+    public List<Product_Order> getAll(Integer id_Order);
     
     public boolean delete(Integer id_Order);
 }

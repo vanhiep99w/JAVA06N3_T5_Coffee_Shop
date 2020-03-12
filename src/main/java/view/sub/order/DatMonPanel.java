@@ -5,9 +5,13 @@
  */
 package view.sub.order;
 
+import entities.Employee;
+import entities.Order;
 import entities.Table;
+import entities.TableStatus;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDateTime;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -30,6 +34,7 @@ public class DatMonPanel extends javax.swing.JPanel {
     JTable tableOrdered;
     JLabel labelTableName;
     String nameTable;
+    private JButton selectedButton;
     /**
      * Creates new form DatMonPanel
      */
@@ -101,10 +106,22 @@ public class DatMonPanel extends javax.swing.JPanel {
                 @Override
                 public void mousePressed(MouseEvent e) {
                     nameTable = btTable.getText().trim();
+                    
+                    selectedButton = btTable;
                     selectedTable.copy(tableService.getOne(nameTable));
-                    informationPanel.getbtAdd().setEnabled(true);
-                    productOrderTableModel = new ProductOrderTableModel(tableOrdered, nameTable);
-                    productOrderTableModel.loadDataTable();
+                    Integer idStatus = selectedTable.getStatus().getId();
+                    if(idStatus == TableStatus.EMPTY || idStatus == TableStatus.ORDERED){
+                        Order order = new Order();
+                        order.setId_Order(0);
+                        order.setTable(selectedTable);
+                        new AddMealDialog(DatMonPanel.this, true, order).setVisible(true);
+                    }if(idStatus == TableStatus.FULL ){
+                        informationPanel.getbtAdd().setEnabled(true);
+                        Integer idOrder = Integer.parseInt(selectedButton.getActionCommand());
+                        productOrderTableModel = new ProductOrderTableModel(tableOrdered, idOrder);
+                        productOrderTableModel.loadDataTable();
+                        
+                    }
                     labelTableName.setText("Bàn "+nameTable);
                 }
             });
@@ -117,11 +134,19 @@ public class DatMonPanel extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 if(btAdd.isEnabled()){
-                    new AddMealDialog(true, selectedTable).setVisible(true);
+                    Integer idOrder = Integer.parseInt(selectedButton.getActionCommand()); 
+                    Order order = new Order();
+                    order.setId_Order(idOrder);
+                    order.setTable(selectedTable);
+                    new AddMealDialog(DatMonPanel.this, true, order).setVisible(true);
                 }
                
             }
             
         });
+    }
+    
+    public JButton getSelectedButton(){
+        return selectedButton;
     }
 }

@@ -18,6 +18,22 @@ public class Order {
     private Table table;
     private LocalDateTime time;
 
+    public Order() {}
+
+    public Order(Integer id_Order, Employee employee, Table table, LocalDateTime time) {
+        this.id_Order = id_Order;
+        this.employee = employee;
+        this.table = table;
+        this.time = time;
+    }
+    
+    public void copy(Order order){
+        this.id_Order = order.id_Order;
+        this.employee = order.employee;
+        this.table = order.table;
+        this.time = order.time;
+    }
+
     public Integer getId_Order() {
         return id_Order;
     }

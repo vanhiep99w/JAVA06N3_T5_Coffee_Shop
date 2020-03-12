@@ -12,7 +12,6 @@ public enum Config {
 
 	String getValue() {
 		conPro = new ConfigurationProvider(path);
-		System.out.println(path);
 		return (conPro == null) ? null : conPro.getProperties().getProperty(this.toString());
 	}
 }

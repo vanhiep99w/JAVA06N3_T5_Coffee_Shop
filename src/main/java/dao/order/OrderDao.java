@@ -6,6 +6,7 @@
 package dao.order;
 
 import entities.Order;
+import java.util.List;
 
 /**
  *
@@ -14,5 +15,9 @@ import entities.Order;
 public interface OrderDao {
     
     public boolean add(Order newOrder);
+    
+    public List<Order> getAll();
+    
+    public Order getOne (Integer id_Order);
     
 }
