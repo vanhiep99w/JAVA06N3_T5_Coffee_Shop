@@ -56,6 +56,10 @@ public class Product {
         return price;
     }
 
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
     public String getImage() {
         return image;
     }
@@ -67,7 +71,6 @@ public class Product {
     public void setImage(String image) {
         this.image = image;
     }
-    
     
 
     @Override

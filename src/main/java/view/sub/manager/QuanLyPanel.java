@@ -5,6 +5,24 @@
  */
 package view.sub.manager;
 
+import entities.Product;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.Consumer;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.WindowConstants;
+import javax.swing.border.TitledBorder;
+import service.product.ProductService;
+import service.product.ProductServiceImpl;
+
 /**
  *
  * @author Admin
@@ -14,8 +32,29 @@ public class QuanLyPanel extends javax.swing.JPanel {
     /**
      * Creates new form QuanLyPanel
      */
+    private final TitledBorder TitledBorder;
+    private final ProductService productService;
+    private final FlowLayout flowLayout = new FlowLayout();
+    private List<Product> products;
+    private Product selectedProduct;
+    private JButton btSelected;
+
     public QuanLyPanel() {
+        productService = new ProductServiceImpl();
+        products = productService.getAll();
         initComponents();
+        selectedProduct = null;
+        flowLayout.setAlignment(FlowLayout.LEFT);
+        TitledBorder = new TitledBorder("Tất cả cá món");
+        TitledBorder.setTitleFont(new Font("Tahoma", Font.BOLD, 18));
+        TitledBorder.setTitleColor(Color.BLUE);
+        initCenterComponent(products);
+        flowLayout.setHgap(50);
+        flowLayout.setVgap(50);
+        pnCenter.setBorder(TitledBorder);
+        pnCenter.setLayout(flowLayout);
+
+        setEvent();
     }
 
     /**
@@ -27,31 +66,438 @@ public class QuanLyPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnCenter = new javax.swing.JPanel();
+        pnLeft = new javax.swing.JPanel();
+        btDoUongCoGa = new javax.swing.JButton();
+        btTraSua = new javax.swing.JButton();
+        btBanhNgot = new javax.swing.JButton();
+        btNuocEp = new javax.swing.JButton();
+        btSinhTo = new javax.swing.JButton();
+        btCoffee = new javax.swing.JButton();
+        btTatCaCacMon = new javax.swing.JButton();
+        pnBottom = new javax.swing.JPanel();
+        btThem = new javax.swing.JButton();
+        btXoa = new javax.swing.JButton();
+        btChinhSua = new javax.swing.JButton();
+        pnTop = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("QUẢN LÝ");
+        setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(609, 609, 609)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(658, Short.MAX_VALUE))
+        pnCenter.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10), javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(0, 153, 153), null)));
+        add(pnCenter, java.awt.BorderLayout.CENTER);
+
+        pnLeft.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 25, 10), javax.swing.BorderFactory.createEtchedBorder()));
+
+        btDoUongCoGa.setBackground(new java.awt.Color(0, 255, 204));
+        btDoUongCoGa.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btDoUongCoGa.setForeground(java.awt.Color.blue);
+        btDoUongCoGa.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\DOUONG.png")); // NOI18N
+        btDoUongCoGa.setText("Đồ uống có ga");
+        btDoUongCoGa.setBorder(null);
+        btDoUongCoGa.setFocusPainted(false);
+        btDoUongCoGa.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+        btTraSua.setBackground(new java.awt.Color(0, 255, 204));
+        btTraSua.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btTraSua.setForeground(java.awt.Color.blue);
+        btTraSua.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\TRASUA.png")); // NOI18N
+        btTraSua.setText("Trà sữa");
+        btTraSua.setBorder(null);
+        btTraSua.setFocusPainted(false);
+        btTraSua.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btTraSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btTraSuaActionPerformed(evt);
+            }
+        });
+
+        btBanhNgot.setBackground(new java.awt.Color(0, 255, 204));
+        btBanhNgot.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btBanhNgot.setForeground(java.awt.Color.blue);
+        btBanhNgot.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\BANHNGOT.png")); // NOI18N
+        btBanhNgot.setText("Bánh ngọt");
+        btBanhNgot.setBorder(null);
+        btBanhNgot.setFocusPainted(false);
+        btBanhNgot.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+        btNuocEp.setBackground(new java.awt.Color(0, 255, 204));
+        btNuocEp.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNuocEp.setForeground(java.awt.Color.blue);
+        btNuocEp.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\NUOCEP.png")); // NOI18N
+        btNuocEp.setText("Nước ép");
+        btNuocEp.setBorder(null);
+        btNuocEp.setFocusPainted(false);
+        btNuocEp.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btNuocEp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btNuocEpActionPerformed(evt);
+            }
+        });
+
+        btSinhTo.setBackground(new java.awt.Color(0, 255, 204));
+        btSinhTo.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btSinhTo.setForeground(java.awt.Color.blue);
+        btSinhTo.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\SINHTO.png")); // NOI18N
+        btSinhTo.setText("Sinh tố");
+        btSinhTo.setBorder(null);
+        btSinhTo.setFocusPainted(false);
+        btSinhTo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+        btCoffee.setBackground(new java.awt.Color(0, 255, 204));
+        btCoffee.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btCoffee.setForeground(java.awt.Color.blue);
+        btCoffee.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\CAFFEE.png")); // NOI18N
+        btCoffee.setText("Coffee");
+        btCoffee.setBorder(null);
+        btCoffee.setFocusPainted(false);
+        btCoffee.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btCoffee.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCoffeeActionPerformed(evt);
+            }
+        });
+
+        btTatCaCacMon.setBackground(new java.awt.Color(0, 255, 204));
+        btTatCaCacMon.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btTatCaCacMon.setForeground(java.awt.Color.blue);
+        btTatCaCacMon.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\icons8_food_40px.png")); // NOI18N
+        btTatCaCacMon.setText("Tất cả các món");
+        btTatCaCacMon.setBorder(null);
+        btTatCaCacMon.setFocusPainted(false);
+        btTatCaCacMon.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+
+        javax.swing.GroupLayout pnLeftLayout = new javax.swing.GroupLayout(pnLeft);
+        pnLeft.setLayout(pnLeftLayout);
+        pnLeftLayout.setHorizontalGroup(
+            pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(btTatCaCacMon, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+            .addComponent(btDoUongCoGa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btTraSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btBanhNgot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btNuocEp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btSinhTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btCoffee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(173, 173, 173)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(448, Short.MAX_VALUE))
+        pnLeftLayout.setVerticalGroup(
+            pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnLeftLayout.createSequentialGroup()
+                .addComponent(btTatCaCacMon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btDoUongCoGa, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btTraSua, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btBanhNgot, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btNuocEp, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btSinhTo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btCoffee, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        add(pnLeft, java.awt.BorderLayout.LINE_START);
+
+        pnBottom.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), javax.swing.BorderFactory.createEtchedBorder()));
+
+        btThem.setBackground(new java.awt.Color(51, 255, 204));
+        btThem.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btThem.setText("THÊM");
+        btThem.setFocusPainted(false);
+        btThem.setPreferredSize(new java.awt.Dimension(200, 80));
+
+        btXoa.setBackground(new java.awt.Color(51, 255, 204));
+        btXoa.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btXoa.setText("XÓA");
+        btXoa.setFocusPainted(false);
+        btXoa.setPreferredSize(new java.awt.Dimension(200, 80));
+
+        btChinhSua.setBackground(new java.awt.Color(51, 255, 204));
+        btChinhSua.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btChinhSua.setText("CHỈNH SỬA");
+        btChinhSua.setFocusPainted(false);
+        btChinhSua.setPreferredSize(new java.awt.Dimension(200, 80));
+        btChinhSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btChinhSuaActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnBottomLayout = new javax.swing.GroupLayout(pnBottom);
+        pnBottom.setLayout(pnBottomLayout);
+        pnBottomLayout.setHorizontalGroup(
+            pnBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnBottomLayout.createSequentialGroup()
+                .addGap(300, 300, 300)
+                .addComponent(btThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addComponent(btChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(75, 75, 75)
+                .addComponent(btXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(131, 131, 131))
+        );
+        pnBottomLayout.setVerticalGroup(
+            pnBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnBottomLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addGroup(pnBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(btXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btThem, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(50, Short.MAX_VALUE))
+        );
+
+        add(pnBottom, java.awt.BorderLayout.PAGE_END);
+
+        pnTop.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10), javax.swing.BorderFactory.createEtchedBorder()));
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 255, 204));
+        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\ORDER.png")); // NOI18N
+        jLabel1.setText("THÔNG TIN THỰC ĐƠN");
+
+        javax.swing.GroupLayout pnTopLayout = new javax.swing.GroupLayout(pnTop);
+        pnTop.setLayout(pnTopLayout);
+        pnTopLayout.setHorizontalGroup(
+            pnTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTopLayout.createSequentialGroup()
+                .addContainerGap(362, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(375, 375, 375))
+        );
+        pnTopLayout.setVerticalGroup(
+            pnTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTopLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addContainerGap())
+        );
+
+        add(pnTop, java.awt.BorderLayout.PAGE_START);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btChinhSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btChinhSuaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btChinhSuaActionPerformed
+
+    private void btTraSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTraSuaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btTraSuaActionPerformed
+
+    private void btNuocEpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNuocEpActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btNuocEpActionPerformed
+
+    private void btCoffeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCoffeeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btCoffeeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btBanhNgot;
+    private javax.swing.JButton btChinhSua;
+    private javax.swing.JButton btCoffee;
+    private javax.swing.JButton btDoUongCoGa;
+    private javax.swing.JButton btNuocEp;
+    private javax.swing.JButton btSinhTo;
+    private javax.swing.JButton btTatCaCacMon;
+    private javax.swing.JButton btThem;
+    private javax.swing.JButton btTraSua;
+    private javax.swing.JButton btXoa;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel pnBottom;
+    private javax.swing.JPanel pnCenter;
+    private javax.swing.JPanel pnLeft;
+    private javax.swing.JPanel pnTop;
     // End of variables declaration//GEN-END:variables
+
+    private void initCenterComponent(List<Product> products) {
+        pnCenter.removeAll();
+        products.forEach(new Consumer<Product>() {
+            @Override
+            public void accept(Product p) {
+                JButton button = new JButton();
+                button.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                button.setForeground(Color.blue);
+                button.setFocusPainted(false);
+                button.setActionCommand(p.getId() + "");
+                button.setPreferredSize(new Dimension(160, 160));
+                button.setText(p.getName() + " \n " + p.getPrice());
+//            button.setIcon(ImageUtils.loadImage("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\food.png", 50, 50));
+//            JScrollPane scrollable = new JScrollPane(20, 20);
+//            scrollable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+//            pnCenter.add(scrollable);
+                pnCenter.add(button);
+            }
+        });
+
+        pnCenter.revalidate();
+        pnCenter.repaint();
+        pnCenterEvent();
+    }
+
+    //chạy đi e ok j nua ko e cái jscop anh nó như nào e chạy thử a coi
+    private void setEvent() {
+        btTatCaCacMonEvent();
+        btDoUongCoGaEvent();
+        btTraSuaEvent();
+        btBanhNgotEvent();
+        btNuocEpRvent();
+        btSinhToEvent();
+        btCoffeeEvent();
+        btRemoveEvent();
+        btAddEvents();
+
+        //thử đi e
+        //pnCenterEvent();
+    }
+
+    private void btTatCaCacMonEvent() {
+        btTatCaCacMon.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                products = productService.getAll();
+                TitledBorder.setTitle("Tất cả các món");
+                pnCenter.setBorder(TitledBorder);
+                initCenterComponent(products);
+
+            }
+
+        });
+    }
+
+    private void btDoUongCoGaEvent() {
+        btDoUongCoGa.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                products = productService.getAll(1);
+                TitledBorder.setTitle("Đồ uống có ga");
+                pnCenter.setBorder(TitledBorder);
+                initCenterComponent(products);
+            }
+        });
+
+    }
+
+    private void btTraSuaEvent() {
+        btTraSua.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                products = productService.getAll(2);
+                TitledBorder.setTitle("Trà sữa");
+                pnCenter.setBorder(TitledBorder);
+                initCenterComponent(products);
+
+            }
+
+        });
+    }
+
+    private void btBanhNgotEvent() {
+        btBanhNgot.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                products = productService.getAll(3);
+                TitledBorder.setTitle("Bánh ngọt");
+                pnCenter.setBorder(TitledBorder);
+                initCenterComponent(products);
+
+            }
+
+        });
+    }
+
+    private void btNuocEpRvent() {
+        btNuocEp.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                products = productService.getAll(4);
+                TitledBorder.setTitle("Nước ép");
+                pnCenter.setBorder(TitledBorder);
+                initCenterComponent(products);
+
+            }
+
+        });
+    }
+
+    private void btSinhToEvent() {
+        btSinhTo.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                products = productService.getAll(5);
+                TitledBorder.setTitle("Sinh tố");
+                pnCenter.setBorder(TitledBorder);
+                initCenterComponent(products);
+
+            }
+
+        });
+    }
+
+    private void btCoffeeEvent() {
+        btCoffee.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                products = productService.getAll(6);
+                TitledBorder.setTitle("Coffee");
+                pnCenter.setBorder(TitledBorder);
+                initCenterComponent(products);
+
+            }
+
+        });
+    }
+
+    private void btRemoveEvent() {
+        btXoa.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (btXoa.isEnabled()) {
+                    int selected = JOptionPane.showConfirmDialog(null, "Xóa Món Ăn");
+                    if (selected == 0) {
+                        productService.delete(selectedProduct.getId());
+                        pnCenter.remove(btSelected);
+                        pnCenter.revalidate();
+                        pnCenter.repaint();
+
+                    }
+
+                }
+            }
+        });
+    }
+
+    public void btAddEvents() {
+        btThem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                final ManagerFrom managerForm = new ManagerFrom();
+                managerForm.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+                managerForm.setVisible(true);
+            }
+
+        });
+    }
+
+    private void pnCenterEvent() {
+        Component[] components = pnCenter.getComponents();
+        Arrays.stream(components).forEach(t -> {
+            JButton button = (JButton) t;
+            button.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mousePressed(MouseEvent e) {
+                    products.forEach(p -> {
+                        if (p.getId() == Integer.parseInt(button.getActionCommand())) {
+                            selectedProduct = p;
+                            btSelected = button;
+                        }
+                    });
+                }
+            });
+        });
+    }
+
 }
