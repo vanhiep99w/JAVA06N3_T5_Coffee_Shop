@@ -6,6 +6,7 @@
 package view.sub.order;
 
 import entities.Category;
+import entities.Order;
 import entities.Product;
 import entities.Product_Order;
 import entities.Table;
@@ -25,6 +26,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -33,8 +35,8 @@ import java.util.stream.Collectors;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import render.comboboxbutton.category.ButtonRender;
 import service.category.CategoryService;
@@ -48,35 +50,33 @@ import util.URL_Factory;
  */
 public class AddMealDialog extends javax.swing.JDialog {
 
-    /**
-     * Creates new form AddMealDialog
-     */
-    private final CardLayout cardLayout;
 
     //Amount of SubAddMealPanel in pnProduct
     private int currentAmount = 0;
     //index of showing SubAddMealPanel 
     private int currentIndex = 1;
     private Component[] buttons;
+    private final CardLayout cardLayout;
+    
     private final ProductService productService;
     private final CategoryService categoryService;
     private final ProductOrderService productOrderService;
+    private final Order order;
     private final List<Product> products;
     private final ButtonGroup btGroup = new ButtonGroup();
-    private final Table table;
     private final List<Category> categorys;
     private final List<Product_Order> product_Orders;
+    
 
     public AddMealDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        
         productOrderService = new ProductOrderServiceImpl();
-        this.table = null;
-        product_Orders = productOrderService.getAll(table.getId());
         productService = new ProductServiceImpl();
         categoryService = new CategoryServiceImpl();
         products = productService.getAll();
         categorys = categoryService.getAll();
+        order = new Order();
+        product_Orders = new ArrayList<>();
         initComponents();
         cardLayout = (CardLayout) pnProduct.getLayout();
         buttons = null;
@@ -84,16 +84,18 @@ public class AddMealDialog extends javax.swing.JDialog {
         setEvent();
     }
 
-    public AddMealDialog(boolean modal, Table table) {
-        this.setModal(modal);
-      
+    
+    public AddMealDialog(JPanel parent, boolean  modal, Order order){
+        this.setModal(modal);   
         productOrderService = new ProductOrderServiceImpl();
-        this.table = table;
-        product_Orders = productOrderService.getAll(table.getId());
         productService = new ProductServiceImpl();
         categoryService = new CategoryServiceImpl();
         products = productService.getAll();
         categorys = categoryService.getAll();
+        this.order = order;
+        product_Orders = new ArrayList<>();
+        //this.order.copy(order);
+        product_Orders.addAll(productOrderService.getAll(order.getId_Order()));
         initComponents();
         cardLayout = (CardLayout) pnProduct.getLayout();
         buttons = null;
@@ -641,7 +643,7 @@ public class AddMealDialog extends javax.swing.JDialog {
     }
 
     private void setlbTableName() {
-        lbTableName.setText(table.getName());
+        lbTableName.setText(order.getTable().getName());
     }
 
     private void setcbKind() {

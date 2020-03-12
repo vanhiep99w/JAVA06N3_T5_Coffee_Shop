@@ -7,6 +7,7 @@ package model;
 
 import common.ProductOrderTableColumn;
 import entities.ProductOrder;
+import entities.Product_Order;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
@@ -24,23 +25,20 @@ import service.product_order.ProductOrderServiceImpl;
 public class ProductOrderTableModel extends AbstractTableModel {
 
     private ProductOrderService productOrderService = new ProductOrderServiceImpl();
-    private List<ProductOrder> productOrders ;
+    private List<Product_Order> product_Orders ;
     private List<Object> productOrderInformation = new ArrayList<>();
     private ProductOrderTableColumn[] columnNames = ProductOrderTableColumn.values();
     private JTable tbProductOrder;
 
-    public ProductOrderTableModel(JTable tbProductOrder,String nameTable) {
+    public ProductOrderTableModel(JTable tbProductOrder,Integer idOrder) {
         this.tbProductOrder = tbProductOrder;
-        productOrders = productOrderService.getProductOrderDetail(nameTable);
+        product_Orders = productOrderService.getAll(idOrder);
     }
 
     @Override
     public int getRowCount() {
-        if (productOrders != null) {
-            return productOrders.size();
-        } else {
-            return 0;
-        }
+        
+        return (product_Orders != null) ? product_Orders.size() : 0;
     }
 
     @Override
@@ -59,15 +57,17 @@ public class ProductOrderTableModel extends AbstractTableModel {
 
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
+        Product_Order product_Order  = product_Orders.get(rowIndex);
         productOrderInformation = Arrays.asList(
-                productOrders.get(rowIndex).getNameProduct(),
-                productOrders.get(rowIndex).getAmout(),
-                productOrders.get(rowIndex).getSum()
+                product_Order.getProduct().getName(),
+                product_Order.getAmount(),
+                product_Order.getAmount() * product_Order.getProduct().getPrice()
         );
+        
         return productOrderInformation.get(columnIndex).toString();
     }
     
-       public void loadDataTable() {
+    public void loadDataTable() {
         tbProductOrder.setModel(this);
     }
        

@@ -18,7 +18,7 @@ public class Test {
     public static void main(String[] args) {
         ProductOrderService productOrderService = new ProductOrderServiceImpl();
         List<ProductOrder> productOrders = new ArrayList<>();
-        productOrders = productOrderService.getProductOrderDetail("A03");
+        //productOrders = productOrderService.getProductOrderDetail("A03");
         if (productOrders == null) {
             System.out.println("null");
         } else {

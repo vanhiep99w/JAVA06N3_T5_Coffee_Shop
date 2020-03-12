@@ -15,7 +15,6 @@ import java.util.List;
  */
 public interface ProductOrderService {
 
-    public List<ProductOrder> getProductOrderDetail(String nameTable);
     
-    public List<Product_Order> getAll(Integer id_Table);
+    public List<Product_Order> getAll(Integer id_Order);
 }

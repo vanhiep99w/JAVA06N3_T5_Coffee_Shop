@@ -26,13 +26,8 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public List<ProductOrder> getProductOrderDetail(String nameTable) {
-        return productOrderDao.getProductOrderDetail(nameTable);
-    }
-
-    @Override
-    public List<Product_Order> getAll(Integer id_Table) {
-        return productOrderDao.getAll(id_Table);
+    public List<Product_Order> getAll(Integer id_Order) {
+        return productOrderDao.getAll(id_Order);
     }
 
 }

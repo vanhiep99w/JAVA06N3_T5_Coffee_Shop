@@ -64,9 +64,6 @@ public class Product {
         return image;
     }
 
-    public void setPrice(Float price) {
-        this.price = price;
-    }
 
     public void setImage(String image) {
         this.image = image;
