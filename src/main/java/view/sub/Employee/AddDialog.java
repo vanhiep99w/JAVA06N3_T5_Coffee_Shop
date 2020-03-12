@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package view.sub.Employee;
+package view.sub.employee;
 
 import entities.Employee;
 import entities.Work;

@@ -1,7 +1,5 @@
 package entities;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
 
 public class Table {
 	private Integer id;
@@ -10,6 +8,12 @@ public class Table {
 	
 	public Table() {
 	}
+        
+        public void copy(Table table){
+            this.setId(table.getId());
+            this.setName(table.getName());
+            this.setStatus(table.getStatus());
+        }
 	
 	public Table(Integer id, String name, TableStatus status) {
 		this.id = id;
@@ -29,10 +33,10 @@ public class Table {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public TableStatus getIdStatus() {
+	public TableStatus getStatus() {
 		return status;
 	}
-	public void setIdStatus(TableStatus status) {
+	public void setStatus(TableStatus status) {
 		this.status = status;
 	}
 

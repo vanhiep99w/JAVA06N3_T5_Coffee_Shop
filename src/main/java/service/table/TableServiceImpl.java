@@ -6,15 +6,21 @@ import dao.table.TableDao;
 import dao.table.TableDaoImpl;
 import entities.Table;
 
-public class TableServiceImpl implements TableService{
-	
-	private final TableDao tableDao;
+public class TableServiceImpl implements TableService {
 
-	public TableServiceImpl() {
-		tableDao = new TableDaoImpl();
-	}
-	public List<Table> getAll() {
-		return tableDao.getAll();
-	}
+    private final TableDao tableDao;
+
+    public TableServiceImpl() {
+        tableDao = new TableDaoImpl();
+    }
+
+    public List<Table> getAll() {
+        return tableDao.getAll();
+    }
+
+    @Override
+    public Table getOne(String name_Table) {
+        return tableDao.getOne(name_Table);
+    }
 
 }

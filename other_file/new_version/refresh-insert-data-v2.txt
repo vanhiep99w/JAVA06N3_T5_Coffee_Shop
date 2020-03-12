@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`order` (
   `id_order` INT(11) NOT NULL AUTO_INCREMENT,
   `id_employee` INT(11) NOT NULL,
   `id_table` INT(11) NOT NULL,
-  `time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `time_order` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_order`),
   INDEX `fk_order_table1_idx` (`id_table` ASC) VISIBLE,
   INDEX `fk_order_employee1_idx` (`id_employee` ASC) VISIBLE,
@@ -133,6 +133,11 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`order` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+LOCK TABLE coffee_shop.order WRITE;
+insert into coffee_shop.order (id_employee,id_table) values
+						(3,1),(4,2),(2,3),(1,4),(1,5)
+						,(2,6),(5,7),(6,8),(7,9);
+UNLOCK TABLES;
 
 -- -----------------------------------------------------
 -- Table `coffee_shop`.`bill`
@@ -141,7 +146,7 @@ DROP TABLE IF EXISTS `coffee_shop`.`bill` ;
 
 CREATE TABLE IF NOT EXISTS `coffee_shop`.`bill` (
   `id_bill` INT(11) NOT NULL AUTO_INCREMENT,
-  `time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `time_bill` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `vat` FLOAT NOT NULL,
   `sum` FLOAT NOT NULL,
   `id_order` INT(11) NOT NULL,
@@ -218,7 +223,7 @@ DROP TABLE IF EXISTS `coffee_shop`.`product_order` ;
 CREATE TABLE IF NOT EXISTS `coffee_shop`.`product_order` (
   `id_order` INT(11) NOT NULL,
   `amount` INT(11) NOT NULL,
-  `order_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `time_product_order` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `id_product` INT(11) NOT NULL,
   PRIMARY KEY (`id_order`, `id_product`),
   INDEX `fk_product_detail_product1_idx` (`id_product` ASC) VISIBLE,
@@ -331,7 +336,7 @@ CREATE TABLE IF NOT EXISTS `coffee_shop`.`product_order_detail` (
   `id_order_status` INT(11) NOT NULL,
   `id_order` INT(11) NOT NULL,
   `id_product` INT(11) NOT NULL,
-  `time` TIME NULL,
+  `time_pod` TIME NULL,
   PRIMARY KEY (`id_order_status`, `id_order`, `id_product`),
   INDEX `fk_order_status_has_product_order_product_order1_idx` (`id_order` ASC, `id_product` ASC) VISIBLE,
   INDEX `fk_order_status_has_product_order_order_status1_idx` (`id_order_status` ASC) VISIBLE,
