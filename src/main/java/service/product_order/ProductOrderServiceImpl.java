@@ -30,4 +30,19 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         return productOrderDao.getAll(id_Order);
     }
 
+    @Override
+    public boolean delete(Integer id_Order, Integer id_Product) {
+        return productOrderDao.delete(id_Order, id_Product);
+    }
+
+    @Override
+    public boolean add(Product_Order newProduct_Order) {
+        return productOrderDao.add(newProduct_Order);
+    }
+
+    @Override
+    public boolean update(Product_Order product_Order) {
+        return productOrderDao.update(product_Order);
+    }
+
 }

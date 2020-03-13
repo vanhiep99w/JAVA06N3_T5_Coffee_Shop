@@ -5,7 +5,7 @@
  */
 package dao.product_order;
 
-import entities.ProductOrder;
+import entities.Order;
 import entities.Product_Order;
 import java.util.List;
 
@@ -18,5 +18,9 @@ public interface ProductOrderDao {
     
     public List<Product_Order> getAll(Integer id_Order);
     
-    public boolean delete(Integer id_Order);
+    public boolean delete(Integer id_Order,Integer id_Product);
+    
+    public boolean add(Product_Order newProduct_Order);
+    
+    public boolean update(Product_Order product_Order);
 }

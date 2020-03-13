@@ -5,10 +5,37 @@
  */
 package service.order;
 
+import dao.order.OrderDao;
+import dao.order.OrderDaoImpl;
+import entities.Order;
+import java.util.List;
+
 /**
  *
  * @author Admin
  */
 public class OrderServiceImpl implements OrderService{
+    
+    private final OrderDao orderDao;
+
+    public OrderServiceImpl() {
+        orderDao = new OrderDaoImpl();
+    }
+
+    @Override
+    public int add(Order newOrder) {
+        return orderDao.add(newOrder);
+    }
+
+    @Override
+    public List<Order> getAll() {
+        return orderDao.getAll();
+    }
+
+    @Override
+    public Order getOne(Integer id_Order) {
+        return orderDao.getOne(id_Order);
+    }
+    
     
 }

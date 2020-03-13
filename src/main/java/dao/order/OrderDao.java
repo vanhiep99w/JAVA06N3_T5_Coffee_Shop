@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface OrderDao {
     
-    public boolean add(Order newOrder);
+    public int add(Order newOrder);
     
     public List<Order> getAll();
     

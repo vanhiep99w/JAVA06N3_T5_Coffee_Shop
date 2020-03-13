@@ -59,7 +59,7 @@ public class TablePanel extends JPanel {
         
         for (int i = 0; i < btTables.length; i++) {
             btTables[i] = new JButton(tables.get(i).getName());
-            btTables[0].setActionCommand("10");
+            btTables[i].setActionCommand("");
             setColor(btTables[i], tables.get(i));
             btTables[i].setFont(font);
             add(btTables[i]);

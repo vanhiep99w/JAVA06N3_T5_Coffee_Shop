@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -66,9 +67,9 @@ public class ProductOrderDaoImpl implements ProductOrderDao {
 
     @Override
     public List<Product_Order> getAll(Integer id_Order) {
-        
+
         final List<Product_Order> product_Orders = new ArrayList<>();
-        
+
         String query = "select po.*,p.name_product,p.price,o.id_table,t.name_table from coffee_shop.product_order po \n"
                 + "left join coffee_shop.order o on po.id_order = o.id_order\n"
                 + "left join coffee_shop.table t on o.id_table = t.id_table\n"
@@ -77,15 +78,15 @@ public class ProductOrderDaoImpl implements ProductOrderDao {
 
         try {
             preStatement = connection.prepareStatement(query);
-            
+
             preStatement.setInt(1, id_Order);
             resultSet = preStatement.executeQuery();
             while (resultSet.next()) {
-                product_Orders.add(setData(resultSet));  
+                product_Orders.add(setData(resultSet));
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             try {
                 resultSet.close();
                 preStatement.close();
@@ -98,9 +99,75 @@ public class ProductOrderDaoImpl implements ProductOrderDao {
     }
 
     @Override
-    public boolean delete(Integer id_Order) {
-        return false;
+    public boolean delete(Integer id_Order,Integer id_Product) {
+        boolean result = false;
+        String query = "delete from coffee_shop.product_order\n"
+                + "where id_order = ? and id_product = ?;";
+        try {
+            preStatement = connection.prepareStatement(query);
+            preStatement.setInt(1, id_Order);
+            preStatement.setInt(2, id_Product);
+            result = (preStatement.executeUpdate() == 0) ? false : true; 
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                preStatement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return result;
     }
-    
-    
+
+    @Override
+    public boolean add(Product_Order newProduct_Order) {
+        boolean result = false;
+        String query = "insert into coffee_shop.product_order(id_order,amount,time_product_order,id_product)\n"
+                + "value(?,?,?,?);";
+        try {
+            preStatement = connection.prepareStatement(query);
+            preStatement.setInt(1, newProduct_Order.getOrder().getId_Order());
+            preStatement.setInt(2, newProduct_Order.getAmount());
+            preStatement.setTimestamp(3, Timestamp.valueOf(newProduct_Order.getOrder_Time()));
+            preStatement.setInt(4, newProduct_Order.getProduct().getId());
+
+            result = (preStatement.executeUpdate() == 0) ? false : true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                preStatement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public boolean update(Product_Order product_Order) {
+        boolean result = false;
+        String query = "update coffee_shop.product_order po \n"
+                + "set po.amount = ?\n"
+                + "where po.id_order = ?\n"
+                + "and po.id_product = ?;";
+        try {
+            preStatement.setInt(1, product_Order.getAmount());
+            preStatement.setInt(2, product_Order.getOrder().getId_Order());
+            preStatement.setInt(3, product_Order.getProduct().getId());
+            result = (preStatement.executeUpdate() == 0) ? false : true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                preStatement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return result;
+    }
+
 }
