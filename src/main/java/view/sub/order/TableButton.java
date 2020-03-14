@@ -42,13 +42,17 @@ public class TableButton extends JButton {
 
     public void setColor() {
         if (table.getStatus().getId() == TableStatus.EMPTY) {//empty
-            this.setBackground(Color.red);
+            this.setBackground(Color.black);
+            this.setForeground(Color.BLACK);
+            
         }
         if (table.getStatus().getId() == TableStatus.FULL) {//Full
-            this.setBackground(Color.yellow);
+            this.setBackground(Color.blue);
+            this.setForeground(Color.BLUE);
         }
         if (table.getStatus().getId() == TableStatus.ORDERED) {//Ordered 
             this.setBackground(Color.PINK);
+            this.setForeground(Color.PINK);
         }
     }
 
