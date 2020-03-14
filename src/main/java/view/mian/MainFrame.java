@@ -73,12 +73,10 @@ public class MainFrame extends javax.swing.JFrame {
                         .forEach(t -> {
                             if(t != button){
                                 t.setBackground(new Color(75, 198, 242));
-                                t.setSelected(false);
-                                
+                                t.setSelected(false); 
                             }
                 });               
             }   
-
             @Override
             public void mouseEntered(MouseEvent e) {
                 if (!button.isSelected()){
@@ -382,12 +380,10 @@ public class MainFrame extends javax.swing.JFrame {
         btQuanLy.setIcon(ImageUtils.loadImage(imageDirectoryPath+"\\icons8_chart_40px.png"));
         btNhanVien.setIcon(ImageUtils.loadImage(imageDirectoryPath+"\\icons8_manager_40px.png"));
         btTroGiup.setIcon(ImageUtils.loadImage(imageDirectoryPath+"\\icons8_help_40px.png"));
-        
-        //lbCalendar.setIcon(ImageUtils.loadImage(imageDirectoryPath+"\\icons8_calendar_64px.png"));
+       
     }
 
-    private void initMainPanelComponent() {
-        
+    private void initMainPanelComponent() {  
         
         DatMonPanel datMonPanel = new DatMonPanel();
         KhoPanel khoPanel = new KhoPanel();

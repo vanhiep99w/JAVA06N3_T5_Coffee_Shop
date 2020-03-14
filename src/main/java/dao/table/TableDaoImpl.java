@@ -11,6 +11,8 @@ import java.util.List;
 import connection.ConnectDB;
 import entities.Table;
 import entities.TableStatus;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class TableDaoImpl implements TableDao {
 
@@ -94,6 +96,35 @@ public class TableDaoImpl implements TableDao {
         }
         return table;
 
+    }
+
+    @Override
+    public boolean update(Table table) {
+        boolean result = false;
+        String query = "UPDATE coffee_shop.table\n"
+                + "SET \n"
+                + "	name_table = ?,\n"
+                + "    id_table_status = ?\n"
+                + "WHERE\n"
+                + "     id_table = ?;";
+
+        try {
+            preStatement = connection.prepareStatement(query);
+            preStatement.setString(1, table.getName());
+            preStatement.setInt(2, table.getStatus().getId());
+            preStatement.setInt(3, table.getId());
+            result = (preStatement.executeUpdate() == 0) ? false : true;
+        } catch (SQLException ex) {
+            Logger.getLogger(TableDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                preStatement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(TableDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return result; 
     }
 
 }

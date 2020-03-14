@@ -141,4 +141,6 @@ public class InformationPanel extends javax.swing.JPanel {
     public JButton getbtAdd(){
         return btnAdd;
     }
+    
+    
 }

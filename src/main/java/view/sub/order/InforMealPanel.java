@@ -68,9 +68,9 @@ public class InforMealPanel extends javax.swing.JPanel {
         lbSum = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 3, 0, new java.awt.Color(153, 153, 153)));
-        setMaximumSize(new java.awt.Dimension(610, 88));
-        setMinimumSize(new java.awt.Dimension(610, 88));
-        setPreferredSize(new java.awt.Dimension(610, 88));
+        setMaximumSize(new java.awt.Dimension(600, 88));
+        setMinimumSize(new java.awt.Dimension(600, 88));
+        setPreferredSize(new java.awt.Dimension(600, 88));
         setRequestFocusEnabled(false);
         setVerifyInputWhenFocusTarget(false);
 
@@ -119,7 +119,7 @@ public class InforMealPanel extends javax.swing.JPanel {
                 .addComponent(spAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbSum, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

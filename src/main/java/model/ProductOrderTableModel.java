@@ -30,6 +30,10 @@ public class ProductOrderTableModel extends AbstractTableModel {
     private ProductOrderTableColumn[] columnNames = ProductOrderTableColumn.values();
     private JTable tbProductOrder;
 
+    public ProductOrderTableModel() {}
+    
+    
+
     public ProductOrderTableModel(JTable tbProductOrder,Integer idOrder) {
         this.tbProductOrder = tbProductOrder;
         product_Orders = productOrderService.getAll(idOrder);
@@ -76,6 +80,11 @@ public class ProductOrderTableModel extends AbstractTableModel {
         tbProductOrder.setRowHeight(26);     
         tbProductOrder.getTableHeader().setReorderingAllowed(false);
         tbProductOrder.setFont(new Font("Tahoma", Font.BOLD, 40));
+    }
+    
+    public void setDataModel(List<Product_Order> product_Orders){
+        this.product_Orders.clear();
+        this.product_Orders.addAll(product_Orders);
     }
 
 }

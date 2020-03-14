@@ -19,5 +19,5 @@ public interface OrderDao {
     public List<Order> getAll();
     
     public Order getOne (Integer id_Order);
-    
+     
 }

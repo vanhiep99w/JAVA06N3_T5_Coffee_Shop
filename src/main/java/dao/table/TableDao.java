@@ -9,4 +9,6 @@ public interface TableDao {
     public List<Table> getAll();
     
     public Table getOne(String name_Table);
+    
+    public boolean update(Table table);
 }
