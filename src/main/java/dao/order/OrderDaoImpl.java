@@ -18,6 +18,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,41 +36,62 @@ public class OrderDaoImpl implements OrderDao {
     public OrderDaoImpl() {
         this.connection = ConnectDB.getInstance().getConnection();
     }
-    
-    public Order setData(ResultSet resultSet)throws SQLException{
+
+    public Order setData(ResultSet resultSet) throws SQLException {
         Integer idOrder = resultSet.getInt("id_order");
-        
+
         Integer idEmployee = resultSet.getInt("id_employee");
         String nameEmployee = resultSet.getString("name_employee");
         Employee employee = new Employee();
         employee.setId(idEmployee);
         employee.setName(nameEmployee);
-        
+
         Integer idTable = resultSet.getInt("id_table");
         String nameTable = resultSet.getString("name_table");
         Table table = new Table();
         table.setId(idTable);
         table.setName(nameTable);
-        
-        
+
         LocalDateTime time = resultSet.getTimestamp("time_order").toLocalDateTime();
-        
+
         return new Order(idOrder, employee, table, time);
-        
-    }
-
-    @Override
-    public boolean add(Order newOrder) {
-        boolean result = false;
-
-        return result;
     }
 
     @Override
     public List<Order> getAll() {
         final List<Order> orders = new ArrayList<>();
-        
+
         return orders;
+    }
+
+    @Override
+    public int add(Order newOrder) {
+        boolean b = false;
+        int result = 0;
+        String query = "insert into coffee_shop.order(id_employee,id_table,time_order )\n"
+                + "value(?,?,?);";
+        try {
+            
+            preStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            preStatement.setInt(1, 3);
+            preStatement.setInt(2, newOrder.getTable().getId());
+            preStatement.setTimestamp(3, Timestamp.valueOf(newOrder.getTime()));
+            
+            b = (preStatement.executeUpdate() == 0) ? false : true;
+            
+            resultSet = preStatement.getGeneratedKeys();
+            resultSet.next();
+            result = (b == false) ? 0: resultSet.getInt(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                preStatement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return result;
     }
 
     @Override
@@ -89,7 +111,7 @@ public class OrderDaoImpl implements OrderDao {
             order.copy(setData(resultSet));
         } catch (SQLException ex) {
             Logger.getLogger(OrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             try {
                 resultSet.close();
                 preStatement.close();
@@ -99,7 +121,6 @@ public class OrderDaoImpl implements OrderDao {
         }
         return order;
     }
-
-   
+    
 
 }

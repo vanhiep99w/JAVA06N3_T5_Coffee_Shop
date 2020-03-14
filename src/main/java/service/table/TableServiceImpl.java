@@ -23,4 +23,9 @@ public class TableServiceImpl implements TableService {
         return tableDao.getOne(name_Table);
     }
 
+    @Override
+    public boolean update(Table table) {
+        return tableDao.update(table);
+    }
+
 }

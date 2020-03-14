@@ -9,7 +9,6 @@ import entities.Category;
 import entities.Order;
 import entities.Product;
 import entities.Product_Order;
-import entities.Table;
 import entities.TableStatus;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
@@ -26,22 +25,33 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.NumberFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import render.comboboxbutton.category.ButtonRender;
 import service.category.CategoryService;
 import service.category.CategoryServiceImpl;
+import service.order.OrderService;
+import service.order.OrderServiceImpl;
 import service.product_order.ProductOrderServiceImpl;
+import service.table.TableService;
+import service.table.TableServiceImpl;
 import util.URL_Factory;
 
 /**
@@ -50,22 +60,32 @@ import util.URL_Factory;
  */
 public class AddMealDialog extends javax.swing.JDialog {
 
-
     //Amount of SubAddMealPanel in pnProduct
     private int currentAmount = 0;
     //index of showing SubAddMealPanel 
     private int currentIndex = 1;
+
+    private int orderAmount;
+    private double sum;
+    private double pay;
+    private double vat;
+    
     private Component[] buttons;
     private final CardLayout cardLayout;
-    
+    private final DatMonPanel pnParent;
     private final ProductService productService;
+    private final OrderService orderService;
     private final CategoryService categoryService;
     private final ProductOrderService productOrderService;
+    private final TableService tableService;
     private final Order order;
     private final List<Product> products;
     private final ButtonGroup btGroup = new ButtonGroup();
     private final List<Category> categorys;
     private final List<Product_Order> product_Orders;
+    private final List<Product_Order> listToAdd;
+    private final List<Product_Order> listToUpdate;
+    private final List<Product_Order> listToDelete;
     
 
     public AddMealDialog(java.awt.Frame parent, boolean modal) {
@@ -73,8 +93,14 @@ public class AddMealDialog extends javax.swing.JDialog {
         productOrderService = new ProductOrderServiceImpl();
         productService = new ProductServiceImpl();
         categoryService = new CategoryServiceImpl();
+        orderService = new OrderServiceImpl();
+        tableService = new TableServiceImpl();
+        pnParent = null;
         products = productService.getAll();
         categorys = categoryService.getAll();
+        listToAdd = new ArrayList<>();
+        listToUpdate = new ArrayList<>();
+        listToDelete = new ArrayList<>();
         order = new Order();
         product_Orders = new ArrayList<>();
         initComponents();
@@ -84,18 +110,21 @@ public class AddMealDialog extends javax.swing.JDialog {
         setEvent();
     }
 
-    
-    public AddMealDialog(JPanel parent, boolean  modal, Order order){
-        this.setModal(modal);   
+    public AddMealDialog(JPanel parent, boolean modal, Order order) {
+        this.setModal(modal);
+        this.pnParent = (DatMonPanel)parent;
         productOrderService = new ProductOrderServiceImpl();
         productService = new ProductServiceImpl();
         categoryService = new CategoryServiceImpl();
         products = productService.getAll();
+        orderService = new OrderServiceImpl();
+        tableService = new TableServiceImpl();
         categorys = categoryService.getAll();
+        listToAdd = new ArrayList<>();
+        listToUpdate = new ArrayList<>();
+        listToDelete = new ArrayList<>();
         this.order = order;
-        product_Orders = new ArrayList<>();
-        //this.order.copy(order);
-        product_Orders.addAll(productOrderService.getAll(order.getId_Order()));
+        product_Orders = productOrderService.getAll(order.getId_Order());
         initComponents();
         cardLayout = (CardLayout) pnProduct.getLayout();
         buttons = null;
@@ -117,11 +146,16 @@ public class AddMealDialog extends javax.swing.JDialog {
         pnBotton = new javax.swing.JPanel();
         pnRight = new javax.swing.JPanel();
         pnRight_Botton = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btConfirm = new javax.swing.JButton();
+        lbSum = new javax.swing.JLabel();
+        lbAmount = new javax.swing.JLabel();
+        lbPay = new javax.swing.JLabel();
+        tfVat = new javax.swing.JTextField();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         lbTableName = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pnInfor = new javax.swing.JPanel();
@@ -138,6 +172,7 @@ public class AddMealDialog extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(56, 180, 123));
+        setResizable(false);
 
         pnProduct.setBackground(new java.awt.Color(255, 255, 255));
         pnProduct.setAutoscrolls(true);
@@ -147,38 +182,71 @@ public class AddMealDialog extends javax.swing.JDialog {
 
         pnRight_Botton.setBackground(new java.awt.Color(255, 255, 255));
 
-        jButton1.setText("jButton1");
+        btConfirm.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btConfirm.setText("Xác Nhận");
 
-        jLabel1.setBackground(new java.awt.Color(102, 255, 0));
-        jLabel1.setText("jLabel1");
-        jLabel1.setOpaque(true);
+        lbSum.setBackground(new java.awt.Color(255, 255, 255));
+        lbSum.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbSum.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbSum.setText("10.000");
+        lbSum.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Tổng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        lbSum.setOpaque(true);
 
-        jLabel2.setBackground(new java.awt.Color(153, 255, 153));
-        jLabel2.setText("jLabel2");
-        jLabel2.setOpaque(true);
+        lbAmount.setBackground(new java.awt.Color(255, 255, 255));
+        lbAmount.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbAmount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbAmount.setText("8");
+        lbAmount.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Số Lượng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        lbAmount.setOpaque(true);
 
-        jPanel1.setBackground(new java.awt.Color(74, 144, 226));
+        lbPay.setBackground(new java.awt.Color(255, 255, 255));
+        lbPay.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lbPay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbPay.setText("10.000");
+        lbPay.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Thành Tiền", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        lbPay.setOpaque(true);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(163, 198, 240));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("2016");
+        tfVat.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        tfVat.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        tfVat.setText("10 %");
+        tfVat.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "VAT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        tfVat.setEnabled(false);
+
+        jLabel1.setText("ngày");
+
+        jLabel2.setText("năm");
+
+        jLabel3.setText("tháng");
+
+        jLabel4.setText("jLabel4");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addGap(37, 37, 37))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(64, 64, 64))
         );
 
         javax.swing.GroupLayout pnRight_BottonLayout = new javax.swing.GroupLayout(pnRight_Botton);
@@ -186,27 +254,34 @@ public class AddMealDialog extends javax.swing.JDialog {
         pnRight_BottonLayout.setHorizontalGroup(
             pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnRight_BottonLayout.createSequentialGroup()
-                .addGap(123, 123, 123)
+                .addContainerGap(37, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tfVat, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbSum, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbPay, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         pnRight_BottonLayout.setVerticalGroup(
             pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnRight_BottonLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnRight_BottonLayout.createSequentialGroup()
                 .addContainerGap()
+                .addGroup(pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbSum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btConfirm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfVat)
+                    .addComponent(lbPay, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         lbTableName.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
@@ -362,16 +437,16 @@ public class AddMealDialog extends javax.swing.JDialog {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 14, Short.MAX_VALUE)
                 .addComponent(pnMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 14, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
+                .addGap(0, 4, Short.MAX_VALUE)
                 .addComponent(pnMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 4, Short.MAX_VALUE))
         );
 
         pack();
@@ -421,20 +496,24 @@ public class AddMealDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btConfirm;
     private javax.swing.JButton btLeft;
     private javax.swing.JButton btReverse;
     private javax.swing.JButton btRight;
     private javax.swing.JComboBox<String> cbKind;
     private javax.swing.JComboBox<String> cbSort;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel kbKind;
+    private javax.swing.JLabel lbAmount;
+    private javax.swing.JLabel lbPay;
     private javax.swing.JLabel lbSearch;
     private javax.swing.JLabel lbSort;
+    private javax.swing.JLabel lbSum;
     private javax.swing.JLabel lbTableName;
     private javax.swing.JPanel pnBotton;
     private javax.swing.JPanel pnInfor;
@@ -444,6 +523,7 @@ public class AddMealDialog extends javax.swing.JDialog {
     private javax.swing.JPanel pnRight_Botton;
     private javax.swing.JPanel pnTop;
     private javax.swing.JTextField tfSearch;
+    private javax.swing.JTextField tfVat;
     // End of variables declaration//GEN-END:variables
 
     private void setComponents() {
@@ -458,6 +538,7 @@ public class AddMealDialog extends javax.swing.JDialog {
         setlbTableName();
         setcbKind();
         setcbSort();
+        setpnRight_Botton();
     }
 
     private void addComponentsIn_pnProduct(List<MealPanel> mealPanels) {
@@ -479,7 +560,7 @@ public class AddMealDialog extends javax.swing.JDialog {
             addComponentsIn_pnProduct(mealPanels);
         }
         radioBt.addMouseListener(RadioBtEvent(radioBt.getActionCommand()));
-        pnProductEvent();
+        subAddMealPanelEvent(subAddMealPanel);
     }
 
     private MouseListener RadioBtEvent(String actionCommand) {
@@ -489,7 +570,6 @@ public class AddMealDialog extends javax.swing.JDialog {
                 cardLayout.show(pnProduct, actionCommand + "");
                 currentIndex = Integer.parseInt(actionCommand);
             }
-
         };
     }
 
@@ -505,13 +585,13 @@ public class AddMealDialog extends javax.swing.JDialog {
 
     private void setEvent() {
         btRightEvent();
-        btLeftEvent();  
+        btLeftEvent();
         tfSearchEvent();
         cbKindEvent();
         cbSortEvent();
         btReverseEvent();
-        pnInforEvent();
-        
+        btConfirmEvent();
+
     }
 
     private void btRightEvent() {
@@ -549,27 +629,40 @@ public class AddMealDialog extends javax.swing.JDialog {
     }
 
     private void setpnInfor() {
-        
-        product_Orders.forEach(t -> pnInfor.add(new InforMealPanel(t)));
-
+        product_Orders.forEach(t -> {
+            InforMealPanel inforMealPanel = new InforMealPanel(t);
+            pnInfor.add(inforMealPanel);
+            btRemoveEvent(inforMealPanel);
+            spAmountEvent(inforMealPanel);
+        });
     }
 
-    private MouseListener removeListener(Component component) {
-        return new MouseAdapter() {
+    private void btRemoveEvent(InforMealPanel inforMealPanel) {
+        inforMealPanel.getButtonRemove().addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                pnInfor.remove(component);
+                pnInfor.remove(inforMealPanel);
+                Product_Order product_Order = inforMealPanel.getProduct_Order();
+                product_Orders.remove(product_Order);
+                setpnRight_Botton();
                 pnInfor.validate();
                 pnInfor.repaint();
             }
-        };
+        });
     }
 
-    private void pnInforEvent() {
-        Component[] component = pnInfor.getComponents();
-        Arrays.stream(component).forEach(t -> {
-            InforMealPanel inforMealPanel = (InforMealPanel) t;
-            inforMealPanel.getButtonRemove().addMouseListener(removeListener(inforMealPanel));
+    private void spAmountEvent(InforMealPanel inforMealPanel) {
+        JSpinner spAmount = (JSpinner) inforMealPanel.getspAmount();
+        spAmount.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int amount = (Integer) spAmount.getValue();
+                inforMealPanel.setAmount(amount);
+                Product_Order product_Order = inforMealPanel.getProduct_Order();
+                product_Order.setAmount(amount);
+                inforMealPanel.setlbSum();
+                setpnRight_Botton();
+            }
         });
     }
 
@@ -593,19 +686,13 @@ public class AddMealDialog extends javax.swing.JDialog {
         }
     }
 
-    private void pnProductEvent() {
-        Component[] componentPanel = pnProduct.getComponents();
-        Arrays.stream(componentPanel).forEach(t -> {
-            SubAddMealPanel subAddMealPanel = (SubAddMealPanel) t;
-            Component[] productPanel = subAddMealPanel.getComponents();
-            Arrays.stream(productPanel).forEach(p -> {
-                MealPanel mealPanel = (MealPanel) p;
-                Product selectedProduct = mealPanel.getProduct();
-
-                mealPanel.getbtMinus().addMouseListener(btMinusEvent(selectedProduct));
-                mealPanel.getbtPlus().addMouseListener(btPlusEvent(selectedProduct));
-            });
-
+    private void subAddMealPanelEvent(SubAddMealPanel subAddMealPanel) {
+        Component[] productPanel = subAddMealPanel.getComponents();
+        Arrays.stream(productPanel).forEach(p -> {
+            MealPanel mealPanel = (MealPanel) p;
+            Product selectedProduct = mealPanel.getProduct();
+            mealPanel.getbtMinus().addMouseListener(btMinusEvent(selectedProduct));
+            mealPanel.getbtPlus().addMouseListener(btPlusEvent(selectedProduct));
         });
     }
 
@@ -614,16 +701,27 @@ public class AddMealDialog extends javax.swing.JDialog {
             @Override
             public void mousePressed(MouseEvent e) {
                 Component[] components = pnInfor.getComponents();
-                Arrays.stream(components).forEach(t -> {
-                    InforMealPanel inforMealPanel = (InforMealPanel) t;
-                    if (inforMealPanel.getProduct_Order().getProduct().equals(selectedProduct)) {
-                        inforMealPanel.setAmount(inforMealPanel.getAmount() + 1);
-                        inforMealPanel.setspAmount();
-                    }
-                });
+                List<InforMealPanel> list = Arrays.stream(components).map(t -> (InforMealPanel) t)
+                        .collect(Collectors.toList());
+                InforMealPanel inforMealPanel = list.stream().filter(t -> t.getProduct_Order().getProduct().equals(selectedProduct))
+                        .findAny().orElse(null);
+                if (inforMealPanel != null) {
+                    inforMealPanel.setAmount(inforMealPanel.getAmount() + 1);
+                    inforMealPanel.setspAmount(); 
+                } else {
+                    Product_Order product_Order = new Product_Order(order, 1, LocalDateTime.now(), selectedProduct);
+                    InforMealPanel newInforMealPanel = new InforMealPanel(product_Order);
+                    btRemoveEvent(newInforMealPanel);
+                    spAmountEvent(newInforMealPanel);
+                    product_Orders.add(product_Order);
+                    pnInfor.add(newInforMealPanel);
+                    pnInfor.revalidate();
+                    pnInfor.repaint();
+                    setpnRight_Botton();
+                }
             }
         };
-        
+
     }
 
     private MouseListener btMinusEvent(Product selectedProduct) {
@@ -632,8 +730,9 @@ public class AddMealDialog extends javax.swing.JDialog {
             public void mousePressed(MouseEvent e) {
                 Component[] components = pnInfor.getComponents();
                 Arrays.stream(components).forEach(t -> {
-                    InforMealPanel inforMealPanel = (InforMealPanel) t;   
-                    if (inforMealPanel.getProduct_Order().getProduct().equals(selectedProduct)) {
+                    InforMealPanel inforMealPanel = (InforMealPanel) t;
+                    Product_Order product_Order = inforMealPanel.getProduct_Order();
+                    if (product_Order.getProduct().equals(selectedProduct)) {
                         inforMealPanel.setAmount(inforMealPanel.getAmount() - 1);
                         inforMealPanel.setspAmount();
                     }
@@ -686,7 +785,6 @@ public class AddMealDialog extends javax.swing.JDialog {
                 tfSearch.setFont(currentFont.deriveFont(Font.PLAIN));
                 tfSearch.setHorizontalAlignment(JTextField.CENTER);
             }
-
         });
         tfSearch.addKeyListener(new KeyAdapter() {
             @Override
@@ -703,7 +801,7 @@ public class AddMealDialog extends javax.swing.JDialog {
                 }
             }
         });
-        
+
     }
 
     private void cbKindEvent() {
@@ -720,7 +818,7 @@ public class AddMealDialog extends javax.swing.JDialog {
                 UpdateComponet_pnProduct();
             }
         });
-        
+
     }
 
     private void UpdateComponet_pnProduct() {
@@ -757,7 +855,7 @@ public class AddMealDialog extends javax.swing.JDialog {
                 }
             }
         });
-        
+
     }
 
     private void btReverseEvent() {
@@ -768,6 +866,57 @@ public class AddMealDialog extends javax.swing.JDialog {
                 UpdateComponet_pnProduct();
             }
 
+        });
+    }
+
+    private void setpnRight_Botton() {
+        vat =10;
+        final Locale locale = new Locale("vi", "VN");
+        final NumberFormat format = NumberFormat.getNumberInstance(locale);
+        orderAmount = product_Orders.stream().mapToInt(Product_Order::getAmount).sum();
+        lbAmount.setText(orderAmount+ "");
+        sum = product_Orders.stream().mapToDouble(t -> t.getAmount() * t.getProduct().getPrice()).reduce(0, Double::sum);
+        String stringVat = vat + " %";
+        tfVat.setText(stringVat);
+        String sumString = format.format(sum);
+        lbSum.setText(sumString);
+        pay = sum * (100-vat) / 100;
+        String payString = format.format(pay);
+        lbPay.setText(payString);   
+    }
+
+    private void btConfirmEvent() {
+        btConfirm.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                List<Product_Order> temp = productOrderService.getAll(order.getId_Order());
+                listToAdd.addAll(product_Orders);
+                listToAdd.removeAll(temp);
+                listToDelete.addAll(temp);
+                listToDelete.removeAll(product_Orders); 
+                temp.removeAll(listToDelete);
+                listToUpdate.addAll(temp);
+                TableButton button = pnParent.getSelectedButton();
+                if("".equals(button.getActionCommand())){
+                    TableStatus tableStatus = new TableStatus();
+                    order.setTime(LocalDateTime.now());
+                    int idOrder = orderService.add(order);
+                    order.setId_Order(idOrder);
+                    tableStatus.setId(TableStatus.FULL);
+                    order.getTable().setStatus(tableStatus);
+                    tableService.update(order.getTable());
+                    listToAdd.forEach(t -> {
+                        t.getOrder().setId_Order(idOrder);
+                        productOrderService.add(t);
+                    }); 
+                }else{
+                    listToAdd.forEach(t -> productOrderService.add(t));
+                    listToDelete.forEach(t -> productOrderService.delete(t.getOrder().getId_Order(), t.getProduct().getId()));
+                    listToUpdate.forEach(t -> productOrderService.update(t));
+                }
+                pnParent.updateLayout(order);
+                AddMealDialog.this.dispose();
+            }
         });
     }
 

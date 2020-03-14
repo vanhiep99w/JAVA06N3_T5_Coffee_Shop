@@ -5,17 +5,19 @@
  */
 package view.sub.order;
 
-import entities.Employee;
 import entities.Order;
+import entities.Product_Order;
 import entities.Table;
 import entities.TableStatus;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDateTime;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import model.ProductOrderTableModel;
+import service.product_order.ProductOrderService;
+import service.product_order.ProductOrderServiceImpl;
 import service.table.TableService;
 import service.table.TableServiceImpl;
 
@@ -28,19 +30,19 @@ public class DatMonPanel extends javax.swing.JPanel {
     TablePanel tablePanel = new TablePanel();
     InformationPanel informationPanel = new InformationPanel();
     ProductOrderTableModel productOrderTableModel;
-    private final Table selectedTable; 
     private final TableService tableService;
-    JButton[] buttonTables;
+    private final ProductOrderService productOrderService;
+    TableButton[] buttonTables;
     JTable tableOrdered;
     JLabel labelTableName;
     String nameTable;
-    private JButton selectedButton;
+    private TableButton selectedButton;
     /**
      * Creates new form DatMonPanel
      */
     public DatMonPanel() {
-        selectedTable = new Table();
         tableService = new TableServiceImpl();
+        productOrderService = new ProductOrderServiceImpl();
         initComponents();
         setPnLeft();
         setPnRight();
@@ -101,15 +103,15 @@ public class DatMonPanel extends javax.swing.JPanel {
         buttonTables = tablePanel.getTables();
         tableOrdered = informationPanel.getTableFromInformationPanel();
         labelTableName = informationPanel.getLabelFromInformationPanel();
-        for (JButton btTable : buttonTables) {
+        for (TableButton btTable : buttonTables) {
             btTable.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
                     nameTable = btTable.getText().trim();
-                    
                     selectedButton = btTable;
-                    selectedTable.copy(tableService.getOne(nameTable));
+                    Table selectedTable = selectedButton.getTable();
                     Integer idStatus = selectedTable.getStatus().getId();
+                    System.out.println(selectedTable.getStatus().getId());
                     if(idStatus == TableStatus.EMPTY || idStatus == TableStatus.ORDERED){
                         Order order = new Order();
                         order.setId_Order(0);
@@ -137,7 +139,7 @@ public class DatMonPanel extends javax.swing.JPanel {
                     Integer idOrder = Integer.parseInt(selectedButton.getActionCommand()); 
                     Order order = new Order();
                     order.setId_Order(idOrder);
-                    order.setTable(selectedTable);
+                    order.setTable(selectedButton.getTable());
                     new AddMealDialog(DatMonPanel.this, true, order).setVisible(true);
                 }
                
@@ -146,7 +148,18 @@ public class DatMonPanel extends javax.swing.JPanel {
         });
     }
     
-    public JButton getSelectedButton(){
+    public TableButton getSelectedButton(){
         return selectedButton;
+    }
+    
+    public void updateLayout(Order newOrder){
+        int idOrder = newOrder.getId_Order();
+        selectedButton.setActionCommand(idOrder+"");
+        selectedButton.getTable().setStatus(newOrder.getTable().getStatus());
+        selectedButton.setColor();
+        List<Product_Order> product_Orders = productOrderService.getAll(idOrder);
+        productOrderTableModel = new ProductOrderTableModel(tableOrdered, idOrder);
+        productOrderTableModel.setDataModel(product_Orders);
+        productOrderTableModel.loadDataTable();
     }
 }
