@@ -69,7 +69,7 @@ public class AddMealDialog extends javax.swing.JDialog {
     private double sum;
     private double pay;
     private double vat;
-    
+
     private Component[] buttons;
     private final CardLayout cardLayout;
     private final DatMonPanel pnParent;
@@ -86,7 +86,6 @@ public class AddMealDialog extends javax.swing.JDialog {
     private final List<Product_Order> listToAdd;
     private final List<Product_Order> listToUpdate;
     private final List<Product_Order> listToDelete;
-    
 
     public AddMealDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -112,7 +111,7 @@ public class AddMealDialog extends javax.swing.JDialog {
 
     public AddMealDialog(JPanel parent, boolean modal, Order order) {
         this.setModal(modal);
-        this.pnParent = (DatMonPanel)parent;
+        this.pnParent = (DatMonPanel) parent;
         productOrderService = new ProductOrderServiceImpl();
         productService = new ProductServiceImpl();
         categoryService = new CategoryServiceImpl();
@@ -707,7 +706,7 @@ public class AddMealDialog extends javax.swing.JDialog {
                         .findAny().orElse(null);
                 if (inforMealPanel != null) {
                     inforMealPanel.setAmount(inforMealPanel.getAmount() + 1);
-                    inforMealPanel.setspAmount(); 
+                    inforMealPanel.setspAmount();
                 } else {
                     Product_Order product_Order = new Product_Order(order, 1, LocalDateTime.now(), selectedProduct);
                     InforMealPanel newInforMealPanel = new InforMealPanel(product_Order);
@@ -870,19 +869,19 @@ public class AddMealDialog extends javax.swing.JDialog {
     }
 
     private void setpnRight_Botton() {
-        vat =10;
+        vat = 10;
         final Locale locale = new Locale("vi", "VN");
         final NumberFormat format = NumberFormat.getNumberInstance(locale);
         orderAmount = product_Orders.stream().mapToInt(Product_Order::getAmount).sum();
-        lbAmount.setText(orderAmount+ "");
+        lbAmount.setText(orderAmount + "");
         sum = product_Orders.stream().mapToDouble(t -> t.getAmount() * t.getProduct().getPrice()).reduce(0, Double::sum);
         String stringVat = vat + " %";
         tfVat.setText(stringVat);
         String sumString = format.format(sum);
         lbSum.setText(sumString);
-        pay = sum * (100-vat) / 100;
+        pay = sum * (100 - vat) / 100;
         String payString = format.format(pay);
-        lbPay.setText(payString);   
+        lbPay.setText(payString);
     }
 
     private void btConfirmEvent() {
@@ -890,14 +889,9 @@ public class AddMealDialog extends javax.swing.JDialog {
             @Override
             public void mousePressed(MouseEvent e) {
                 List<Product_Order> temp = productOrderService.getAll(order.getId_Order());
-                listToAdd.addAll(product_Orders);
-                listToAdd.removeAll(temp);
-                listToDelete.addAll(temp);
-                listToDelete.removeAll(product_Orders); 
-                temp.removeAll(listToDelete);
-                listToUpdate.addAll(temp);
+                setData(temp, product_Orders);
                 TableButton button = pnParent.getSelectedButton();
-                if("".equals(button.getActionCommand())){
+                if ("".equals(button.getActionCommand())) {
                     TableStatus tableStatus = new TableStatus();
                     order.setTime(LocalDateTime.now());
                     int idOrder = orderService.add(order);
@@ -908,8 +902,8 @@ public class AddMealDialog extends javax.swing.JDialog {
                     listToAdd.forEach(t -> {
                         t.getOrder().setId_Order(idOrder);
                         productOrderService.add(t);
-                    }); 
-                }else{
+                    });
+                } else {
                     listToAdd.forEach(t -> productOrderService.add(t));
                     listToDelete.forEach(t -> productOrderService.delete(t.getOrder().getId_Order(), t.getProduct().getId()));
                     listToUpdate.forEach(t -> productOrderService.update(t));
@@ -918,6 +912,15 @@ public class AddMealDialog extends javax.swing.JDialog {
                 AddMealDialog.this.dispose();
             }
         });
+    }
+
+    private void setData(List<Product_Order> start, List<Product_Order> end) {
+        listToAdd.addAll(end);
+        listToAdd.removeAll(start);
+        listToDelete.addAll(start);
+        listToDelete.removeAll(end);
+        start.removeAll(listToDelete);
+        listToUpdate.addAll(start);
     }
 
 }

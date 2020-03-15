@@ -18,7 +18,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -71,20 +70,20 @@ public class OrderDaoImpl implements OrderDao {
         String query = "insert into coffee_shop.order(id_employee,id_table,time_order )\n"
                 + "value(?,?,?);";
         try {
-            
+
             preStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             preStatement.setInt(1, 3);
             preStatement.setInt(2, newOrder.getTable().getId());
             preStatement.setTimestamp(3, Timestamp.valueOf(newOrder.getTime()));
-            
+
             b = (preStatement.executeUpdate() == 0) ? false : true;
-            
+
             resultSet = preStatement.getGeneratedKeys();
             resultSet.next();
-            result = (b == false) ? 0: resultSet.getInt(1);
+            result = (b == false) ? 0 : resultSet.getInt(1);
         } catch (SQLException ex) {
             Logger.getLogger(OrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             try {
                 preStatement.close();
             } catch (SQLException ex) {
@@ -121,6 +120,37 @@ public class OrderDaoImpl implements OrderDao {
         }
         return order;
     }
-    
+
+    @Override
+    public List<Order> getAll(Integer idTableStatus) {
+        final List<Order> orders = new ArrayList<>();
+        String query = "select o.*,t.name_table,e.name_employee from coffee_shop.table t \n"
+                + "left join coffee_shop.order o\n"
+                + "on t.id_table = o.id_table\n"
+                + "left join coffee_shop.employee e \n"
+                + "on e.id_employee = o.id_employee\n"
+                + "where t.id_table_status = ? ;";
+
+        try {
+            preStatement = connection.prepareStatement(query);
+            preStatement.setInt(1, idTableStatus);
+            resultSet = preStatement.executeQuery();
+            while(resultSet.next()){
+                Order order = setData(resultSet);
+                orders.add(order);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(OrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            try {
+                resultSet.close();
+                preStatement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(OrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return orders;
+    }
 
 }

@@ -154,6 +154,7 @@ public class ProductOrderDaoImpl implements ProductOrderDao {
                 + "where po.id_order = ?\n"
                 + "and po.id_product = ?;";
         try {
+            preStatement = connection.prepareStatement(query);
             preStatement.setInt(1, product_Order.getAmount());
             preStatement.setInt(2, product_Order.getOrder().getId_Order());
             preStatement.setInt(3, product_Order.getProduct().getId());
