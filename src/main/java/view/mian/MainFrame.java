@@ -37,13 +37,6 @@ public class MainFrame extends javax.swing.JFrame {
     private TablePanel tablePanel = new TablePanel();
     private JLabel picLogo = new JLabel();
     private Component[] buttonComponents;
-    
-//    private JPanel panelKho;
-//    private JPanel panelNhanVien;
-//    private JPanel panelQuanLy;
-//    private JPanel panelThongKe;
-//    private JPanel panelTroGiup;
-//    private JPanel panelDatMon;
     private CardLayout cardLayout;
     
     
@@ -81,17 +74,14 @@ public class MainFrame extends javax.swing.JFrame {
             public void mouseEntered(MouseEvent e) {
                 if (!button.isSelected()){
                     button.setBackground(new Color(39,174,244));
-                }
-                
+                }    
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 if (!button.isSelected()){
                     button.setBackground(new Color(75, 198, 242));
-                }
-                
-                
+                } 
             }
             
         });

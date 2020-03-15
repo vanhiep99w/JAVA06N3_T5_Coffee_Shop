@@ -111,7 +111,6 @@ public class DatMonPanel extends javax.swing.JPanel {
                     selectedButton = btTable;
                     Table selectedTable = selectedButton.getTable();
                     Integer idStatus = selectedTable.getStatus().getId();
-                    System.out.println(selectedTable.getStatus().getId());
                     if(idStatus == TableStatus.EMPTY || idStatus == TableStatus.ORDERED){
                         Order order = new Order();
                         order.setId_Order(0);
@@ -154,12 +153,14 @@ public class DatMonPanel extends javax.swing.JPanel {
     
     public void updateLayout(Order newOrder){
         int idOrder = newOrder.getId_Order();
-        selectedButton.setActionCommand(idOrder+"");
+        if(idOrder != 0){
+            List<Product_Order> product_Orders = productOrderService.getAll(idOrder);
+            productOrderTableModel = new ProductOrderTableModel(tableOrdered, idOrder);
+            productOrderTableModel.setDataModel(product_Orders);
+            productOrderTableModel.loadDataTable();
+            selectedButton.setActionCommand(idOrder+"");
+        }
         selectedButton.getTable().setStatus(newOrder.getTable().getStatus());
         selectedButton.setColor();
-        List<Product_Order> product_Orders = productOrderService.getAll(idOrder);
-        productOrderTableModel = new ProductOrderTableModel(tableOrdered, idOrder);
-        productOrderTableModel.setDataModel(product_Orders);
-        productOrderTableModel.loadDataTable();
     }
 }
