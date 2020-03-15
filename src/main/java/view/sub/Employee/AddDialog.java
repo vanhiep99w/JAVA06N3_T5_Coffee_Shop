@@ -30,23 +30,20 @@ public class AddDialog extends javax.swing.JDialog {
      */
     
     private final List<Work> works ;
-    private final WorkService workService;
-    private final EmployeeService employeeService;
-    
+    private static final WorkService workService;
+    private static final EmployeeService employeeService;
+    static {
+        workService = new WorkServiceImpl();
+        employeeService = new EmployeeServiceImpl();
+    }
     
     public AddDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        workService = new WorkServiceImpl();
-        employeeService = new EmployeeServiceImpl();
         works = workService.getAll();
-        
- 
         initComponents();      
     }
 
     public AddDialog(boolean modal) {
-        workService = new WorkServiceImpl();
-        employeeService = new EmployeeServiceImpl();
         works = workService.getAll();
         setModal(modal);
         initComponents();

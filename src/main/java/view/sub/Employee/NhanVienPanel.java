@@ -32,26 +32,26 @@ public class NhanVienPanel extends javax.swing.JPanel {
     /**
      * Creates new form NhanVienPanel
      */
-    private final WorkService workService;
-    private final EmployeeService employeeService;
-    private final List<Work> works;
-    private final List<Employee> employees;
+    private static final WorkService workService;
+    private static final EmployeeService employeeService;
     private static final DefaultTableModel tableModel;
+    private final List<Work> works;
+    private final List<Employee> employees; 
     private final Employee selectedEmployee;
 
     static {
+        workService = new WorkServiceImpl();
+        employeeService = new EmployeeServiceImpl();
         tableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
-
         };
     }
 
     public NhanVienPanel() {
-        workService = new WorkServiceImpl();
-        employeeService = new EmployeeServiceImpl();
+        
         works = workService.getAll();
         employees = employeeService.getAll();
         selectedEmployee = new Employee();
@@ -461,7 +461,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
         tableModel.setColumnIdentifiers(new Object[]{""});
         //Object[][] objectses = employees.stream().map(t -> new Object[]{t}).toArray(Object[][] :: new);
         setTableData();
-
         tbEmployee.getColumnModel().getColumn(0).setCellRenderer(new TableCellRender());
     }
 

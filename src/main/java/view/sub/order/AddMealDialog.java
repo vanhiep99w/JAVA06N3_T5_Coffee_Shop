@@ -9,6 +9,7 @@ import entities.Category;
 import entities.Order;
 import entities.Product;
 import entities.Product_Order;
+import entities.Table;
 import entities.TableStatus;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
@@ -26,6 +27,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -69,37 +71,35 @@ public class AddMealDialog extends javax.swing.JDialog {
     private double sum;
     private double pay;
     private double vat;
-
     private Component[] buttons;
     private final CardLayout cardLayout;
-    private final DatMonPanel pnParent;
-    private final ProductService productService;
-    private final OrderService orderService;
-    private final CategoryService categoryService;
-    private final ProductOrderService productOrderService;
-    private final TableService tableService;
     private final Order order;
-    private final List<Product> products;
+    private final DatMonPanel pnParent;
     private final ButtonGroup btGroup = new ButtonGroup();
+    private final List<Product_Order> listToAdd = new ArrayList<>();
+    private final List<Product_Order> listToUpdate = new ArrayList<>();
+    private final List<Product_Order> listToDelete = new ArrayList<>();
+    private final List<Product> products;
     private final List<Category> categorys;
     private final List<Product_Order> product_Orders;
-    private final List<Product_Order> listToAdd;
-    private final List<Product_Order> listToUpdate;
-    private final List<Product_Order> listToDelete;
+    private static final ProductService productService;
+    private static final OrderService orderService;
+    private static final CategoryService categoryService;
+    private static final ProductOrderService productOrderService;
+    private static final TableService tableService;
+    static{
+        productService = new ProductServiceImpl();
+        orderService = new OrderServiceImpl();
+        categoryService = new CategoryServiceImpl();
+        productOrderService = new ProductOrderServiceImpl();
+        tableService = new TableServiceImpl();
+    }
 
     public AddMealDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        productOrderService = new ProductOrderServiceImpl();
-        productService = new ProductServiceImpl();
-        categoryService = new CategoryServiceImpl();
-        orderService = new OrderServiceImpl();
-        tableService = new TableServiceImpl();
         pnParent = null;
         products = productService.getAll();
         categorys = categoryService.getAll();
-        listToAdd = new ArrayList<>();
-        listToUpdate = new ArrayList<>();
-        listToDelete = new ArrayList<>();
         order = new Order();
         product_Orders = new ArrayList<>();
         initComponents();
@@ -112,16 +112,8 @@ public class AddMealDialog extends javax.swing.JDialog {
     public AddMealDialog(JPanel parent, boolean modal, Order order) {
         this.setModal(modal);
         this.pnParent = (DatMonPanel) parent;
-        productOrderService = new ProductOrderServiceImpl();
-        productService = new ProductServiceImpl();
-        categoryService = new CategoryServiceImpl();
         products = productService.getAll();
-        orderService = new OrderServiceImpl();
-        tableService = new TableServiceImpl();
         categorys = categoryService.getAll();
-        listToAdd = new ArrayList<>();
-        listToUpdate = new ArrayList<>();
-        listToDelete = new ArrayList<>();
         this.order = order;
         product_Orders = productOrderService.getAll(order.getId_Order());
         initComponents();
@@ -150,11 +142,12 @@ public class AddMealDialog extends javax.swing.JDialog {
         lbAmount = new javax.swing.JLabel();
         lbPay = new javax.swing.JLabel();
         tfVat = new javax.swing.JTextField();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        pnCaledar = new javax.swing.JPanel();
+        lbDay = new javax.swing.JLabel();
+        lbYear = new javax.swing.JLabel();
+        lbMonth = new javax.swing.JLabel();
+        lbDayOfWeek = new javax.swing.JLabel();
+        btOrder = new javax.swing.JButton();
         lbTableName = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pnInfor = new javax.swing.JPanel();
@@ -179,16 +172,21 @@ public class AddMealDialog extends javax.swing.JDialog {
 
         pnBotton.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 10, 5));
 
+        pnRight.setPreferredSize(new java.awt.Dimension(600, 859));
+
         pnRight_Botton.setBackground(new java.awt.Color(255, 255, 255));
 
+        btConfirm.setBackground(new java.awt.Color(56, 180, 123));
         btConfirm.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btConfirm.setForeground(new java.awt.Color(255, 255, 255));
         btConfirm.setText("Xác Nhận");
+        btConfirm.setBorderPainted(false);
 
         lbSum.setBackground(new java.awt.Color(255, 255, 255));
         lbSum.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbSum.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbSum.setText("10.000");
-        lbSum.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Tổng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        lbSum.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "VNĐ", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Tahoma", 1, 11)), "Tổng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         lbSum.setOpaque(true);
 
         lbAmount.setBackground(new java.awt.Color(255, 255, 255));
@@ -202,7 +200,7 @@ public class AddMealDialog extends javax.swing.JDialog {
         lbPay.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbPay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lbPay.setText("10.000");
-        lbPay.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Thành Tiền", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
+        lbPay.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "VNĐ", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Tahoma", 1, 11)), "Thành Tiền", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         lbPay.setOpaque(true);
 
         tfVat.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -211,52 +209,73 @@ public class AddMealDialog extends javax.swing.JDialog {
         tfVat.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "VAT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         tfVat.setEnabled(false);
 
-        jLabel1.setText("ngày");
+        pnCaledar.setBackground(new java.awt.Color(56, 180, 123));
 
-        jLabel2.setText("năm");
+        lbDay.setFont(new java.awt.Font("Verdana", 1, 20)); // NOI18N
+        lbDay.setForeground(new java.awt.Color(204, 204, 204));
+        lbDay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbDay.setText("15");
 
-        jLabel3.setText("tháng");
+        lbYear.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lbYear.setForeground(new java.awt.Color(204, 204, 204));
+        lbYear.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbYear.setText("2020");
 
-        jLabel4.setText("jLabel4");
+        lbMonth.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        lbMonth.setForeground(new java.awt.Color(204, 204, 204));
+        lbMonth.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbMonth.setText("March");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addGap(37, 37, 37))
+        lbDayOfWeek.setBackground(new java.awt.Color(24, 134, 85));
+        lbDayOfWeek.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
+        lbDayOfWeek.setForeground(new java.awt.Color(255, 255, 255));
+        lbDayOfWeek.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lbDayOfWeek.setText("Friday");
+        lbDayOfWeek.setOpaque(true);
+
+        javax.swing.GroupLayout pnCaledarLayout = new javax.swing.GroupLayout(pnCaledar);
+        pnCaledar.setLayout(pnCaledarLayout);
+        pnCaledarLayout.setHorizontalGroup(
+            pnCaledarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(lbDayOfWeek, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnCaledarLayout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(pnCaledarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lbYear, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbDay, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(64, 64, 64))
+        pnCaledarLayout.setVerticalGroup(
+            pnCaledarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnCaledarLayout.createSequentialGroup()
+                .addComponent(lbDayOfWeek, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbDay, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lbYear, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
+
+        btOrder.setBackground(new java.awt.Color(56, 180, 123));
+        btOrder.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btOrder.setForeground(new java.awt.Color(255, 255, 255));
+        btOrder.setText("Đặt Trước");
+        btOrder.setBorderPainted(false);
+        btOrder.setEnabled(false);
 
         javax.swing.GroupLayout pnRight_BottonLayout = new javax.swing.GroupLayout(pnRight_Botton);
         pnRight_Botton.setLayout(pnRight_BottonLayout);
         pnRight_BottonLayout.setHorizontalGroup(
             pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnRight_BottonLayout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnCaledar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(27, 27, 27)
-                .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -272,15 +291,18 @@ public class AddMealDialog extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnRight_BottonLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbSum, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lbAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbSum, javax.swing.GroupLayout.DEFAULT_SIZE, 72, Short.MAX_VALUE)
+                    .addComponent(btOrder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnRight_BottonLayout.createSequentialGroup()
+                        .addComponent(lbAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btConfirm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(tfVat)
-                    .addComponent(lbPay, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE))
+                    .addComponent(lbPay, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                    .addComponent(tfVat, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnCaledar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         lbTableName.setFont(new java.awt.Font("Tahoma", 1, 60)); // NOI18N
@@ -290,7 +312,6 @@ public class AddMealDialog extends javax.swing.JDialog {
         lbTableName.setOpaque(true);
 
         jScrollPane1.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 0, new java.awt.Color(153, 153, 153)));
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         jScrollPane1.setViewportView(null);
 
         pnInfor.setLayout(new javax.swing.BoxLayout(pnInfor, javax.swing.BoxLayout.Y_AXIS));
@@ -300,17 +321,19 @@ public class AddMealDialog extends javax.swing.JDialog {
         pnRight.setLayout(pnRightLayout);
         pnRightLayout.setHorizontalGroup(
             pnRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnRight_Botton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(lbTableName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jScrollPane1)
+            .addComponent(pnRight_Botton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnRightLayout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         pnRightLayout.setVerticalGroup(
             pnRightLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnRightLayout.createSequentialGroup()
                 .addComponent(lbTableName, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 586, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(13, 13, 13)
                 .addComponent(pnRight_Botton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -400,8 +423,7 @@ public class AddMealDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btRight, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnRight, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(pnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 610, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pnMainLayout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btLeft, btRight});
@@ -443,9 +465,9 @@ public class AddMealDialog extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 4, Short.MAX_VALUE)
+                .addGap(0, 3, Short.MAX_VALUE)
                 .addComponent(pnMain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 4, Short.MAX_VALUE))
+                .addGap(0, 2, Short.MAX_VALUE))
         );
 
         pack();
@@ -497,24 +519,25 @@ public class AddMealDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btConfirm;
     private javax.swing.JButton btLeft;
+    private javax.swing.JButton btOrder;
     private javax.swing.JButton btReverse;
     private javax.swing.JButton btRight;
     private javax.swing.JComboBox<String> cbKind;
     private javax.swing.JComboBox<String> cbSort;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel kbKind;
     private javax.swing.JLabel lbAmount;
+    private javax.swing.JLabel lbDay;
+    private javax.swing.JLabel lbDayOfWeek;
+    private javax.swing.JLabel lbMonth;
     private javax.swing.JLabel lbPay;
     private javax.swing.JLabel lbSearch;
     private javax.swing.JLabel lbSort;
     private javax.swing.JLabel lbSum;
     private javax.swing.JLabel lbTableName;
+    private javax.swing.JLabel lbYear;
     private javax.swing.JPanel pnBotton;
+    private javax.swing.JPanel pnCaledar;
     private javax.swing.JPanel pnInfor;
     private javax.swing.JPanel pnMain;
     private javax.swing.JPanel pnProduct;
@@ -538,6 +561,8 @@ public class AddMealDialog extends javax.swing.JDialog {
         setcbKind();
         setcbSort();
         setpnRight_Botton();
+        setpnCaledar();
+        setbtOrder();
     }
 
     private void addComponentsIn_pnProduct(List<MealPanel> mealPanels) {
@@ -590,7 +615,7 @@ public class AddMealDialog extends javax.swing.JDialog {
         cbSortEvent();
         btReverseEvent();
         btConfirmEvent();
-
+        btOrderEvent();
     }
 
     private void btRightEvent() {
@@ -690,12 +715,12 @@ public class AddMealDialog extends javax.swing.JDialog {
         Arrays.stream(productPanel).forEach(p -> {
             MealPanel mealPanel = (MealPanel) p;
             Product selectedProduct = mealPanel.getProduct();
-            mealPanel.getbtMinus().addMouseListener(btMinusEvent(selectedProduct));
-            mealPanel.getbtPlus().addMouseListener(btPlusEvent(selectedProduct));
+            mealPanel.getbtMinus().addMouseListener(btMinusEvent(selectedProduct,mealPanel.getbtMinus()));
+            mealPanel.getbtPlus().addMouseListener(btPlusEvent(selectedProduct,mealPanel.getbtPlus()));
         });
     }
 
-    private MouseListener btPlusEvent(Product selectedProduct) {
+    private MouseListener btPlusEvent(Product selectedProduct, JButton button) {
         return new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -707,6 +732,7 @@ public class AddMealDialog extends javax.swing.JDialog {
                 if (inforMealPanel != null) {
                     inforMealPanel.setAmount(inforMealPanel.getAmount() + 1);
                     inforMealPanel.setspAmount();
+                    spAmountEvent(inforMealPanel);
                 } else {
                     Product_Order product_Order = new Product_Order(order, 1, LocalDateTime.now(), selectedProduct);
                     InforMealPanel newInforMealPanel = new InforMealPanel(product_Order);
@@ -719,11 +745,21 @@ public class AddMealDialog extends javax.swing.JDialog {
                     setpnRight_Botton();
                 }
             }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(new Color(212,212,165));    
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(new Color(240,240,240)); 
+            }
+            
         };
 
     }
 
-    private MouseListener btMinusEvent(Product selectedProduct) {
+    private MouseListener btMinusEvent(Product selectedProduct, JButton button) {
         return new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -736,6 +772,15 @@ public class AddMealDialog extends javax.swing.JDialog {
                         inforMealPanel.setspAmount();
                     }
                 });
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                button.setBackground(new Color(212,212,165));   
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                button.setBackground(new Color(240,240,240));
             }
         };
     }
@@ -796,7 +841,6 @@ public class AddMealDialog extends javax.swing.JDialog {
                         products.addAll(productService.getAll(searchString));
                         UpdateComponet_pnProduct();
                     }
-
                 }
             }
         });
@@ -911,6 +955,15 @@ public class AddMealDialog extends javax.swing.JDialog {
                 pnParent.updateLayout(order);
                 AddMealDialog.this.dispose();
             }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                btConfirm.setBackground(new Color(212,212,165));    
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btConfirm.setBackground(new Color(56,180,123));
+            }
         });
     }
 
@@ -921,6 +974,54 @@ public class AddMealDialog extends javax.swing.JDialog {
         listToDelete.removeAll(end);
         start.removeAll(listToDelete);
         listToUpdate.addAll(start);
+    }
+
+    private void setpnCaledar() {
+        LocalDate localDate = LocalDate.now();
+        int day = localDate.getDayOfMonth();
+        String month = localDate.getMonth().toString();
+        int year = localDate.getYear();
+        String dayofweek = localDate.getDayOfWeek().toString();
+        
+        lbDay.setText(day+"");
+        lbMonth.setText(month);
+        lbYear.setText(year+"");
+        lbDayOfWeek.setText(dayofweek);
+    }
+
+    private void btOrderEvent() {
+        btOrder.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if(btOrder.isEnabled()){
+                    Table table = order.getTable();
+                    table.getStatus().setId(TableStatus.ORDERED);
+                    tableService.update(table);
+                    order.getTable().copy(table);
+                    pnParent.updateLayout(order);
+                    AddMealDialog.this.dispose();
+                }  
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                if (btOrder.isEnabled()){
+                    btOrder.setBackground(new Color(212,212,165));
+                }    
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+                btOrder.setBackground(new Color(56,180,123));
+            }
+            
+        });
+    }
+
+    private void setbtOrder() {
+        int idStatusOrder = order.getTable().getStatus().getId();
+        if(idStatusOrder == TableStatus.EMPTY){
+            btOrder.setEnabled(true);
+        }
     }
 
 }
