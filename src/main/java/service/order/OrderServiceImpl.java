@@ -36,6 +36,11 @@ public class OrderServiceImpl implements OrderService{
     public Order getOne(Integer id_Order) {
         return orderDao.getOne(id_Order);
     }
+
+    @Override
+    public List<Order> getAll(Integer idTableStatus) {
+        return orderDao.getAll(idTableStatus);
+    }
     
     
 }

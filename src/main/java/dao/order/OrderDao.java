@@ -19,5 +19,6 @@ public interface OrderDao {
     public List<Order> getAll();
     
     public Order getOne (Integer id_Order);
-     
+    
+    public List<Order> getAll(Integer idTableStatus);
 }
