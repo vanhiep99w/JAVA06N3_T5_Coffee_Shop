@@ -16,12 +16,18 @@ import java.awt.event.MouseEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import static javax.swing.SwingConstants.BOTTOM;
+import static javax.swing.SwingConstants.CENTER;
 import javax.swing.WindowConstants;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
+import util.ImageUtils;
 
 /**
  *
@@ -37,7 +43,12 @@ public class QuanLyPanel extends javax.swing.JPanel {
     private final FlowLayout flowLayout = new FlowLayout();
     private List<Product> products;
     private Product selectedProduct;
-    private JButton btSelected;
+    private static JButton btSelected;
+    private JScrollPane scrollPane;
+
+    private final Border defaultBorder = new JButton().getBorder();
+    private final Border pnLeftButtonHighLightBorder = BorderFactory.createLineBorder(Color.GREEN, 10);
+    private final Border pnLeftEmptyBorder = BorderFactory.createEmptyBorder();
 
     public QuanLyPanel() {
         productService = new ProductServiceImpl();
@@ -45,15 +56,19 @@ public class QuanLyPanel extends javax.swing.JPanel {
         initComponents();
         selectedProduct = null;
         flowLayout.setAlignment(FlowLayout.LEFT);
-        TitledBorder = new TitledBorder("Tất cả cá món");
+
+        TitledBorder = new TitledBorder("Tất cả các món");
         TitledBorder.setTitleFont(new Font("Tahoma", Font.BOLD, 18));
         TitledBorder.setTitleColor(Color.BLUE);
+
         initCenterComponent(products);
+
         flowLayout.setHgap(50);
         flowLayout.setVgap(50);
+
         pnCenter.setBorder(TitledBorder);
         pnCenter.setLayout(flowLayout);
-
+        initEvent();
         setEvent();
     }
 
@@ -82,28 +97,33 @@ public class QuanLyPanel extends javax.swing.JPanel {
         pnTop = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
+        setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10), javax.swing.BorderFactory.createEtchedBorder()));
         setLayout(new java.awt.BorderLayout());
 
-        pnCenter.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10), javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED, new java.awt.Color(0, 153, 153), null)));
+        pnCenter.setBackground(java.awt.Color.white);
+        pnCenter.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), javax.swing.BorderFactory.createEtchedBorder()));
         add(pnCenter, java.awt.BorderLayout.CENTER);
 
-        pnLeft.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 25, 10), javax.swing.BorderFactory.createEtchedBorder()));
+        pnLeft.setBackground(java.awt.Color.white);
+        pnLeft.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(0, 255, 255))));
 
-        btDoUongCoGa.setBackground(new java.awt.Color(0, 255, 204));
-        btDoUongCoGa.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btDoUongCoGa.setBackground(new java.awt.Color(255, 255, 255));
+        btDoUongCoGa.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
         btDoUongCoGa.setForeground(java.awt.Color.blue);
         btDoUongCoGa.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\DOUONG.png")); // NOI18N
         btDoUongCoGa.setText("Đồ uống có ga");
         btDoUongCoGa.setBorder(null);
+        btDoUongCoGa.setContentAreaFilled(false);
         btDoUongCoGa.setFocusPainted(false);
         btDoUongCoGa.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
-        btTraSua.setBackground(new java.awt.Color(0, 255, 204));
-        btTraSua.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btTraSua.setBackground(new java.awt.Color(255, 255, 255));
+        btTraSua.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
         btTraSua.setForeground(java.awt.Color.blue);
         btTraSua.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\TRASUA.png")); // NOI18N
         btTraSua.setText("Trà sữa");
         btTraSua.setBorder(null);
+        btTraSua.setContentAreaFilled(false);
         btTraSua.setFocusPainted(false);
         btTraSua.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btTraSua.addActionListener(new java.awt.event.ActionListener() {
@@ -112,21 +132,23 @@ public class QuanLyPanel extends javax.swing.JPanel {
             }
         });
 
-        btBanhNgot.setBackground(new java.awt.Color(0, 255, 204));
-        btBanhNgot.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btBanhNgot.setBackground(new java.awt.Color(255, 255, 255));
+        btBanhNgot.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
         btBanhNgot.setForeground(java.awt.Color.blue);
         btBanhNgot.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\BANHNGOT.png")); // NOI18N
         btBanhNgot.setText("Bánh ngọt");
         btBanhNgot.setBorder(null);
+        btBanhNgot.setContentAreaFilled(false);
         btBanhNgot.setFocusPainted(false);
         btBanhNgot.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
-        btNuocEp.setBackground(new java.awt.Color(0, 255, 204));
-        btNuocEp.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btNuocEp.setBackground(new java.awt.Color(255, 255, 255));
+        btNuocEp.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
         btNuocEp.setForeground(java.awt.Color.blue);
         btNuocEp.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\NUOCEP.png")); // NOI18N
         btNuocEp.setText("Nước ép");
         btNuocEp.setBorder(null);
+        btNuocEp.setContentAreaFilled(false);
         btNuocEp.setFocusPainted(false);
         btNuocEp.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btNuocEp.addActionListener(new java.awt.event.ActionListener() {
@@ -135,21 +157,23 @@ public class QuanLyPanel extends javax.swing.JPanel {
             }
         });
 
-        btSinhTo.setBackground(new java.awt.Color(0, 255, 204));
-        btSinhTo.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btSinhTo.setBackground(new java.awt.Color(255, 255, 255));
+        btSinhTo.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
         btSinhTo.setForeground(java.awt.Color.blue);
         btSinhTo.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\SINHTO.png")); // NOI18N
         btSinhTo.setText("Sinh tố");
         btSinhTo.setBorder(null);
+        btSinhTo.setContentAreaFilled(false);
         btSinhTo.setFocusPainted(false);
         btSinhTo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
-        btCoffee.setBackground(new java.awt.Color(0, 255, 204));
-        btCoffee.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btCoffee.setBackground(new java.awt.Color(255, 255, 255));
+        btCoffee.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
         btCoffee.setForeground(java.awt.Color.blue);
         btCoffee.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\CAFFEE.png")); // NOI18N
         btCoffee.setText("Coffee");
         btCoffee.setBorder(null);
+        btCoffee.setContentAreaFilled(false);
         btCoffee.setFocusPainted(false);
         btCoffee.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btCoffee.addActionListener(new java.awt.event.ActionListener() {
@@ -158,12 +182,13 @@ public class QuanLyPanel extends javax.swing.JPanel {
             }
         });
 
-        btTatCaCacMon.setBackground(new java.awt.Color(0, 255, 204));
-        btTatCaCacMon.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
+        btTatCaCacMon.setBackground(new java.awt.Color(255, 255, 255));
+        btTatCaCacMon.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
         btTatCaCacMon.setForeground(java.awt.Color.blue);
         btTatCaCacMon.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\icons8_food_40px.png")); // NOI18N
         btTatCaCacMon.setText("Tất cả các món");
         btTatCaCacMon.setBorder(null);
+        btTatCaCacMon.setContentAreaFilled(false);
         btTatCaCacMon.setFocusPainted(false);
         btTatCaCacMon.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
 
@@ -171,51 +196,55 @@ public class QuanLyPanel extends javax.swing.JPanel {
         pnLeft.setLayout(pnLeftLayout);
         pnLeftLayout.setHorizontalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btTatCaCacMon, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
-            .addComponent(btDoUongCoGa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btTraSua, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btBanhNgot, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btNuocEp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btSinhTo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btCoffee, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btTatCaCacMon, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+            .addComponent(btDoUongCoGa, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+            .addComponent(btTraSua, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+            .addComponent(btBanhNgot, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+            .addComponent(btNuocEp, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+            .addComponent(btSinhTo, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+            .addComponent(btCoffee, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
         );
         pnLeftLayout.setVerticalGroup(
             pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnLeftLayout.createSequentialGroup()
-                .addComponent(btTatCaCacMon, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btTatCaCacMon, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btDoUongCoGa, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btDoUongCoGa, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btTraSua, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btTraSua, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btBanhNgot, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btBanhNgot, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btNuocEp, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btNuocEp, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btSinhTo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btSinhTo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btCoffee, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btCoffee, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(pnLeft, java.awt.BorderLayout.LINE_START);
 
-        pnBottom.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), javax.swing.BorderFactory.createEtchedBorder()));
+        pnBottom.setBackground(java.awt.Color.white);
+        pnBottom.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(0, 255, 255))));
 
         btThem.setBackground(new java.awt.Color(51, 255, 204));
         btThem.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btThem.setForeground(java.awt.Color.blue);
         btThem.setText("THÊM");
         btThem.setFocusPainted(false);
         btThem.setPreferredSize(new java.awt.Dimension(200, 80));
 
         btXoa.setBackground(new java.awt.Color(51, 255, 204));
         btXoa.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btXoa.setForeground(java.awt.Color.blue);
         btXoa.setText("XÓA");
         btXoa.setFocusPainted(false);
         btXoa.setPreferredSize(new java.awt.Dimension(200, 80));
 
         btChinhSua.setBackground(new java.awt.Color(51, 255, 204));
         btChinhSua.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btChinhSua.setForeground(java.awt.Color.blue);
         btChinhSua.setText("CHỈNH SỬA");
         btChinhSua.setFocusPainted(false);
         btChinhSua.setPreferredSize(new java.awt.Dimension(200, 80));
@@ -232,9 +261,9 @@ public class QuanLyPanel extends javax.swing.JPanel {
             .addGroup(pnBottomLayout.createSequentialGroup()
                 .addGap(300, 300, 300)
                 .addComponent(btThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(75, 75, 75)
+                .addGap(170, 170, 170)
                 .addComponent(btXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(131, 131, 131))
         );
@@ -251,10 +280,11 @@ public class QuanLyPanel extends javax.swing.JPanel {
 
         add(pnBottom, java.awt.BorderLayout.PAGE_END);
 
-        pnTop.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 10, 5, 10), javax.swing.BorderFactory.createEtchedBorder()));
+        pnTop.setBackground(java.awt.Color.white);
+        pnTop.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(0, 255, 255))));
 
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 255, 204));
+        jLabel1.setForeground(java.awt.Color.blue);
         jLabel1.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\ORDER.png")); // NOI18N
         jLabel1.setText("THÔNG TIN THỰC ĐƠN");
 
@@ -263,7 +293,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
         pnTopLayout.setHorizontalGroup(
             pnTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTopLayout.createSequentialGroup()
-                .addContainerGap(362, Short.MAX_VALUE)
+                .addContainerGap(338, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(375, 375, 375))
         );
@@ -319,26 +349,76 @@ public class QuanLyPanel extends javax.swing.JPanel {
             @Override
             public void accept(Product p) {
                 JButton button = new JButton();
-                button.setFont(new Font("Tahoma", Font.PLAIN, 14));
+                button.setContentAreaFilled(false);
+                button.setFont(new Font("Camboria", Font.PLAIN, 12));
                 button.setForeground(Color.blue);
                 button.setFocusPainted(false);
-                button.setActionCommand(p.getId() + "");
-                button.setPreferredSize(new Dimension(160, 160));
-                button.setText(p.getName() + " \n " + p.getPrice());
-//            button.setIcon(ImageUtils.loadImage("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\food.png", 50, 50));
-//            JScrollPane scrollable = new JScrollPane(20, 20);
-//            scrollable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-//            pnCenter.add(scrollable);
+                button.setPreferredSize(new Dimension(150, 150));
+                button.setIcon(ImageUtils.loadImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\food.png", 50, 50));
+                button.setVerticalTextPosition(BOTTOM);
+                button.setHorizontalTextPosition(CENTER);
+
+                setButton(button, p);
+
                 pnCenter.add(button);
+
             }
         });
-
         pnCenter.revalidate();
         pnCenter.repaint();
         pnCenterEvent();
     }
 
-    //chạy đi e ok j nua ko e cái jscop anh nó như nào e chạy thử a coi
+    private void setButton(JButton button, Product p) {
+        button.setText(p.getName());
+        button.setActionCommand(p.getId() + "");
+    }
+
+    private void initEvent() {
+        pnLeftHighLightButtonsEvents();
+    }
+
+    private void pnLeftHighLightButtonsEvents() {
+        final Component[] components = pnLeft.getComponents();
+        for (Component component : components) {
+            if (component instanceof JButton) {
+                final JButton button = (JButton) component;
+                button.addMouseListener(new MouseAdapter() {
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+                        disableHighLightButtonsPnLeft(components);
+                        //button.setBorder(pnLeftButtonHighLightBorder); 
+                        button.setBorderPainted(false);
+                        button.setFocusPainted(false);
+                        button.setOpaque(true);
+                        button.setBackground(Color.BLUE);
+                        button.setForeground(Color.WHITE);
+                    }
+                });
+            }
+        }
+    }
+
+    private void disableHighLightButtonsCenter(Component... components) {
+        for (Component component : components) {
+            if (component instanceof JButton) {
+                final JButton button = (JButton) component;
+                button.setFont(new Font("Tahoma", Font.PLAIN, 12));
+            }
+        }
+    }
+
+    private void disableHighLightButtonsPnLeft(Component... components) {
+        for (Component component : components) {
+            if (component instanceof JButton) {
+                final JButton button = (JButton) component;               
+                button.setOpaque(false);
+                button.setBackground(Color.white);
+                button.setForeground(Color.BLUE);
+            }
+        }
+    }
+
     private void setEvent() {
         btTatCaCacMonEvent();
         btDoUongCoGaEvent();
@@ -349,9 +429,8 @@ public class QuanLyPanel extends javax.swing.JPanel {
         btCoffeeEvent();
         btRemoveEvent();
         btAddEvents();
+        btEditEvents();
 
-        //thử đi e
-        //pnCenterEvent();
     }
 
     private void btTatCaCacMonEvent() {
@@ -482,6 +561,17 @@ public class QuanLyPanel extends javax.swing.JPanel {
         });
     }
 
+    public void btEditEvents() {
+        btChinhSua.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                ManagerEditFrom managerEditFrom = new ManagerEditFrom(selectedProduct);
+                managerEditFrom.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+                managerEditFrom.setVisible(true);
+            }
+        });
+    }
+
     private void pnCenterEvent() {
         Component[] components = pnCenter.getComponents();
         Arrays.stream(components).forEach(t -> {
@@ -489,15 +579,24 @@ public class QuanLyPanel extends javax.swing.JPanel {
             button.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
+                    disableHighLightButtonsCenter(components);
+                    button.setFont(new Font("Camboria", Font.BOLD, 14));
                     products.forEach(p -> {
                         if (p.getId() == Integer.parseInt(button.getActionCommand())) {
                             selectedProduct = p;
                             btSelected = button;
+                        } else {
                         }
                     });
                 }
+
             });
         });
+    }
+
+    public static void update(Product product) {
+        btSelected.setText(product.getName());
+        btSelected.setActionCommand(product.getId() + "");
     }
 
 }

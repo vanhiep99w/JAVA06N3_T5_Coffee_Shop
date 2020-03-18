@@ -17,9 +17,8 @@ public class Product {
         this.name = name;
         this.price = price;
         this.category = category;
-        this.image = "";
+        this.image = null;
     }
-
     public Product(Integer id, String name, Float price, String image, Category category) {
         this.id = id;
         this.name = name;
@@ -63,8 +62,6 @@ public class Product {
     public String getImage() {
         return image;
     }
-
-
     public void setImage(String image) {
         this.image = image;
     }
