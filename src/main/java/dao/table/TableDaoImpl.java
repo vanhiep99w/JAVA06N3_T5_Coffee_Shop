@@ -59,8 +59,8 @@ public class TableDaoImpl implements TableDao {
             e.printStackTrace();
         } finally {
             try {
-                resultSet.close();
                 statement.close();
+                resultSet.close();                
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();

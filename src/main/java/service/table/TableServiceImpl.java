@@ -14,6 +14,7 @@ public class TableServiceImpl implements TableService {
         tableDao = new TableDaoImpl();
     }
 
+    @Override
     public List<Table> getAll() {
         return tableDao.getAll();
     }

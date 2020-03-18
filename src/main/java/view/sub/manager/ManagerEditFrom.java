@@ -10,48 +10,65 @@ import entities.Product;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import org.apache.commons.io.FilenameUtils;
 import java.util.Arrays;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import org.apache.commons.io.FilenameUtils;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
 import util.ImageUtils;
-import util.URL_Factory;
 
 /**
  *
  * @author Admin
  */
-public class ManagerFrom extends javax.swing.JFrame {
-
+public final class ManagerEditFrom extends javax.swing.JFrame {
+//hai cái này khác nhau j đó e
+    //em đang tính gộp mà chưa được
+    //khác nhau 2 cái nút với thông tin save != sumit
+    //một cái thêm ms một cái edit ak dạ anh
     private File selectedFile;
-    private JButton selectedButton;
     private Product product;
+    private final Product selectedProduct;
     private final String[] EXIT_FILE = {"png", "jpg", "jpeg", "git"};
-    private ProductService productService = new ProductServiceImpl();
+    private final ProductService productService = new ProductServiceImpl();
 
     /**
      * Creates new form ManagerFrom
+     *
+     * @param product
      */
-    public ManagerFrom() {
+    public ManagerEditFrom(Product product) {
         initComponents();
         setLocationRelativeTo(null);
-        Category[] categorys = {new Category(1, "Đồ uống có ga"), new Category(2, "Trà sữa"), new Category(3, "Bánh ngọt"), new Category(4, "Nước ép"), new Category(5, "Sinh tố"), new Category(6, "Coffee")};
-        ComboBoxModel<Category> categoryModel = new DefaultComboBoxModel<>(categorys);
-        ccbLoaiNuoc.setModel(categoryModel);
-
+        setCombox();
+        setManager(product);
+        selectedProduct = product;
         initEvents();
     }
 
+    public void setCombox() {
+        Category[] categorys = {new Category(1, "Đồ uống có ga"), new Category(2, "Trà sữa"), new Category(3, "Bánh ngọt"), new Category(4, "Nước ép"), new Category(5, "Sinh tố"), new Category(6, "Coffee")};
+        ComboBoxModel<Category> categoryModel = new DefaultComboBoxModel<>(categorys);
+        ccbLoaiNuoc.setFocusable(false);
+        ccbLoaiNuoc.setModel(categoryModel);
+    }
+
+    public void setManager(Product product) {
+        tfTeenMonAn.setText(product.getName());
+        tfGiaTien.setText(Float.toString(product.getPrice()));
+        ccbLoaiNuoc.setSelectedIndex(product.getCategory().getId() - 1);
+        lbImage.setIcon(ImageUtils.loadImage(product.getImage()));
+    }
+
     private void initEvents() {
-        btUploadEvents();
-        btAddEvent();
+        btEditEvent();
         btResetEvent();
+        btUploadEvents();
+
     }
 
     private void btUploadEvents() {
@@ -61,10 +78,9 @@ public class ManagerFrom extends javax.swing.JFrame {
                 JFileChooser fc = new JFileChooser("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop");
                 if (fc.showDialog(null, "UPLOAD") == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fc.getSelectedFile();
+                    System.out.println("1");
                     final String ext = FilenameUtils.getExtension(selectedFile.getName());
-                    System.out.println(ext);
                     if (Arrays.stream(EXIT_FILE).anyMatch(t -> t.equalsIgnoreCase(ext))) {
-                        System.out.println(selectedFile.getPath());
                         lbImage.setIcon((Icon) ImageUtils.loadImageIcon(selectedFile.getPath(), 100, 120));
                     }
 
@@ -73,34 +89,28 @@ public class ManagerFrom extends javax.swing.JFrame {
 
         });
     }
-    
-    
 
-    private void btAddEvent() {
-        btSubmit.addMouseListener(new MouseAdapter() {
+    private void btEditEvent() {
+        btSave.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                product = new Product();
-                if (tfTeenMonAn.getText().length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Mời bạn nhập tên món ăn");
-                } else if (tfGiaTien.getText().length() == 0) {
-                    JOptionPane.showMessageDialog(null, "Mời bạn nhập gia tien");
-                } else {
-                    product.setName(tfTeenMonAn.getText());
-                    product.setPrice(Float.parseFloat(tfGiaTien.getText()));
-                    product.setCategory((Category) ccbLoaiNuoc.getSelectedItem());
-                    product.setImage(selectedFile.getName());
-                    //không có !!! 
-                    boolean result = productService.insert(product);
-                    if (result) {
-                        JOptionPane.showMessageDialog(null, "Thêm thất bại");
-                    } else {
-                       
-                       JOptionPane.showMessageDialog(null, "Thêm thành công");
-                    }
-                   
+                selectedProduct.setName(tfTeenMonAn.getText());
+                selectedProduct.setPrice(Float.parseFloat(tfGiaTien.getText()));
+                selectedProduct.setCategory((Category) ccbLoaiNuoc.getSelectedItem());
+                String changeImage = selectedProduct.getImage();
+                if (selectedFile != null) {
+                    changeImage = selectedFile.getName();
                 }
+                selectedProduct.setImage(changeImage);
 
+                boolean result = productService.update(selectedProduct);
+                if (!result) {
+                    JOptionPane.showMessageDialog(null, "Thêm thất bại");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Thêm thành công");
+                }
+                QuanLyPanel.update(selectedProduct);
+             
             }
         });
     }
@@ -126,11 +136,6 @@ public class ManagerFrom extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnTop = new javax.swing.JPanel();
-        lbProductInfo = new javax.swing.JLabel();
-        pnBottom = new javax.swing.JPanel();
-        btReset = new javax.swing.JButton();
-        btSubmit = new javax.swing.JButton();
         pnCenter = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         tfTeenMonAn = new javax.swing.JTextField();
@@ -141,35 +146,14 @@ public class ManagerFrom extends javax.swing.JFrame {
         lbImage = new javax.swing.JLabel();
         btUpload = new javax.swing.JButton();
         ccbLoaiNuoc = new javax.swing.JComboBox<>();
+        pnBottom = new javax.swing.JPanel();
+        btReset = new javax.swing.JButton();
+        btSave = new javax.swing.JButton();
+        pnTop = new javax.swing.JPanel();
+        lbProductInfo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        pnTop.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), javax.swing.BorderFactory.createEtchedBorder()));
-
-        lbProductInfo.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        lbProductInfo.setForeground(new java.awt.Color(51, 255, 204));
-        lbProductInfo.setText("THÔNG TIN MÓN ĂN");
-        lbProductInfo.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        pnTop.add(lbProductInfo);
-
-        getContentPane().add(pnTop, java.awt.BorderLayout.PAGE_START);
-
-        pnBottom.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), javax.swing.BorderFactory.createEtchedBorder()));
-        pnBottom.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
-
-        btReset.setBackground(new java.awt.Color(51, 255, 204));
-        btReset.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        btReset.setText("Reset");
-        btReset.setFocusPainted(false);
-        pnBottom.add(btReset);
-
-        btSubmit.setBackground(new java.awt.Color(0, 255, 204));
-        btSubmit.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        btSubmit.setText("Submit");
-        btSubmit.setFocusPainted(false);
-        pnBottom.add(btSubmit);
-
-        getContentPane().add(pnBottom, java.awt.BorderLayout.PAGE_END);
+        setMinimumSize(new java.awt.Dimension(636, 507));
 
         pnCenter.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), javax.swing.BorderFactory.createEtchedBorder()));
 
@@ -205,15 +189,15 @@ public class ManagerFrom extends javax.swing.JFrame {
                 .addGap(49, 49, 49)
                 .addGroup(pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(pnCenterLayout.createSequentialGroup()
-                            .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnCenterLayout.createSequentialGroup()
+                            .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(tfGiaTien, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(tfTeenMonAn, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(ccbLoaiNuoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addContainerGap(109, Short.MAX_VALUE))
         );
         pnCenterLayout.setVerticalGroup(
             pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,12 +221,39 @@ public class ManagerFrom extends javax.swing.JFrame {
                     .addGroup(pnCenterLayout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addGroup(pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(44, Short.MAX_VALUE))
+                            .addComponent(btUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(7, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnCenter, java.awt.BorderLayout.CENTER);
+
+        pnBottom.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), javax.swing.BorderFactory.createEtchedBorder()));
+        pnBottom.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
+
+        btReset.setBackground(new java.awt.Color(51, 255, 204));
+        btReset.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btReset.setText("Reset");
+        btReset.setFocusPainted(false);
+        pnBottom.add(btReset);
+
+        btSave.setBackground(new java.awt.Color(0, 255, 204));
+        btSave.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btSave.setText("Save");
+        btSave.setFocusPainted(false);
+        pnBottom.add(btSave);
+
+        getContentPane().add(pnBottom, java.awt.BorderLayout.PAGE_END);
+
+        pnTop.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), javax.swing.BorderFactory.createEtchedBorder()));
+
+        lbProductInfo.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        lbProductInfo.setForeground(new java.awt.Color(51, 255, 204));
+        lbProductInfo.setText("THÔNG TIN MÓN ĂN");
+        lbProductInfo.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        pnTop.add(lbProductInfo);
+
+        getContentPane().add(pnTop, java.awt.BorderLayout.PAGE_START);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -264,27 +275,28 @@ public class ManagerFrom extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ManagerFrom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManagerEditFrom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ManagerFrom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManagerEditFrom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ManagerFrom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManagerEditFrom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ManagerFrom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ManagerEditFrom.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new ManagerFrom().setVisible(true);
+//                new ManagerEditFrom().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btReset;
-    private javax.swing.JButton btSubmit;
+    private javax.swing.JButton btSave;
     private javax.swing.JButton btUpload;
     private javax.swing.JComboBox<Category> ccbLoaiNuoc;
     private javax.swing.JLabel jLabel1;
@@ -300,5 +312,4 @@ public class ManagerFrom extends javax.swing.JFrame {
     private javax.swing.JTextField tfTeenMonAn;
     // End of variables declaration//GEN-END:variables
 
-   
 }
