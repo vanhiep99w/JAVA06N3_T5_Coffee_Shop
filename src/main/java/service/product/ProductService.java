@@ -14,7 +14,7 @@ public interface ProductService {
     
     public boolean insert(Product product);
 
-    public void update(int id1, int id, String name, float price, String NameCategory);
+    public boolean update(Product product);
 
     public boolean delete(Integer id);
 }

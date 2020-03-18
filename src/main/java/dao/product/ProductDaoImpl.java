@@ -11,6 +11,7 @@ import java.util.List;
 import connection.ConnectDB;
 import dao.employee.EmployeeDaoImpl;
 import entities.Category;
+import entities.Employee;
 import entities.Product;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -61,7 +62,7 @@ public class ProductDaoImpl implements ProductDao {
         } finally {
             try {
                 resultSet.close();
-                statement.close();    
+                statement.close();
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -121,7 +122,7 @@ public class ProductDaoImpl implements ProductDao {
         } finally {
             try {
                 resultSet.close();
-                statement.close(); 
+                statement.close();
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -130,6 +131,7 @@ public class ProductDaoImpl implements ProductDao {
         return products;
     }
 
+    //ok chạy lại đie
     @Override
     public boolean insert(Product product) {
         String query = "INSERT INTO product (name_product, price, id_category, image) VALUES (?,?,?,?)";
@@ -142,8 +144,9 @@ public class ProductDaoImpl implements ProductDao {
             preStatement.setString(++i, product.getImage());
             System.out.println(preStatement.toString());
             int n = preStatement.executeUpdate();
-        } catch (SQLException e) {
-            
+        } catch (SQLException ex) {
+
+            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 preStatement.close();
@@ -155,22 +158,40 @@ public class ProductDaoImpl implements ProductDao {
         return false;
     }
 
-    public void update(int id1, int id, String name, float price, String NameCategory) {
-        String query = "UPDATE product SET 'id_product' = '" + id + "', 'name_product' = '" + name + "', 'price' = '" + price + "', 'id_category' = '" + NameCategory + "' WHERE 'id' = '" + id1 + "'";
-        try {
-            preStatement = connection.prepareStatement(query);
-            preStatement.execute();
-            JOptionPane.showMessageDialog(null, "Thanh Cong");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "That Bai");
-        } finally {
+    @Override
+    public boolean update(Product product) {
+        boolean result = false;
+        int i = 0;
+        String query = "update coffee_shop.product p \n"
+                + "set p.name_product = ?,\n"
+                + "p.price = ?,\n"
+                + "p.id_category = ?,\n"
+                + "p.image = ?\n"
+                + "where p.id_product = ?;";
+
+        if (product != null) {
             try {
-                preStatement.close();
-            } catch (SQLException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                preStatement = connection.prepareStatement(query);
+                preStatement.setString(++i, product.getName());
+                preStatement.setFloat(++i, product.getPrice());
+                preStatement.setInt(++i, product.getCategory().getId());
+                preStatement.setString(++i, product.getImage());
+                preStatement.setInt(++i, product.getId());
+
+                result = (preStatement.executeUpdate() == 0) ? false : true;
+                //lỗi đau e
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    preStatement.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
+
+        return result;
     }
 
     public boolean delete(Integer id) {
@@ -184,15 +205,16 @@ public class ProductDaoImpl implements ProductDao {
 
             result = (preStatement.executeUpdate() == 0) ? false : true;
         } catch (SQLException ex) {
-            Logger.getLogger(EmployeeDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {
                 preStatement.close();
             } catch (SQLException ex) {
-                Logger.getLogger(EmployeeDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
         return result;
     }
+
 }
