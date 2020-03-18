@@ -99,7 +99,7 @@ public class ProductOrderDaoImpl implements ProductOrderDao {
     }
 
     @Override
-    public boolean delete(Integer id_Order,Integer id_Product) {
+    public boolean delete(Integer id_Order, Integer id_Product) {
         boolean result = false;
         String query = "delete from coffee_shop.product_order\n"
                 + "where id_order = ? and id_product = ?;";
@@ -107,17 +107,17 @@ public class ProductOrderDaoImpl implements ProductOrderDao {
             preStatement = connection.prepareStatement(query);
             preStatement.setInt(1, id_Order);
             preStatement.setInt(2, id_Product);
-            result = (preStatement.executeUpdate() == 0) ? false : true; 
+            result = (preStatement.executeUpdate() == 0) ? false : true;
         } catch (SQLException ex) {
             Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             try {
                 preStatement.close();
             } catch (SQLException ex) {
                 Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         return result;
     }
 
@@ -168,6 +168,55 @@ public class ProductOrderDaoImpl implements ProductOrderDao {
                 Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return result;
+    }
+
+    @Override
+    public List<Float> getSum(Integer id_Order) {
+        List<Float> list = new ArrayList<>();
+        String query = "select coffee_shop.product_order.amount*coffee_shop.product.price as sumpay"
+                + " from coffee_shop.product_order join coffee_shop.product\n"
+                + "on coffee_shop.product_order.id_product = coffee_shop.product.id_product "
+                + "where coffee_shop.product_order.id_order = ?;";
+        try {
+            preStatement = connection.prepareStatement(query);
+            preStatement.setInt(1, id_Order);
+            resultSet = preStatement.executeQuery();
+            while (resultSet.next()) {
+                list.add(resultSet.getFloat("sumpay"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                preStatement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public boolean deleteOrder(Integer id_Order) {
+        boolean result = false;
+        String query = "delete from coffee_shop.product_order\n"
+                + "where id_order = ?;";
+        try {
+            preStatement = connection.prepareStatement(query);
+            preStatement.setInt(1, id_Order);
+            result = (preStatement.executeUpdate() == 0) ? false : true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                preStatement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         return result;
     }
 

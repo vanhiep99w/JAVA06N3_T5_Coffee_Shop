@@ -40,6 +40,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
@@ -87,12 +88,15 @@ public class AddMealDialog extends javax.swing.JDialog {
     private static final CategoryService categoryService;
     private static final ProductOrderService productOrderService;
     private static final TableService tableService;
-    static{
+    String payString;
+
+    static {
         productService = new ProductServiceImpl();
         orderService = new OrderServiceImpl();
         categoryService = new CategoryServiceImpl();
         productOrderService = new ProductOrderServiceImpl();
         tableService = new TableServiceImpl();
+
     }
 
     public AddMealDialog(java.awt.Frame parent, boolean modal) {
@@ -715,8 +719,8 @@ public class AddMealDialog extends javax.swing.JDialog {
         Arrays.stream(productPanel).forEach(p -> {
             MealPanel mealPanel = (MealPanel) p;
             Product selectedProduct = mealPanel.getProduct();
-            mealPanel.getbtMinus().addMouseListener(btMinusEvent(selectedProduct,mealPanel.getbtMinus()));
-            mealPanel.getbtPlus().addMouseListener(btPlusEvent(selectedProduct,mealPanel.getbtPlus()));
+            mealPanel.getbtMinus().addMouseListener(btMinusEvent(selectedProduct, mealPanel.getbtMinus()));
+            mealPanel.getbtPlus().addMouseListener(btPlusEvent(selectedProduct, mealPanel.getbtPlus()));
         });
     }
 
@@ -745,16 +749,17 @@ public class AddMealDialog extends javax.swing.JDialog {
                     setpnRight_Botton();
                 }
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
-                button.setBackground(new Color(212,212,165));    
+                button.setBackground(new Color(212, 212, 165));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                button.setBackground(new Color(240,240,240)); 
+                button.setBackground(new Color(240, 240, 240));
             }
-            
+
         };
 
     }
@@ -773,14 +778,15 @@ public class AddMealDialog extends javax.swing.JDialog {
                     }
                 });
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
-                button.setBackground(new Color(212,212,165));   
+                button.setBackground(new Color(212, 212, 165));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                button.setBackground(new Color(240,240,240));
+                button.setBackground(new Color(240, 240, 240));
             }
         };
     }
@@ -923,8 +929,8 @@ public class AddMealDialog extends javax.swing.JDialog {
         tfVat.setText(stringVat);
         String sumString = format.format(sum);
         lbSum.setText(sumString);
-        pay = sum * (100 - vat) / 100;
-        String payString = format.format(pay);
+        pay = sum * (100 + vat) / 100;
+        payString = format.format(pay);
         lbPay.setText(payString);
     }
 
@@ -955,14 +961,15 @@ public class AddMealDialog extends javax.swing.JDialog {
                 pnParent.updateLayout(order);
                 AddMealDialog.this.dispose();
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
-                btConfirm.setBackground(new Color(212,212,165));    
+                btConfirm.setBackground(new Color(212, 212, 165));
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                btConfirm.setBackground(new Color(56,180,123));
+                btConfirm.setBackground(new Color(56, 180, 123));
             }
         });
     }
@@ -982,10 +989,10 @@ public class AddMealDialog extends javax.swing.JDialog {
         String month = localDate.getMonth().toString();
         int year = localDate.getYear();
         String dayofweek = localDate.getDayOfWeek().toString();
-        
-        lbDay.setText(day+"");
+
+        lbDay.setText(day + "");
         lbMonth.setText(month);
-        lbYear.setText(year+"");
+        lbYear.setText(year + "");
         lbDayOfWeek.setText(dayofweek);
     }
 
@@ -993,33 +1000,34 @@ public class AddMealDialog extends javax.swing.JDialog {
         btOrder.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if(btOrder.isEnabled()){
+                if (btOrder.isEnabled()) {
                     Table table = order.getTable();
                     table.getStatus().setId(TableStatus.ORDERED);
                     tableService.update(table);
                     order.getTable().copy(table);
                     pnParent.updateLayout(order);
                     AddMealDialog.this.dispose();
-                }  
+                }
             }
+
             @Override
             public void mouseEntered(MouseEvent e) {
-                if (btOrder.isEnabled()){
-                    btOrder.setBackground(new Color(212,212,165));
-                }    
+                if (btOrder.isEnabled()) {
+                    btOrder.setBackground(new Color(212, 212, 165));
+                }
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                btOrder.setBackground(new Color(56,180,123));
+                btOrder.setBackground(new Color(56, 180, 123));
             }
-            
+
         });
     }
 
     private void setbtOrder() {
         int idStatusOrder = order.getTable().getStatus().getId();
-        if(idStatusOrder == TableStatus.EMPTY){
+        if (idStatusOrder == TableStatus.EMPTY) {
             btOrder.setEnabled(true);
         }
     }
