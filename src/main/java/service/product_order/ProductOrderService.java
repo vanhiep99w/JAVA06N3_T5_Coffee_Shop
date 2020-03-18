@@ -20,7 +20,11 @@ public interface ProductOrderService {
     
     public boolean delete(Integer id_Order,Integer id_Product);
     
+    public boolean deleteOrder(Integer id_Order);
+    
     public boolean add(Product_Order newProduct_Order);
     
     public boolean update(Product_Order product_Order);
+    
+    public List<Float> getSum(Integer id_Order);
 }

@@ -45,4 +45,14 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         return productOrderDao.update(product_Order);
     }
 
+    @Override
+    public List<Float> getSum(Integer id_Order) {
+        return productOrderDao.getSum(id_Order);
+    }
+
+    @Override
+    public boolean deleteOrder(Integer id_Order) {
+        return productOrderDao.deleteOrder(id_Order);
+    }
+
 }
