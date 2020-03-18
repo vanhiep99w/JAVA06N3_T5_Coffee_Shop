@@ -30,19 +30,23 @@ public class DatMonPanel extends javax.swing.JPanel {
     TablePanel tablePanel = new TablePanel();
     InformationPanel informationPanel = new InformationPanel();
     ProductOrderTableModel productOrderTableModel;
-    private final TableService tableService;
-    private final ProductOrderService productOrderService;
     TableButton[] buttonTables;
     JTable tableOrdered;
     JLabel labelTableName;
     String nameTable;
     private TableButton selectedButton;
+    private static final TableService tableService;
+    private static final ProductOrderService productOrderService;
+    static{
+        tableService = new TableServiceImpl();
+        productOrderService = new ProductOrderServiceImpl();
+    }
+    
     /**
      * Creates new form DatMonPanel
      */
     public DatMonPanel() {
-        tableService = new TableServiceImpl();
-        productOrderService = new ProductOrderServiceImpl();
+        
         initComponents();
         setPnLeft();
         setPnRight();
@@ -85,8 +89,7 @@ public class DatMonPanel extends javax.swing.JPanel {
 
     private void setPnLeft() {
         pnLeft.add(tablePanel);
-        //InformationPanel informationPanel = new InformationPanel();
-        //pnLeft.add(informationPanel);
+        
     }
     
     private void setPnRight(){      

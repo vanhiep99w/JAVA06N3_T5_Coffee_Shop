@@ -5,6 +5,8 @@
  */
 package service.shift;
 
+import dao.shift.ShiftDao;
+import dao.shift.ShiftDaoImpl;
 import entities.Shift;
 import java.util.List;
 
@@ -13,10 +15,21 @@ import java.util.List;
  * @author Admin
  */
 public class ShiftServiceImpl implements ShiftService{
+    
+    private final ShiftDao ShiftDao;
+
+    public ShiftServiceImpl() {
+        this.ShiftDao = new ShiftDaoImpl();
+    }
 
     @Override
     public List<Shift> getAll() {
-        return null;
+        return ShiftDao.getAll();
+    }
+
+    @Override
+    public List<Shift> getAll(Integer idEmployee) {
+        return ShiftDao.getAll(idEmployee);
     }
     
 }

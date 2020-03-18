@@ -185,27 +185,23 @@ public class AddMealDialog extends javax.swing.JDialog {
         lbSum.setBackground(new java.awt.Color(255, 255, 255));
         lbSum.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbSum.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbSum.setText("10.000");
         lbSum.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "VNĐ", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Tahoma", 1, 11)), "Tổng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         lbSum.setOpaque(true);
 
         lbAmount.setBackground(new java.awt.Color(255, 255, 255));
         lbAmount.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbAmount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbAmount.setText("8");
         lbAmount.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "Số Lượng", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         lbAmount.setOpaque(true);
 
         lbPay.setBackground(new java.awt.Color(255, 255, 255));
         lbPay.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lbPay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbPay.setText("10.000");
         lbPay.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "VNĐ", javax.swing.border.TitledBorder.RIGHT, javax.swing.border.TitledBorder.BOTTOM, new java.awt.Font("Tahoma", 1, 11)), "Thành Tiền", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         lbPay.setOpaque(true);
 
         tfVat.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         tfVat.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        tfVat.setText("10 %");
         tfVat.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2), "VAT", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 12))); // NOI18N
         tfVat.setEnabled(false);
 
@@ -214,23 +210,19 @@ public class AddMealDialog extends javax.swing.JDialog {
         lbDay.setFont(new java.awt.Font("Verdana", 1, 20)); // NOI18N
         lbDay.setForeground(new java.awt.Color(204, 204, 204));
         lbDay.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbDay.setText("15");
 
-        lbYear.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        lbYear.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         lbYear.setForeground(new java.awt.Color(204, 204, 204));
         lbYear.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbYear.setText("2020");
 
-        lbMonth.setFont(new java.awt.Font("Verdana", 1, 16)); // NOI18N
+        lbMonth.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         lbMonth.setForeground(new java.awt.Color(204, 204, 204));
         lbMonth.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbMonth.setText("March");
 
         lbDayOfWeek.setBackground(new java.awt.Color(24, 134, 85));
         lbDayOfWeek.setFont(new java.awt.Font("Tahoma", 1, 20)); // NOI18N
         lbDayOfWeek.setForeground(new java.awt.Color(255, 255, 255));
         lbDayOfWeek.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbDayOfWeek.setText("Friday");
         lbDayOfWeek.setOpaque(true);
 
         javax.swing.GroupLayout pnCaledarLayout = new javax.swing.GroupLayout(pnCaledar);
@@ -239,12 +231,12 @@ public class AddMealDialog extends javax.swing.JDialog {
             pnCaledarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(lbDayOfWeek, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnCaledarLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addGroup(pnCaledarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbYear, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbDay, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(pnCaledarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbYear, javax.swing.GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+                    .addComponent(lbMonth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lbDay, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         pnCaledarLayout.setVerticalGroup(
             pnCaledarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,10 +264,10 @@ public class AddMealDialog extends javax.swing.JDialog {
             pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnRight_BottonLayout.createSequentialGroup()
                 .addComponent(pnCaledar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(27, 27, 27)
-                .addGroup(pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btOrder, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btOrder, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                    .addComponent(btConfirm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnRight_BottonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbAmount, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -724,6 +716,7 @@ public class AddMealDialog extends javax.swing.JDialog {
         return new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
+                btOrder.setEnabled(false);
                 Component[] components = pnInfor.getComponents();
                 List<InforMealPanel> list = Arrays.stream(components).map(t -> (InforMealPanel) t)
                         .collect(Collectors.toList());

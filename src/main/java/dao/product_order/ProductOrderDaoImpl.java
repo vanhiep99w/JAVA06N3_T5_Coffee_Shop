@@ -6,7 +6,6 @@
 package dao.product_order;
 
 import connection.ConnectDB;
-import entities.ProductOrder;
 import entities.Product_Order;
 import entities.Order;
 import entities.Product;
@@ -29,13 +28,16 @@ import java.util.logging.Logger;
  */
 public class ProductOrderDaoImpl implements ProductOrderDao {
 
-    private final Connection connection;
+    private static final Connection connection;
     private Statement statement;
     private PreparedStatement preStatement;
     private ResultSet resultSet;
-
-    public ProductOrderDaoImpl() {
+    static{
         connection = ConnectDB.getInstance().getConnection();
+    }
+    
+    public ProductOrderDaoImpl() {
+        
     }
 
     public Product_Order setData(ResultSet resultSet) throws SQLException {

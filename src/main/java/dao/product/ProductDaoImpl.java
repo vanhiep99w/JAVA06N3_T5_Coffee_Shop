@@ -18,13 +18,16 @@ import javax.swing.JOptionPane;
 
 public class ProductDaoImpl implements ProductDao {
 
-    private final Connection connection;
+    private static final Connection connection;
     private Statement statement;
     private PreparedStatement preStatement;
     private ResultSet resultSet;
+    static{
+        connection = ConnectDB.getInstance().getConnection();
+    }
 
     public ProductDaoImpl() {
-        connection = ConnectDB.getInstance().getConnection();
+        
     }
 
     private Product setData(ResultSet resultSet) throws SQLException {

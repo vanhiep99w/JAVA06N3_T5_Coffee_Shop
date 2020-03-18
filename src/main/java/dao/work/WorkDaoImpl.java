@@ -23,13 +23,16 @@ import java.util.logging.Logger;
  */
 public class WorkDaoImpl implements WorkDao{
     
-    private final Connection connection ;
+    private static final Connection connection ;
     private Statement statement ;
     private PreparedStatement preStatement;
     private ResultSet resultSet ;
+    static{
+        connection = ConnectDB.getInstance().getConnection();
+    }
 
     public WorkDaoImpl() {
-        connection = ConnectDB.getInstance().getConnection();
+        
     }
 
     @Override

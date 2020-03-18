@@ -182,7 +182,7 @@ public class MealPanel extends javax.swing.JPanel {
         if(product == null || "".equals(product.getImage())){
             lbIcon.setIcon(defaultIcon);
         }else{
-            lbIcon.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + product.getImage() ));
+            lbIcon.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\products\\" + product.getImage() ));
         }
     }
 
@@ -192,17 +192,16 @@ public class MealPanel extends javax.swing.JPanel {
     }
 
     private void setlbName() {
-        if(product == null){
+        if(product == null || "".equals(product.getName())){
             lbName.setText("Product");
-        }else{
-            
+        }else{ 
             lbName.setText(product.getName());
         }
     }
 
     private void setlbPrice() {
         String defaultString = "0.000 vnđ";
-        if(product == null){
+        if(product == null ){
             lbPrice.setText(defaultString);
         }else{
             lbPrice.setText(product.getPrice() + " vnđ");

@@ -6,13 +6,16 @@
 package view.sub.employee;
 
 import entities.Employee;
+import entities.Shift;
 import entities.Work;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.DefaultButtonModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -20,6 +23,8 @@ import render.comboboxbutton.work.ButtonRender;
 import render.table.TableCellRender;
 import service.employee.EmployeeService;
 import service.employee.EmployeeServiceImpl;
+import service.shift.ShiftService;
+import service.shift.ShiftServiceImpl;
 import service.work.WorkService;
 import service.work.WorkServiceImpl;
 
@@ -35,13 +40,17 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private static final WorkService workService;
     private static final EmployeeService employeeService;
     private static final DefaultTableModel tableModel;
+    private static final ShiftService shiftService;
     private final List<Work> works;
     private final List<Employee> employees; 
     private final Employee selectedEmployee;
+    private final List<Shift> allShifts;
+    private final List<Shift> employeeShift;
 
     static {
         workService = new WorkServiceImpl();
         employeeService = new EmployeeServiceImpl();
+        shiftService = new ShiftServiceImpl();
         tableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -54,11 +63,11 @@ public class NhanVienPanel extends javax.swing.JPanel {
         
         works = workService.getAll();
         employees = employeeService.getAll();
+        allShifts = shiftService.getAll();
         selectedEmployee = new Employee();
-
+        employeeShift = new ArrayList<>();
         initComponents();
-        setComboBox();
-        setTable();
+        setComponent();
         setEvent();
     }
 
@@ -432,6 +441,12 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private javax.swing.JTextField tfSalary;
     // End of variables declaration//GEN-END:variables
 
+    private void setComponent() {
+        setComboBox();
+        setTable();
+        seCheckBox();
+    }
+    
     private void setComboBox() {
 
         DefaultComboBoxModel comboBoxModel = new DefaultComboBoxModel();
@@ -573,7 +588,6 @@ public class NhanVienPanel extends javax.swing.JPanel {
                         employeeService.remove(selectedEmployee.getId());
                         tableModel.removeRow(tbEmployee.getSelectedRow());
                     }
-
                 }
             }
         });
@@ -582,4 +596,10 @@ public class NhanVienPanel extends javax.swing.JPanel {
     public static DefaultTableModel getTableModel() {
         return tableModel;
     }
+
+    private void seCheckBox() {
+        
+    }
+
+    
 }

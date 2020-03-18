@@ -13,5 +13,8 @@ import java.util.List;
  * @author Admin
  */
 public interface ShiftDao {
+    
     public List<Shift> getAll();
+    
+    public List<Shift> getAll(Integer idEmployee);
 }

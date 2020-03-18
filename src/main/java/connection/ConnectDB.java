@@ -9,10 +9,18 @@ public class ConnectDB {
     private Connection connection;
 
     private ConnectDB() {
+        try {
+        	
+            connection = DriverManager.getConnection(Config.URL.getValue(), Config.USER.getValue(), Config.PASS.getValue());
+
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     public static class ConnectionHelper {
-
+        
         public static final ConnectDB instance = new ConnectDB();
     }
 
@@ -23,12 +31,7 @@ public class ConnectDB {
 
     // Nhớ đổi username password và port trước khi chạy 
     public Connection getConnection() {
-        try {
-            connection = DriverManager.getConnection(Config.URL.getValue(), Config.USER.getValue(), Config.PASS.getValue());
-        } catch (SQLException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+
         return connection;
     }
 
