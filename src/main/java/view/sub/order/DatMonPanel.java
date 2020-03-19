@@ -78,7 +78,7 @@ public class DatMonPanel extends javax.swing.JPanel {
      * Creates new form DatMonPanel
      */
     public DatMonPanel() {
-
+       
         billService = new BillServiceImpl();
 
         initComponents();
