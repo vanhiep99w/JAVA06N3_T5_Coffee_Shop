@@ -99,10 +99,10 @@ public class NhanVienPanel extends javax.swing.JPanel {
         jButton3 = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(39, 130, 192));
 
-        btAdd.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\icons8_add_30px.png")); // NOI18N
         btAdd.setFocusPainted(false);
 
         cbWork.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -140,7 +140,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 48, Short.MAX_VALUE)
                         .addComponent(cbWork, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -155,11 +155,14 @@ public class NhanVienPanel extends javax.swing.JPanel {
                     .addComponent(btAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
                     .addComponent(cbWork))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pnButton, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
+        add(jPanel1, java.awt.BorderLayout.WEST);
+
         pnCenter.setBackground(new java.awt.Color(39, 130, 192));
+        pnCenter.setLayout(new java.awt.BorderLayout());
 
         pnInfor.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), "Thông Tin", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.ABOVE_TOP, new java.awt.Font("Tahoma", 1, 26), new java.awt.Color(56, 180, 123))); // NOI18N
 
@@ -206,38 +209,31 @@ public class NhanVienPanel extends javax.swing.JPanel {
         cbShift1.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         cbShift1.setText("Ca1");
         cbShift1.setFocusPainted(false);
-        cbShift1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
-        cbShift1.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
 
         cbShift2.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         cbShift2.setText("Ca1");
         cbShift2.setFocusPainted(false);
-        cbShift2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
-        cbShift2.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
 
         cbShift3.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         cbShift3.setText("Ca1");
         cbShift3.setFocusPainted(false);
-        cbShift3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
-        cbShift3.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
 
         cbShift4.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         cbShift4.setText("Ca1");
         cbShift4.setFocusPainted(false);
-        cbShift4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
-        cbShift4.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
 
         javax.swing.GroupLayout pnInforLayout = new javax.swing.GroupLayout(pnInfor);
         pnInfor.setLayout(pnInforLayout);
         pnInforLayout.setHorizontalGroup(
             pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnInforLayout.createSequentialGroup()
-                .addGap(72, 72, 72)
+                .addGap(10, 10, 10)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lbSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbShift, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbShift, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbWork, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnInforLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -250,27 +246,22 @@ public class NhanVienPanel extends javax.swing.JPanel {
                             .addGroup(pnInforLayout.createSequentialGroup()
                                 .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(257, 257, 257)))
-                        .addContainerGap(133, Short.MAX_VALUE))
+                        .addGap(0, 91, Short.MAX_VALUE))
                     .addGroup(pnInforLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addComponent(cbShift3)
                         .addGap(88, 88, 88)
                         .addComponent(cbShift2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 95, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
                         .addComponent(cbShift1)
                         .addGap(70, 70, 70)
                         .addComponent(cbShift4)
                         .addGap(123, 123, 123))))
-            .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnInforLayout.createSequentialGroup()
-                    .addGap(82, 82, 82)
-                    .addComponent(lbWork, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(773, Short.MAX_VALUE)))
         );
         pnInforLayout.setVerticalGroup(
             pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnInforLayout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(33, 33, 33)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbPhoneNumber))
@@ -279,7 +270,9 @@ public class NhanVienPanel extends javax.swing.JPanel {
                     .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
-                .addComponent(cbWork1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cbWork1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbWork, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -291,17 +284,14 @@ public class NhanVienPanel extends javax.swing.JPanel {
                     .addComponent(cbShift2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbShift3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbShift4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
+                .addGap(20, 20, 20)
                 .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
-            .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(pnInforLayout.createSequentialGroup()
-                    .addGap(244, 244, 244)
-                    .addComponent(lbWork, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(352, Short.MAX_VALUE)))
+                .addGap(0, 0, 0))
         );
 
         pnInforLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cbWork1, lbWork});
+
+        pnCenter.add(pnInfor, java.awt.BorderLayout.CENTER);
 
         btEdit.setFont(new java.awt.Font("Tahoma", 1, 26)); // NOI18N
         btEdit.setForeground(new java.awt.Color(56, 180, 123));
@@ -344,54 +334,14 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 .addComponent(btRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(318, Short.MAX_VALUE))
+                .addContainerGap(263, Short.MAX_VALUE))
         );
 
         pnLeftLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btEdit, btRemove, jButton3});
 
-        javax.swing.GroupLayout pnCenterLayout = new javax.swing.GroupLayout(pnCenter);
-        pnCenter.setLayout(pnCenterLayout);
-        pnCenterLayout.setHorizontalGroup(
-            pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnCenterLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnInfor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        pnCenterLayout.setVerticalGroup(
-            pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnCenterLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pnInfor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(pnLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        pnCenter.add(pnLeft, java.awt.BorderLayout.EAST);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnCenter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(pnCenter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
+        add(pnCenter, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditActionPerformed

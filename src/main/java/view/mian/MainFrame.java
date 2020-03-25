@@ -28,8 +28,6 @@ import view.sub.helper.TroGiupPanel;
  * @author PC
  */
 public class MainFrame extends javax.swing.JFrame {
-    
-    
 
     /**
      * Creates new form MainFrame
@@ -38,22 +36,20 @@ public class MainFrame extends javax.swing.JFrame {
     private JLabel picLogo = new JLabel();
     private Component[] buttonComponents;
     private CardLayout cardLayout;
-    
-    
-    
-    
+
     public MainFrame() {
-        
+
         initComponents();
+        setResizable(true);
         setIcon();
         initMainPanelComponent();
         initTablePanel();
         initEvent();
-        
+
     }
-    
-    private void setSelectedButtonColorEvent(JButton button){
-       
+
+    private void setSelectedButtonColorEvent(JButton button) {
+
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -62,28 +58,29 @@ public class MainFrame extends javax.swing.JFrame {
                 cardLayout.show(pnMain, button.getText());
                 Arrays.stream(buttonComponents)
                         .filter(t -> (t instanceof JButton))
-                        .map(t -> (JButton)t )
+                        .map(t -> (JButton) t)
                         .forEach(t -> {
-                            if(t != button){
+                            if (t != button) {
                                 t.setBackground(new Color(75, 198, 242));
-                                t.setSelected(false); 
+                                t.setSelected(false);
                             }
-                });               
-            }   
+                        });
+            }
+
             @Override
             public void mouseEntered(MouseEvent e) {
-                if (!button.isSelected()){
-                    button.setBackground(new Color(39,174,244));
-                }    
+                if (!button.isSelected()) {
+                    button.setBackground(new Color(39, 174, 244));
+                }
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-                if (!button.isSelected()){
+                if (!button.isSelected()) {
                     button.setBackground(new Color(75, 198, 242));
-                } 
+                }
             }
-            
+
         });
     }
 
@@ -238,26 +235,11 @@ public class MainFrame extends javax.swing.JFrame {
         getContentPane().add(pnTop, java.awt.BorderLayout.PAGE_START);
 
         pnCenter.setBackground(new java.awt.Color(39, 130, 192));
+        pnCenter.setLayout(new java.awt.BorderLayout());
 
         pnMain.setMinimumSize(new java.awt.Dimension(1420, 745));
         pnMain.setLayout(new java.awt.CardLayout());
-
-        javax.swing.GroupLayout pnCenterLayout = new javax.swing.GroupLayout(pnCenter);
-        pnCenter.setLayout(pnCenterLayout);
-        pnCenterLayout.setHorizontalGroup(
-            pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnCenterLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnMain, javax.swing.GroupLayout.DEFAULT_SIZE, 1514, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        pnCenterLayout.setVerticalGroup(
-            pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnCenterLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        pnCenter.add(pnMain, java.awt.BorderLayout.CENTER);
 
         getContentPane().add(pnCenter, java.awt.BorderLayout.CENTER);
 
@@ -294,17 +276,16 @@ public class MainFrame extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-              new MainFrame().setVisible(true);
+        new MainFrame().setVisible(true);
 
     }
-    
-    private void initTablePanel(){
+
+    private void initTablePanel() {
         //PanelTable.add(tablePanel);
         //tablePanel.setVisible(true);
         //tablePanel.dra
     }
-    
-   
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btDatMon;
@@ -323,9 +304,10 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void initEvent() {
         buttonEvent();
-                
+
     }
-    private void buttonEvent(){
+
+    private void buttonEvent() {
         btDatMon.setBackground(new Color(39, 130, 192));
         buttonComponents = pnButton.getComponents();
         btDatMonEvent();
@@ -338,7 +320,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btDatMonEvent() {
         setSelectedButtonColorEvent(btDatMon);
-  
+
     }
 
     private void btKhoEvent() {
@@ -363,33 +345,33 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void setIcon() {
         final String imageDirectoryPath = URL_Factory.IMAGE_FOLDER_URL;
-        
-        btDatMon.setIcon(ImageUtils.loadImage(imageDirectoryPath+"\\icons8_food_40px.png")); 
-        btThongKe.setIcon(ImageUtils.loadImage(imageDirectoryPath+"\\icons8_activity_history_40px.png"));
-        btKho.setIcon(ImageUtils.loadImage(imageDirectoryPath+"\\icons8_online_store_40px.png"));
-        btQuanLy.setIcon(ImageUtils.loadImage(imageDirectoryPath+"\\icons8_chart_40px.png"));
-        btNhanVien.setIcon(ImageUtils.loadImage(imageDirectoryPath+"\\icons8_manager_40px.png"));
-        btTroGiup.setIcon(ImageUtils.loadImage(imageDirectoryPath+"\\icons8_help_40px.png"));
-       
+
+        btDatMon.setIcon(ImageUtils.loadImage(imageDirectoryPath + "\\icons8_food_40px.png"));
+        btThongKe.setIcon(ImageUtils.loadImage(imageDirectoryPath + "\\icons8_activity_history_40px.png"));
+        btKho.setIcon(ImageUtils.loadImage(imageDirectoryPath + "\\icons8_online_store_40px.png"));
+        btQuanLy.setIcon(ImageUtils.loadImage(imageDirectoryPath + "\\icons8_chart_40px.png"));
+        btNhanVien.setIcon(ImageUtils.loadImage(imageDirectoryPath + "\\icons8_manager_40px.png"));
+        btTroGiup.setIcon(ImageUtils.loadImage(imageDirectoryPath + "\\icons8_help_40px.png"));
+
     }
 
-    private void initMainPanelComponent() {  
-        
+    private void initMainPanelComponent() {
+
         DatMonPanel datMonPanel = new DatMonPanel();
         KhoPanel khoPanel = new KhoPanel();
         NhanVienPanel nhanVienPanel = new NhanVienPanel();
         QuanLyPanel quanLyPanel = new QuanLyPanel();
         ThongKePanel thongKePanel = new ThongKePanel();
         TroGiupPanel troGiupPanel = new TroGiupPanel();
-        
+
         pnMain.add(datMonPanel, btDatMon.getText());
         pnMain.add(khoPanel, btKho.getText());
         pnMain.add(nhanVienPanel, btNhanVien.getText());
         pnMain.add(quanLyPanel, btQuanLy.getText());
         pnMain.add(thongKePanel, btThongKe.getText());
         pnMain.add(troGiupPanel, btTroGiup.getText());
-        
+
         cardLayout = (CardLayout) pnMain.getLayout();
-        
+
     }
 }

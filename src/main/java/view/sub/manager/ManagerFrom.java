@@ -55,6 +55,7 @@ public class ManagerFrom extends javax.swing.JFrame {
     }
 
     private void btUploadEvents() {
+        btUpload.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + File.separator + "UPLOAD.png", 30, 30));
         btUpload.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -90,13 +91,12 @@ public class ManagerFrom extends javax.swing.JFrame {
                     product.setPrice(Float.parseFloat(tfGiaTien.getText()));
                     product.setCategory((Category) ccbLoaiNuoc.getSelectedItem());
                     product.setImage(selectedFile.getName());
-                    //không có !!! 
                     boolean result = productService.insert(product);
                     if (result) {
-                        JOptionPane.showMessageDialog(null, "Thêm thất bại");
+                        JOptionPane.showMessageDialog(null, "Thêm thành công");
                     } else {
                        
-                       JOptionPane.showMessageDialog(null, "Thêm thành công");
+                       JOptionPane.showMessageDialog(null, "Thêm thất bại");
                     }
                    
                 }
@@ -144,76 +144,92 @@ public class ManagerFrom extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        pnTop.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), javax.swing.BorderFactory.createEtchedBorder()));
+        pnTop.setBackground(new java.awt.Color(255, 255, 255));
+        pnTop.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createMatteBorder(5, 5, 0, 5, new java.awt.Color(51, 153, 255)), javax.swing.BorderFactory.createEmptyBorder(5, 5, 1, 5)));
 
-        lbProductInfo.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        lbProductInfo.setForeground(new java.awt.Color(51, 255, 204));
+        lbProductInfo.setBackground(new java.awt.Color(51, 153, 0));
+        lbProductInfo.setFont(new java.awt.Font("Cambria", 1, 36)); // NOI18N
+        lbProductInfo.setForeground(new java.awt.Color(51, 204, 0));
         lbProductInfo.setText("THÔNG TIN MÓN ĂN");
         lbProductInfo.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         pnTop.add(lbProductInfo);
 
         getContentPane().add(pnTop, java.awt.BorderLayout.PAGE_START);
 
-        pnBottom.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), javax.swing.BorderFactory.createEtchedBorder()));
+        pnBottom.setBackground(new java.awt.Color(255, 255, 255));
+        pnBottom.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createMatteBorder(0, 5, 5, 5, new java.awt.Color(51, 153, 255)), javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5)));
         pnBottom.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.RIGHT));
 
-        btReset.setBackground(new java.awt.Color(51, 255, 204));
-        btReset.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btReset.setBackground(new java.awt.Color(51, 153, 0));
+        btReset.setFont(new java.awt.Font("Cambria", 1, 16)); // NOI18N
+        btReset.setForeground(new java.awt.Color(255, 255, 255));
         btReset.setText("Reset");
+        btReset.setBorderPainted(false);
         btReset.setFocusPainted(false);
         pnBottom.add(btReset);
 
-        btSubmit.setBackground(new java.awt.Color(0, 255, 204));
-        btSubmit.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        btSubmit.setBackground(new java.awt.Color(51, 153, 0));
+        btSubmit.setFont(new java.awt.Font("Cambria", 1, 16)); // NOI18N
+        btSubmit.setForeground(new java.awt.Color(255, 255, 255));
         btSubmit.setText("Submit");
+        btSubmit.setBorderPainted(false);
         btSubmit.setFocusPainted(false);
         pnBottom.add(btSubmit);
 
         getContentPane().add(pnBottom, java.awt.BorderLayout.PAGE_END);
 
-        pnCenter.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5), javax.swing.BorderFactory.createEtchedBorder()));
+        pnCenter.setBackground(new java.awt.Color(255, 255, 255));
+        pnCenter.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createMatteBorder(5, 5, 5, 5, new java.awt.Color(51, 153, 255)), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 153, 255));
         jLabel1.setText("Tên món ăn");
 
-        jLabel2.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        tfTeenMonAn.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 153, 255));
         jLabel2.setText("Giá tiền");
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        tfGiaTien.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 153, 255));
         jLabel3.setText("Loại nước");
 
-        jLabel4.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 153, 255));
         jLabel4.setText("Hình ảnh");
 
-        lbImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 204, 0), 2));
+        lbImage.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         btUpload.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\plus.png")); // NOI18N
         btUpload.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btUpload.setFocusPainted(false);
+
+        ccbLoaiNuoc.setFont(new java.awt.Font("Cambria", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout pnCenterLayout = new javax.swing.GroupLayout(pnCenter);
         pnCenter.setLayout(pnCenterLayout);
         pnCenterLayout.setHorizontalGroup(
             pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnCenterLayout.createSequentialGroup()
-                .addGap(120, 120, 120)
+                .addGap(65, 65, 65)
                 .addGroup(pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
+                    .addComponent(jLabel3)
                     .addComponent(jLabel4))
-                .addGap(49, 49, 49)
-                .addGroup(pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(pnCenterLayout.createSequentialGroup()
-                            .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfGiaTien, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(tfTeenMonAn, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(ccbLoaiNuoc, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(106, Short.MAX_VALUE))
+                .addGap(32, 32, 32)
+                .addGroup(pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(tfTeenMonAn, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnCenterLayout.createSequentialGroup()
+                        .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfGiaTien, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(ccbLoaiNuoc, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(68, Short.MAX_VALUE))
         );
         pnCenterLayout.setVerticalGroup(
             pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,7 +255,7 @@ public class ManagerFrom extends javax.swing.JFrame {
                         .addGroup(pnCenterLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lbImage, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btUpload, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
         );
 
         getContentPane().add(pnCenter, java.awt.BorderLayout.CENTER);

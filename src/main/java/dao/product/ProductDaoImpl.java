@@ -134,6 +134,7 @@ public class ProductDaoImpl implements ProductDao {
     //ok chạy lại đie
     @Override
     public boolean insert(Product product) {
+        boolean result = false;
         String query = "INSERT INTO product (name_product, price, id_category, image) VALUES (?,?,?,?)";
         int i = 0;
         try {
@@ -143,7 +144,7 @@ public class ProductDaoImpl implements ProductDao {
             preStatement.setInt(++i, product.getCategory().getId());
             preStatement.setString(++i, product.getImage());
             System.out.println(preStatement.toString());
-            int n = preStatement.executeUpdate();
+            result = (preStatement.executeUpdate() != 0);
         } catch (SQLException ex) {
 
             Logger.getLogger(ProductDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
@@ -155,7 +156,7 @@ public class ProductDaoImpl implements ProductDao {
 
             }
         }
-        return false;
+        return result;
     }
 
     @Override
