@@ -594,7 +594,7 @@ public class AddMealDialog extends javax.swing.JDialog {
     }
 
     private void addNewPage(SubAddMealPanel subAddMealPanel, JRadioButton radioBt) {
-
+        
         pnProduct.add(subAddMealPanel, (currentAmount) + "");
         radioBt.setText("");
         radioBt.setActionCommand(currentAmount + "");

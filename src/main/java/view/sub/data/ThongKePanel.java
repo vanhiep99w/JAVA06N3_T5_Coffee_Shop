@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
+import javax.swing.OverlayLayout;
 import view.sub.data.sub.ChartPanel;
 import view.sub.data.sub.OverviewPanel;
 import view.sub.data.sub.StatisticPanel;
@@ -22,15 +23,9 @@ import view.sub.data.sub.StatisticPanel;
  */
 public class ThongKePanel extends javax.swing.JPanel {
 
-    private static final JPanel pnChart;
-    private static final JPanel pnOverview;
-    private static final JPanel pnStatistic;
+    
     private final CardLayout cardLayout;
-    static {
-        pnChart = new JPanel();
-        pnOverview = new JPanel();
-        pnStatistic = new JPanel();
-    }
+    
     
     public ThongKePanel() {
         initComponents();
@@ -126,20 +121,15 @@ public class ThongKePanel extends javax.swing.JPanel {
     }
 
     private void setEvents() {
-        lbOverviewEvent();
-        lbChartEvent();
-        lbThongkeEvent();
+        btOverviewEvent();
+        btChartEvent();
+        btStatisticEvent();
     }
 
-    private void lbOverviewEvent() {
+    private void btOverviewEvent() {
         btOverview.addMouseListener(new MouseAdapter() {
             @Override
-            public void mousePressed(MouseEvent e) {
-                if(pnOverview.getComponents().length == 0){
-                    pnOverview.add(new OverviewPanel());
-                }else{
-                    
-                }
+            public void mousePressed(MouseEvent e) {   
                 cardLayout.show(pnRight, btOverview.getActionCommand());
                 
             }
@@ -159,15 +149,11 @@ public class ThongKePanel extends javax.swing.JPanel {
         });
     }
 
-    private void lbChartEvent() {
+    private void btChartEvent() {
         btChart.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if(pnChart.getComponents().length == 0){
-                    pnChart.add(new ChartPanel());
-                }else{
-                    
-                }
+                
                 cardLayout.show(pnRight, btChart.getActionCommand());
                 
             }
@@ -185,16 +171,13 @@ public class ThongKePanel extends javax.swing.JPanel {
         });
     }
 
-    private void lbThongkeEvent() {
+    private void btStatisticEvent() {
         btStatistic.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if(pnStatistic.getComponents().length == 0){
-                    pnStatistic.add(new StatisticPanel());
-                }else{
-                    
-                }
+                
                 cardLayout.show(pnRight, btStatistic.getActionCommand());
+                System.out.println(btStatistic.getActionCommand());
                 
             }
             @Override
@@ -211,9 +194,13 @@ public class ThongKePanel extends javax.swing.JPanel {
     }
 
     private void setpnRight() {
-        pnRight.add(pnOverview, btOverview.getActionCommand());
-        pnRight.add(pnChart,btChart.getActionCommand());
-        pnRight.add(pnStatistic,btStatistic.getActionCommand());
+        OverviewPanel overviewPanel = new OverviewPanel();
+        ChartPanel chartPanel = new ChartPanel();
+        StatisticPanel statisticPanel = new StatisticPanel();
+        
+        pnRight.add(overviewPanel,btOverview.getActionCommand());
+        pnRight.add(chartPanel, btChart.getActionCommand());
+        pnRight.add(statisticPanel, btStatistic.getActionCommand());
     }
 
     private void setpnLeft() {
@@ -221,8 +208,5 @@ public class ThongKePanel extends javax.swing.JPanel {
         btOverview.setActionCommand("overview");
         btStatistic.setActionCommand("statistic");
     }
-
-    
-
     
 }

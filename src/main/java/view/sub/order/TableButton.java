@@ -41,6 +41,7 @@ public class TableButton extends JButton {
         this.setFont(font);
         this.setActionCommand("");
         this.setBorderPainted(false);
+        
     }
 
     public void setColor() {
