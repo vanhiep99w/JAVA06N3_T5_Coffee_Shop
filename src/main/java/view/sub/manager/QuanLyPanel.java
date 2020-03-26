@@ -13,21 +13,21 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
-import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
 import static javax.swing.SwingConstants.BOTTOM;
 import static javax.swing.SwingConstants.CENTER;
 import javax.swing.WindowConstants;
-import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 import service.product.ProductService;
 import service.product.ProductServiceImpl;
 import util.ImageUtils;
+import util.URL_Factory;
 
 /**
  *
@@ -36,7 +36,7 @@ import util.ImageUtils;
 public class QuanLyPanel extends javax.swing.JPanel {
 
     /**
-     * Creates new form QuanLyPanel
+     * Creates new form NewJPanel
      */
     private final TitledBorder TitledBorder;
     private final ProductService productService;
@@ -44,30 +44,25 @@ public class QuanLyPanel extends javax.swing.JPanel {
     private List<Product> products;
     private Product selectedProduct;
     private static JButton btSelected;
-    private JScrollPane scrollPane;
-
-    private final Border defaultBorder = new JButton().getBorder();
-    private final Border pnLeftButtonHighLightBorder = BorderFactory.createLineBorder(Color.GREEN, 10);
-    private final Border pnLeftEmptyBorder = BorderFactory.createEmptyBorder();
 
     public QuanLyPanel() {
+        initComponents();
+
         productService = new ProductServiceImpl();
         products = productService.getAll();
-        initComponents();
         selectedProduct = null;
         flowLayout.setAlignment(FlowLayout.LEFT);
+        flowLayout.setVgap(5);
+        flowLayout.setHgap(10);
 
         TitledBorder = new TitledBorder("Tất cả các món");
         TitledBorder.setTitleFont(new Font("Tahoma", Font.BOLD, 18));
-        TitledBorder.setTitleColor(Color.BLUE);
+        TitledBorder.setTitleColor(new Color(51, 153, 255));
 
-        initCenterComponent(products);
+        initCenterInComponent(products);
+        pnCenterIn.setBorder(TitledBorder);
+        pnCenterIn.setLayout(flowLayout);
 
-        flowLayout.setHgap(50);
-        flowLayout.setVgap(50);
-
-        pnCenter.setBorder(TitledBorder);
-        pnCenter.setLayout(flowLayout);
         initEvent();
         setEvent();
     }
@@ -81,255 +76,215 @@ public class QuanLyPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnCenter = new javax.swing.JPanel();
-        pnLeft = new javax.swing.JPanel();
-        btDoUongCoGa = new javax.swing.JButton();
+        pn_Top = new javax.swing.JPanel();
+        pnTopLeft = new javax.swing.JPanel();
+        pnTopRight = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        pn_Left = new javax.swing.JPanel();
+        btTatCaCacMon = new javax.swing.JButton();
+        btDoUongCoga = new javax.swing.JButton();
         btTraSua = new javax.swing.JButton();
         btBanhNgot = new javax.swing.JButton();
         btNuocEp = new javax.swing.JButton();
         btSinhTo = new javax.swing.JButton();
         btCoffee = new javax.swing.JButton();
-        btTatCaCacMon = new javax.swing.JButton();
-        pnBottom = new javax.swing.JPanel();
+        pn_Center = new javax.swing.JPanel();
+        pn_CenterBottom = new javax.swing.JPanel();
         btThem = new javax.swing.JButton();
-        btXoa = new javax.swing.JButton();
         btChinhSua = new javax.swing.JButton();
-        pnTop = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        btXoa = new javax.swing.JButton();
+        pn_CenterTop = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        pnCenterIn = new javax.swing.JPanel();
 
-        setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10), javax.swing.BorderFactory.createEtchedBorder()));
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.BorderLayout());
 
-        pnCenter.setBackground(java.awt.Color.white);
-        pnCenter.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1), javax.swing.BorderFactory.createEtchedBorder()));
-        add(pnCenter, java.awt.BorderLayout.CENTER);
+        pn_Top.setBackground(new java.awt.Color(255, 255, 255));
+        pn_Top.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        pn_Top.setLayout(new java.awt.BorderLayout());
 
-        pnLeft.setBackground(java.awt.Color.white);
-        pnLeft.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(0, 255, 255))));
+        pnTopLeft.setBackground(new java.awt.Color(255, 255, 255));
+        pnTopLeft.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 5, 5, new java.awt.Color(51, 153, 255)));
+        pnTopLeft.setPreferredSize(new java.awt.Dimension(290, 40));
+        pnTopLeft.setLayout(new java.awt.CardLayout());
+        pn_Top.add(pnTopLeft, java.awt.BorderLayout.LINE_START);
 
-        btDoUongCoGa.setBackground(new java.awt.Color(255, 255, 255));
-        btDoUongCoGa.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
-        btDoUongCoGa.setForeground(java.awt.Color.blue);
-        btDoUongCoGa.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\DOUONG.png")); // NOI18N
-        btDoUongCoGa.setText("Đồ uống có ga");
-        btDoUongCoGa.setBorder(null);
-        btDoUongCoGa.setContentAreaFilled(false);
-        btDoUongCoGa.setFocusPainted(false);
-        btDoUongCoGa.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        pnTopRight.setBackground(new java.awt.Color(255, 255, 255));
+        pnTopRight.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 5, 0, new java.awt.Color(51, 153, 255)), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
-        btTraSua.setBackground(new java.awt.Color(255, 255, 255));
-        btTraSua.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
-        btTraSua.setForeground(java.awt.Color.blue);
-        btTraSua.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\TRASUA.png")); // NOI18N
-        btTraSua.setText("Trà sữa");
-        btTraSua.setBorder(null);
-        btTraSua.setContentAreaFilled(false);
-        btTraSua.setFocusPainted(false);
-        btTraSua.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btTraSua.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btTraSuaActionPerformed(evt);
-            }
-        });
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel1.setFont(new java.awt.Font("Cambria", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(51, 204, 0));
+        jLabel1.setText("THÔNG TIN THỰC ĐƠN");
+        pnTopRight.add(jLabel1);
 
-        btBanhNgot.setBackground(new java.awt.Color(255, 255, 255));
-        btBanhNgot.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
-        btBanhNgot.setForeground(java.awt.Color.blue);
-        btBanhNgot.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\BANHNGOT.png")); // NOI18N
-        btBanhNgot.setText("Bánh ngọt");
-        btBanhNgot.setBorder(null);
-        btBanhNgot.setContentAreaFilled(false);
-        btBanhNgot.setFocusPainted(false);
-        btBanhNgot.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        pn_Top.add(pnTopRight, java.awt.BorderLayout.CENTER);
 
-        btNuocEp.setBackground(new java.awt.Color(255, 255, 255));
-        btNuocEp.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
-        btNuocEp.setForeground(java.awt.Color.blue);
-        btNuocEp.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\NUOCEP.png")); // NOI18N
-        btNuocEp.setText("Nước ép");
-        btNuocEp.setBorder(null);
-        btNuocEp.setContentAreaFilled(false);
-        btNuocEp.setFocusPainted(false);
-        btNuocEp.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btNuocEp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btNuocEpActionPerformed(evt);
-            }
-        });
+        add(pn_Top, java.awt.BorderLayout.PAGE_START);
 
-        btSinhTo.setBackground(new java.awt.Color(255, 255, 255));
-        btSinhTo.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
-        btSinhTo.setForeground(java.awt.Color.blue);
-        btSinhTo.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\SINHTO.png")); // NOI18N
-        btSinhTo.setText("Sinh tố");
-        btSinhTo.setBorder(null);
-        btSinhTo.setContentAreaFilled(false);
-        btSinhTo.setFocusPainted(false);
-        btSinhTo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-
-        btCoffee.setBackground(new java.awt.Color(255, 255, 255));
-        btCoffee.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
-        btCoffee.setForeground(java.awt.Color.blue);
-        btCoffee.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\CAFFEE.png")); // NOI18N
-        btCoffee.setText("Coffee");
-        btCoffee.setBorder(null);
-        btCoffee.setContentAreaFilled(false);
-        btCoffee.setFocusPainted(false);
-        btCoffee.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btCoffee.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCoffeeActionPerformed(evt);
-            }
-        });
+        pn_Left.setBackground(new java.awt.Color(255, 255, 255));
+        pn_Left.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createMatteBorder(0, 10, 5, 5, new java.awt.Color(51, 153, 255)), javax.swing.BorderFactory.createEmptyBorder(10, 0, 0, 0)));
+        pn_Left.setForeground(new java.awt.Color(0, 153, 204));
+        pn_Left.setPreferredSize(new java.awt.Dimension(290, 575));
+        pn_Left.setLayout(new java.awt.GridLayout(10, 1));
 
         btTatCaCacMon.setBackground(new java.awt.Color(255, 255, 255));
-        btTatCaCacMon.setFont(new java.awt.Font("Cambria", 1, 28)); // NOI18N
-        btTatCaCacMon.setForeground(java.awt.Color.blue);
-        btTatCaCacMon.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\icons8_food_40px.png")); // NOI18N
+        btTatCaCacMon.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btTatCaCacMon.setForeground(new java.awt.Color(0, 153, 204));
         btTatCaCacMon.setText("Tất cả các món");
-        btTatCaCacMon.setBorder(null);
-        btTatCaCacMon.setContentAreaFilled(false);
+        btTatCaCacMon.setBorderPainted(false);
         btTatCaCacMon.setFocusPainted(false);
         btTatCaCacMon.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btTatCaCacMon.setMaximumSize(new java.awt.Dimension(500, 56));
+        btTatCaCacMon.setPreferredSize(new java.awt.Dimension(300, 56));
+        btTatCaCacMon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btTatCaCacMonActionPerformed(evt);
+            }
+        });
+        pn_Left.add(btTatCaCacMon);
 
-        javax.swing.GroupLayout pnLeftLayout = new javax.swing.GroupLayout(pnLeft);
-        pnLeft.setLayout(pnLeftLayout);
-        pnLeftLayout.setHorizontalGroup(
-            pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btTatCaCacMon, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-            .addComponent(btDoUongCoGa, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-            .addComponent(btTraSua, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-            .addComponent(btBanhNgot, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-            .addComponent(btNuocEp, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-            .addComponent(btSinhTo, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-            .addComponent(btCoffee, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-        );
-        pnLeftLayout.setVerticalGroup(
-            pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnLeftLayout.createSequentialGroup()
-                .addComponent(btTatCaCacMon, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btDoUongCoGa, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btTraSua, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btBanhNgot, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btNuocEp, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btSinhTo, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btCoffee, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+        btDoUongCoga.setBackground(new java.awt.Color(255, 255, 255));
+        btDoUongCoga.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btDoUongCoga.setForeground(new java.awt.Color(0, 153, 204));
+        btDoUongCoga.setText("Đồ uống có ga");
+        btDoUongCoga.setBorderPainted(false);
+        btDoUongCoga.setFocusPainted(false);
+        btDoUongCoga.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btDoUongCoga.setPreferredSize(new java.awt.Dimension(262, 56));
+        pn_Left.add(btDoUongCoga);
 
-        add(pnLeft, java.awt.BorderLayout.LINE_START);
+        btTraSua.setBackground(new java.awt.Color(255, 255, 255));
+        btTraSua.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btTraSua.setForeground(new java.awt.Color(0, 153, 204));
+        btTraSua.setText("Trà sữa");
+        btTraSua.setBorderPainted(false);
+        btTraSua.setFocusPainted(false);
+        btTraSua.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btTraSua.setPreferredSize(new java.awt.Dimension(262, 56));
+        pn_Left.add(btTraSua);
 
-        pnBottom.setBackground(java.awt.Color.white);
-        pnBottom.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(0, 255, 255))));
+        btBanhNgot.setBackground(new java.awt.Color(255, 255, 255));
+        btBanhNgot.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btBanhNgot.setForeground(new java.awt.Color(0, 153, 204));
+        btBanhNgot.setText("Bánh ngọt");
+        btBanhNgot.setBorderPainted(false);
+        btBanhNgot.setFocusPainted(false);
+        btBanhNgot.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btBanhNgot.setPreferredSize(new java.awt.Dimension(262, 56));
+        pn_Left.add(btBanhNgot);
 
-        btThem.setBackground(new java.awt.Color(51, 255, 204));
-        btThem.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btThem.setForeground(java.awt.Color.blue);
+        btNuocEp.setBackground(new java.awt.Color(255, 255, 255));
+        btNuocEp.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btNuocEp.setForeground(new java.awt.Color(0, 153, 204));
+        btNuocEp.setText("Nước ép");
+        btNuocEp.setBorderPainted(false);
+        btNuocEp.setFocusPainted(false);
+        btNuocEp.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btNuocEp.setPreferredSize(new java.awt.Dimension(262, 56));
+        pn_Left.add(btNuocEp);
+
+        btSinhTo.setBackground(new java.awt.Color(255, 255, 255));
+        btSinhTo.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btSinhTo.setForeground(new java.awt.Color(0, 153, 204));
+        btSinhTo.setText("Sinh tố");
+        btSinhTo.setBorderPainted(false);
+        btSinhTo.setFocusPainted(false);
+        btSinhTo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btSinhTo.setPreferredSize(new java.awt.Dimension(262, 56));
+        pn_Left.add(btSinhTo);
+
+        btCoffee.setBackground(new java.awt.Color(255, 255, 255));
+        btCoffee.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btCoffee.setForeground(new java.awt.Color(0, 153, 204));
+        btCoffee.setText("Coffee");
+        btCoffee.setBorderPainted(false);
+        btCoffee.setFocusPainted(false);
+        btCoffee.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btCoffee.setPreferredSize(new java.awt.Dimension(262, 56));
+        pn_Left.add(btCoffee);
+
+        add(pn_Left, java.awt.BorderLayout.LINE_START);
+
+        pn_Center.setLayout(new java.awt.BorderLayout());
+
+        pn_CenterBottom.setBackground(new java.awt.Color(255, 255, 255));
+        pn_CenterBottom.setBorder(javax.swing.BorderFactory.createMatteBorder(5, 0, 5, 5, new java.awt.Color(51, 153, 255)));
+
+        btThem.setBackground(new java.awt.Color(0, 153, 0));
+        btThem.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        btThem.setForeground(new java.awt.Color(255, 255, 255));
         btThem.setText("THÊM");
+        btThem.setBorderPainted(false);
         btThem.setFocusPainted(false);
-        btThem.setPreferredSize(new java.awt.Dimension(200, 80));
+        btThem.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btThem.setPreferredSize(new java.awt.Dimension(120, 40));
+        pn_CenterBottom.add(btThem);
 
-        btXoa.setBackground(new java.awt.Color(51, 255, 204));
-        btXoa.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btXoa.setForeground(java.awt.Color.blue);
-        btXoa.setText("XÓA");
-        btXoa.setFocusPainted(false);
-        btXoa.setPreferredSize(new java.awt.Dimension(200, 80));
-
-        btChinhSua.setBackground(new java.awt.Color(51, 255, 204));
-        btChinhSua.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btChinhSua.setForeground(java.awt.Color.blue);
+        btChinhSua.setBackground(new java.awt.Color(0, 153, 0));
+        btChinhSua.setFont(new java.awt.Font("Cambria", 1, 16)); // NOI18N
+        btChinhSua.setForeground(new java.awt.Color(255, 255, 255));
         btChinhSua.setText("CHỈNH SỬA");
+        btChinhSua.setBorderPainted(false);
+        btChinhSua.setEnabled(false);
         btChinhSua.setFocusPainted(false);
-        btChinhSua.setPreferredSize(new java.awt.Dimension(200, 80));
+        btChinhSua.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btChinhSua.setPreferredSize(new java.awt.Dimension(160, 40));
         btChinhSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btChinhSuaActionPerformed(evt);
             }
         });
+        pn_CenterBottom.add(btChinhSua);
 
-        javax.swing.GroupLayout pnBottomLayout = new javax.swing.GroupLayout(pnBottom);
-        pnBottom.setLayout(pnBottomLayout);
-        pnBottomLayout.setHorizontalGroup(
-            pnBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnBottomLayout.createSequentialGroup()
-                .addGap(300, 300, 300)
-                .addComponent(btThem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(170, 170, 170)
-                .addComponent(btXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(131, 131, 131))
-        );
-        pnBottomLayout.setVerticalGroup(
-            pnBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnBottomLayout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(pnBottomLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btXoa, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btThem, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btChinhSua, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(50, Short.MAX_VALUE))
-        );
+        btXoa.setBackground(new java.awt.Color(0, 153, 0));
+        btXoa.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        btXoa.setForeground(new java.awt.Color(255, 255, 255));
+        btXoa.setText("XÓA");
+        btXoa.setBorderPainted(false);
+        btXoa.setEnabled(false);
+        btXoa.setFocusPainted(false);
+        btXoa.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btXoa.setPreferredSize(new java.awt.Dimension(120, 40));
+        pn_CenterBottom.add(btXoa);
 
-        add(pnBottom, java.awt.BorderLayout.PAGE_END);
+        pn_Center.add(pn_CenterBottom, java.awt.BorderLayout.PAGE_END);
 
-        pnTop.setBackground(java.awt.Color.white);
-        pnTop.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createEtchedBorder(), javax.swing.BorderFactory.createMatteBorder(10, 10, 10, 10, new java.awt.Color(0, 255, 255))));
+        pn_CenterTop.setBackground(new java.awt.Color(255, 255, 255));
+        pn_CenterTop.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        pn_CenterTop.setLayout(new javax.swing.OverlayLayout(pn_CenterTop));
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 1, 36)); // NOI18N
-        jLabel1.setForeground(java.awt.Color.blue);
-        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\ORDER.png")); // NOI18N
-        jLabel1.setText("THÔNG TIN THỰC ĐƠN");
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(1060, 450));
 
-        javax.swing.GroupLayout pnTopLayout = new javax.swing.GroupLayout(pnTop);
-        pnTop.setLayout(pnTopLayout);
-        pnTopLayout.setHorizontalGroup(
-            pnTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTopLayout.createSequentialGroup()
-                .addContainerGap(338, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(375, 375, 375))
-        );
-        pnTopLayout.setVerticalGroup(
-            pnTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnTopLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap())
-        );
+        pnCenterIn.setBackground(new java.awt.Color(255, 255, 255));
+        pnCenterIn.setPreferredSize(new java.awt.Dimension(1210, 600));
+        pnCenterIn.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
+        jScrollPane1.setViewportView(pnCenterIn);
 
-        add(pnTop, java.awt.BorderLayout.PAGE_START);
+        pn_CenterTop.add(jScrollPane1);
+
+        pn_Center.add(pn_CenterTop, java.awt.BorderLayout.CENTER);
+
+        add(pn_Center, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btTatCaCacMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTatCaCacMonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btTatCaCacMonActionPerformed
 
     private void btChinhSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btChinhSuaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btChinhSuaActionPerformed
-
-    private void btTraSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btTraSuaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btTraSuaActionPerformed
-
-    private void btNuocEpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNuocEpActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btNuocEpActionPerformed
-
-    private void btCoffeeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCoffeeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btCoffeeActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btBanhNgot;
     private javax.swing.JButton btChinhSua;
     private javax.swing.JButton btCoffee;
-    private javax.swing.JButton btDoUongCoGa;
+    private javax.swing.JButton btDoUongCoga;
     private javax.swing.JButton btNuocEp;
     private javax.swing.JButton btSinhTo;
     private javax.swing.JButton btTatCaCacMon;
@@ -337,14 +292,23 @@ public class QuanLyPanel extends javax.swing.JPanel {
     private javax.swing.JButton btTraSua;
     private javax.swing.JButton btXoa;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel pnBottom;
-    private javax.swing.JPanel pnCenter;
-    private javax.swing.JPanel pnLeft;
-    private javax.swing.JPanel pnTop;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel pnCenterIn;
+    private javax.swing.JPanel pnTopLeft;
+    private javax.swing.JPanel pnTopRight;
+    private javax.swing.JPanel pn_Center;
+    private javax.swing.JPanel pn_CenterBottom;
+    private javax.swing.JPanel pn_CenterTop;
+    private javax.swing.JPanel pn_Left;
+    private javax.swing.JPanel pn_Top;
     // End of variables declaration//GEN-END:variables
 
-    private void initCenterComponent(List<Product> products) {
-        pnCenter.removeAll();
+    private void initEvent() {
+        pnLeftHighLightButtonsEvents();
+    }
+
+    private void initCenterInComponent(List<Product> products) {
+        pnCenterIn.removeAll();
         products.forEach(new Consumer<Product>() {
             @Override
             public void accept(Product p) {
@@ -353,19 +317,16 @@ public class QuanLyPanel extends javax.swing.JPanel {
                 button.setFont(new Font("Camboria", Font.PLAIN, 12));
                 button.setForeground(Color.blue);
                 button.setFocusPainted(false);
-                button.setPreferredSize(new Dimension(150, 150));
-                button.setIcon(ImageUtils.loadImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\food.png", 50, 50));
+                button.setPreferredSize(new Dimension(140, 140));
+                button.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + p.getImage(), 100, 100));
                 button.setVerticalTextPosition(BOTTOM);
                 button.setHorizontalTextPosition(CENTER);
-
                 setButton(button, p);
-
-                pnCenter.add(button);
-
+                pnCenterIn.add(button);
             }
         });
-        pnCenter.revalidate();
-        pnCenter.repaint();
+        pnCenterIn.revalidate();
+        pnCenterIn.repaint();
         pnCenterEvent();
     }
 
@@ -374,12 +335,8 @@ public class QuanLyPanel extends javax.swing.JPanel {
         button.setActionCommand(p.getId() + "");
     }
 
-    private void initEvent() {
-        pnLeftHighLightButtonsEvents();
-    }
-
     private void pnLeftHighLightButtonsEvents() {
-        final Component[] components = pnLeft.getComponents();
+        final Component[] components = pn_Left.getComponents();
         for (Component component : components) {
             if (component instanceof JButton) {
                 final JButton button = (JButton) component;
@@ -387,13 +344,20 @@ public class QuanLyPanel extends javax.swing.JPanel {
                     @Override
                     public void mousePressed(MouseEvent e) {
                         disableHighLightButtonsPnLeft(components);
-                        //button.setBorder(pnLeftButtonHighLightBorder); 
-                        button.setBorderPainted(false);
-                        button.setFocusPainted(false);
-                        button.setOpaque(true);
-                        button.setBackground(Color.BLUE);
+                        button.setBackground(new Color(0, 153, 204));
                         button.setForeground(Color.WHITE);
                     }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        button.setFont(new Font("Cambria Math", Font.BOLD, 30));
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+                        button.setFont(new Font("Cambria Math", Font.BOLD, 28));
+                    }
+
                 });
             }
         }
@@ -404,6 +368,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
             if (component instanceof JButton) {
                 final JButton button = (JButton) component;
                 button.setFont(new Font("Tahoma", Font.PLAIN, 12));
+                button.setForeground(Color.BLUE);
             }
         }
     }
@@ -411,10 +376,9 @@ public class QuanLyPanel extends javax.swing.JPanel {
     private void disableHighLightButtonsPnLeft(Component... components) {
         for (Component component : components) {
             if (component instanceof JButton) {
-                final JButton button = (JButton) component;               
-                button.setOpaque(false);
-                button.setBackground(Color.white);
-                button.setForeground(Color.BLUE);
+                final JButton button = (JButton) component;
+                button.setBackground(Color.WHITE);
+                button.setForeground(new Color(0, 153, 204));
             }
         }
     }
@@ -430,126 +394,122 @@ public class QuanLyPanel extends javax.swing.JPanel {
         btRemoveEvent();
         btAddEvents();
         btEditEvents();
-
     }
 
     private void btTatCaCacMonEvent() {
+        btTatCaCacMon.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + File.separator + "ALLFOOD.png", 30, 30));
         btTatCaCacMon.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 products = productService.getAll();
                 TitledBorder.setTitle("Tất cả các món");
-                pnCenter.setBorder(TitledBorder);
-                initCenterComponent(products);
-
+                pnCenterIn.setBorder(TitledBorder);
+                initCenterInComponent(products);
             }
-
         });
     }
 
     private void btDoUongCoGaEvent() {
-        btDoUongCoGa.addMouseListener(new MouseAdapter() {
+        btDoUongCoga.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + "DOUONG.png"));
+        btDoUongCoga.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 products = productService.getAll(1);
                 TitledBorder.setTitle("Đồ uống có ga");
-                pnCenter.setBorder(TitledBorder);
-                initCenterComponent(products);
+                pnCenterIn.setBorder(TitledBorder);
+                initCenterInComponent(products);
             }
         });
-
     }
 
     private void btTraSuaEvent() {
+        btTraSua.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + "TRASUA.png"));
         btTraSua.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 products = productService.getAll(2);
                 TitledBorder.setTitle("Trà sữa");
-                pnCenter.setBorder(TitledBorder);
-                initCenterComponent(products);
-
+                pnCenterIn.setBorder(TitledBorder);
+                initCenterInComponent(products);
             }
-
         });
     }
 
     private void btBanhNgotEvent() {
+        btBanhNgot.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + "BANHNGOT.png"));
         btBanhNgot.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 products = productService.getAll(3);
                 TitledBorder.setTitle("Bánh ngọt");
-                pnCenter.setBorder(TitledBorder);
-                initCenterComponent(products);
-
+                pnCenterIn.setBorder(TitledBorder);
+                initCenterInComponent(products);
             }
-
         });
     }
 
     private void btNuocEpRvent() {
+        btNuocEp.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + "NUOCEP.png"));
         btNuocEp.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 products = productService.getAll(4);
                 TitledBorder.setTitle("Nước ép");
-                pnCenter.setBorder(TitledBorder);
-                initCenterComponent(products);
+                pnCenterIn.setBorder(TitledBorder);
+                initCenterInComponent(products);
 
             }
-
         });
     }
 
     private void btSinhToEvent() {
+        btSinhTo.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + "SINHTO.png"));
         btSinhTo.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 products = productService.getAll(5);
                 TitledBorder.setTitle("Sinh tố");
-                pnCenter.setBorder(TitledBorder);
-                initCenterComponent(products);
-
+                pnCenterIn.setBorder(TitledBorder);
+                initCenterInComponent(products);
             }
-
         });
     }
 
     private void btCoffeeEvent() {
+        btCoffee.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + "CAFFEE.png"));
         btCoffee.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 products = productService.getAll(6);
                 TitledBorder.setTitle("Coffee");
-                pnCenter.setBorder(TitledBorder);
-                initCenterComponent(products);
-
+                pnCenterIn.setBorder(TitledBorder);
+                initCenterInComponent(products);
             }
-
         });
     }
 
     private void btRemoveEvent() {
+        btXoa.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + File.separator + "DELETE.png", 30, 30));
         btXoa.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (btXoa.isEnabled()) {
+                if (btXoa.isEnabled() == true) {
                     int selected = JOptionPane.showConfirmDialog(null, "Xóa Món Ăn");
                     if (selected == 0) {
+                        btXoa.setEnabled(false);
+                        btChinhSua.setEnabled(false);
                         productService.delete(selectedProduct.getId());
-                        pnCenter.remove(btSelected);
-                        pnCenter.revalidate();
-                        pnCenter.repaint();
-
+                        pnCenterIn.remove(btSelected);
+                        pnCenterIn.revalidate();
+                        pnCenterIn.repaint();
                     }
-
                 }
             }
         });
     }
 
     public void btAddEvents() {
+        btThem.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + File.separator + "ADD.png", 30, 30));
         btThem.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -557,30 +517,35 @@ public class QuanLyPanel extends javax.swing.JPanel {
                 managerForm.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                 managerForm.setVisible(true);
             }
-
         });
     }
 
     public void btEditEvents() {
+        btChinhSua.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + File.separator + "Edit.png", 30, 30));
         btChinhSua.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                ManagerEditFrom managerEditFrom = new ManagerEditFrom(selectedProduct);
-                managerEditFrom.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-                managerEditFrom.setVisible(true);
+                if (btChinhSua.isEnabled()) {
+                    ManagerEditFrom managerEditFrom = new ManagerEditFrom(selectedProduct);
+                    managerEditFrom.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+                    managerEditFrom.setVisible(true);
+                }
             }
         });
     }
 
     private void pnCenterEvent() {
-        Component[] components = pnCenter.getComponents();
-        Arrays.stream(components).forEach(t -> {
+        Component[] components = pnCenterIn.getComponents();
+        Arrays.stream(components).forEach((Component t) -> {
             JButton button = (JButton) t;
             button.addMouseListener(new MouseAdapter() {
                 @Override
                 public void mousePressed(MouseEvent e) {
                     disableHighLightButtonsCenter(components);
                     button.setFont(new Font("Camboria", Font.BOLD, 14));
+                    btXoa.setEnabled(true);
+                    btChinhSua.setEnabled(true);
+                    button.setForeground(Color.red);
                     products.forEach(p -> {
                         if (p.getId() == Integer.parseInt(button.getActionCommand())) {
                             selectedProduct = p;
@@ -590,13 +555,22 @@ public class QuanLyPanel extends javax.swing.JPanel {
                     });
                 }
 
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    button.setFont(new Font("Camboria", Font.BOLD, 14));
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    button.setFont(new Font("Camboria", Font.PLAIN, 12));
+                }
             });
         });
     }
 
     public static void update(Product product) {
         btSelected.setText(product.getName());
+        btSelected.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + File.separator + product.getImage(), 100, 100));
         btSelected.setActionCommand(product.getId() + "");
     }
-
 }

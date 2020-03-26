@@ -44,36 +44,36 @@ public class TableButton extends JButton {
     public void setColor() {
         if (table.getStatus().getId() == TableStatus.EMPTY) {//empty
             this.setBackground(Color.white);
-            this.setContentAreaFilled(false);
-            this.setOpaque(true);
+            // this.setContentAreaFilled(false);
+            // this.setOpaque(true);
         }
         if (table.getStatus().getId() == TableStatus.FULL) {//Full
             this.setBackground(Color.cyan);
-            this.setContentAreaFilled(false);
-            this.setOpaque(true);
+            // this.setContentAreaFilled(false);
+            // this.setOpaque(true);
         }
         if (table.getStatus().getId() == TableStatus.ORDERED) {//Ordered 
             this.setBackground(Color.pink);
-            this.setContentAreaFilled(false);
-            this.setOpaque(true);
+            // this.setContentAreaFilled(false);
+            // this.setOpaque(true);
         }
     }
     
     public void setColorEnter() {
         if (table.getStatus().getId() == TableStatus.EMPTY) {//empty
             this.setBackground(Color.LIGHT_GRAY);
-            this.setContentAreaFilled(false);
-            this.setOpaque(true);
+            // this.setContentAreaFilled(false);
+            // this.setOpaque(true);
         }
         if (table.getStatus().getId() == TableStatus.FULL) {//Full
             this.setBackground(Color.BLUE);
-            this.setContentAreaFilled(false);
-            this.setOpaque(true);
+            // this.setContentAreaFilled(false);
+            // this.setOpaque(true);
         }
         if (table.getStatus().getId() == TableStatus.ORDERED) {//Ordered 
             this.setBackground(Color.red);
-            this.setContentAreaFilled(false);
-            this.setOpaque(true);
+            // this.setContentAreaFilled(false);
+            // this.setOpaque(true);
         }
     }
 

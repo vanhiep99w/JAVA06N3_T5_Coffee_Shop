@@ -284,6 +284,7 @@ public class DatMonPanel extends javax.swing.JPanel {
 
     private void writeBill(List<BillToPrint> l, Integer id_Order) throws IOException {
         //System.out.println(l.size());
+        
         List<Float> listSum = new ArrayList<>();
 
 // Create new Paragraph
@@ -323,7 +324,7 @@ public class DatMonPanel extends javax.swing.JPanel {
         FileOutputStream out = new FileOutputStream(new File("bill\\" + id_Order + "_bill.docx"));
         document.write(out);
         out.close();
-        document.close();
+        //document.close();
         System.out.println("successully");
     }
 
