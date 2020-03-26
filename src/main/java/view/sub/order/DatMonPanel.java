@@ -14,6 +14,9 @@ import entities.Product_Order;
 import entities.Table;
 import entities.TableStatus;
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -68,7 +71,7 @@ public class DatMonPanel extends javax.swing.JPanel {
     final String imageDirURL = URL_Factory.IMAGE_FOLDER_URL;
     private final Locale localeVN = new Locale("vi", "VN");
     private final NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
-    private XWPFDocument document = new XWPFDocument();
+    private XWPFDocument document;// = new XWPFDocument();
     private List<BillToPrint> listBill = new ArrayList<>();
 
     /**
@@ -94,28 +97,64 @@ public class DatMonPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSplitPane1 = new javax.swing.JSplitPane();
-        pnLeft = new javax.swing.JPanel();
         pnRight = new javax.swing.JPanel();
-
-        setLayout(new javax.swing.OverlayLayout(this));
-
-        jSplitPane1.setDividerLocation(700);
-
-        pnLeft.setLayout(new javax.swing.OverlayLayout(pnLeft));
-        jSplitPane1.setLeftComponent(pnLeft);
+        jpLeft = new javax.swing.JScrollPane();
+        pnLeft = new javax.swing.JPanel();
+        tfSearchTable = new javax.swing.JTextField();
+        btnAll = new javax.swing.JButton();
 
         pnRight.setLayout(new javax.swing.OverlayLayout(pnRight));
-        jSplitPane1.setRightComponent(pnRight);
 
-        add(jSplitPane1);
+        jpLeft.setViewportView(pnLeft);
+
+        tfSearchTable.setFont(new java.awt.Font("Dialog", 2, 18)); // NOI18N
+        tfSearchTable.setForeground(new java.awt.Color(204, 204, 204));
+        tfSearchTable.setText("Nhập bàn cần tìm kiếm");
+
+        btnAll.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        btnAll.setText("All");
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(tfSearchTable, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAll, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
+                        .addGap(1213, 1213, 1213))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jpLeft)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jpLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnRight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tfSearchTable)
+                    .addComponent(btnAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSplitPane jSplitPane1;
+    private javax.swing.JButton btnAll;
+    private javax.swing.JScrollPane jpLeft;
     private javax.swing.JPanel pnLeft;
     private javax.swing.JPanel pnRight;
+    private javax.swing.JTextField tfSearchTable;
     // End of variables declaration//GEN-END:variables
 
     private void setPnLeft() {
@@ -132,7 +171,8 @@ public class DatMonPanel extends javax.swing.JPanel {
         initEventTableOfTablePanel();
         btAddEvent();
         btPayEvent();
-
+        tfSearchEvent();
+        btAllEvent();
     }
 
     private void initEventTableOfTablePanel() {
@@ -212,6 +252,50 @@ public class DatMonPanel extends javax.swing.JPanel {
         });
     }
 
+    private void tfSearchEvent() {
+        tfSearchTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                tfSearchTable.setText("");
+                tfSearchTable.setFont(new Font("Dialog", 1, 18));
+                tfSearchTable.setForeground(Color.BLACK);
+            }
+
+        });
+        tfSearchTable.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    String searchTableString = tfSearchTable.getText();
+                    tablePanel = new TablePanel(searchTableString);
+                    pnLeft.removeAll();
+                    pnLeft.add(tablePanel);
+                    initEventTableOfTablePanel();
+                    pnLeft.repaint();
+                    pnLeft.revalidate();
+                }
+            }
+        });
+    }
+
+    private void btAllEvent() {
+        btnAll.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                tablePanel = new TablePanel();
+                pnLeft.removeAll();
+                pnLeft.add(tablePanel);
+                initEventTableOfTablePanel();
+                pnLeft.repaint();
+                pnLeft.revalidate();
+                tfSearchTable.setText("Nhập bàn cần tìm kiếm");
+                tfSearchTable.setFont(new Font("Dialog", 2, 18));
+                tfSearchTable.setForeground(new Color(204, 204, 204));
+            }
+
+        });
+    }
+
     private void btPayEvent() {
         btnPay = informationPanel.getbtPay();
         btnPay.addMouseListener(new MouseAdapter() {
@@ -229,6 +313,7 @@ public class DatMonPanel extends javax.swing.JPanel {
                 selectedTable.setStatus(new TableStatus(1, selectedTable.getName()));
 
                 //print bill
+                document = new XWPFDocument();
                 listBill = billService.getBillToPrint(idOrder);
                 tableService.update(selectedTable);
                 try {

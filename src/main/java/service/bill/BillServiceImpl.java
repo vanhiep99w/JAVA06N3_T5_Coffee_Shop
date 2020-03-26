@@ -33,4 +33,9 @@ public class BillServiceImpl implements BillService {
         return billDao.getBillToPrint(id_Order);
     }
 
+    @Override
+    public Float getSumOfDay(String day) {
+        return billDao.getSumOfDay(day);
+    }
+
 }

@@ -8,6 +8,7 @@ package view.sub.order;
 import entities.Table;
 import entities.TableStatus;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
@@ -40,24 +41,25 @@ public class TableButton extends JButton {
         this.setText(table.getName());
         this.setFont(font);
         this.setActionCommand("");
+        this.setPreferredSize(new Dimension(150, 150));
         this.setBorderPainted(false);
     }
 
     public void setColor() {
         if (table.getStatus().getId() == TableStatus.EMPTY) {//empty
             this.setBackground(Color.white);
-            // this.setContentAreaFilled(false);
-            // this.setOpaque(true);
+            this.setContentAreaFilled(false);
+            this.setOpaque(true);
         }
         if (table.getStatus().getId() == TableStatus.FULL) {//Full
             this.setBackground(Color.cyan);
-            // this.setContentAreaFilled(false);
-            // this.setOpaque(true);
+            this.setContentAreaFilled(false);
+            this.setOpaque(true);
         }
         if (table.getStatus().getId() == TableStatus.ORDERED) {//Ordered 
             this.setBackground(Color.pink);
-            // this.setContentAreaFilled(false);
-            // this.setOpaque(true);
+            this.setContentAreaFilled(false);
+            this.setOpaque(true);
         }
     }
     

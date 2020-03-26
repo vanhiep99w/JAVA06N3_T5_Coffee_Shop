@@ -29,4 +29,9 @@ public class TableServiceImpl implements TableService {
         return tableDao.update(table);
     }
 
+    @Override
+    public List<Table> getSearch(String name_Table) {
+        return tableDao.getSearch(name_Table);
+    }
+
 }
