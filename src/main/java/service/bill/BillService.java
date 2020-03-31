@@ -18,4 +18,6 @@ public interface BillService {
     public boolean add(Bill bill);
 
     public List<BillToPrint> getBillToPrint(int id_Order);
+
+    public Float getSumOfDay(String day);
 }

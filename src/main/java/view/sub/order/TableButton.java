@@ -42,6 +42,7 @@ public class TableButton extends JButton {
         this.setFont(font);
         this.setForeground(new Color(227, 120, 4));
         this.setActionCommand("");
+        this.setPreferredSize(new Dimension(150, 150));
         this.setBorderPainted(false);
         
     }
@@ -49,15 +50,20 @@ public class TableButton extends JButton {
     public void setColor() {
         if (table.getStatus().getId() == TableStatus.EMPTY) {//empty
             this.setBackground(Color.white);
-            
+
+            this.setContentAreaFilled(false);
+            this.setOpaque(true);
         }
         if (table.getStatus().getId() == TableStatus.FULL) {//Full
             this.setBackground(Color.cyan);
-            
+            this.setContentAreaFilled(false);
+            this.setOpaque(true);
         }
         if (table.getStatus().getId() == TableStatus.ORDERED) {//Ordered 
             this.setBackground(Color.pink);
-            this.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL+"\\ordered.png"));
+            this.setContentAreaFilled(false);
+            this.setOpaque(true);
+
         }
     }
     

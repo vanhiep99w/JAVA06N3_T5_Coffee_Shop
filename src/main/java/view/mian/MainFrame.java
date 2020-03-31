@@ -169,7 +169,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(otherInforPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(529, Short.MAX_VALUE))
+                .addContainerGap(549, Short.MAX_VALUE))
         );
         otherInforPanelLayout.setVerticalGroup(
             otherInforPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
