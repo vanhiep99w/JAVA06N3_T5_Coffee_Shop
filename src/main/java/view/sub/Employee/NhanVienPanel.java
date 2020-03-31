@@ -27,6 +27,8 @@ import service.shift.ShiftService;
 import service.shift.ShiftServiceImpl;
 import service.work.WorkService;
 import service.work.WorkServiceImpl;
+import util.ImageUtils;
+import util.URL_Factory;
 
 /**
  *
@@ -149,22 +151,20 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 48, Short.MAX_VALUE)
-                        .addComponent(cbWork, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cbWork, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pnButton, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
-                    .addComponent(cbWork))
+                    .addComponent(cbWork, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                    .addComponent(btAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnButton, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
+                .addComponent(pnButton, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -218,18 +218,22 @@ public class NhanVienPanel extends javax.swing.JPanel {
         cbShift1.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         cbShift1.setText("Ca1");
         cbShift1.setFocusPainted(false);
+        cbShift1.setPreferredSize(new java.awt.Dimension(100, 40));
 
         cbShift2.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         cbShift2.setText("Ca1");
         cbShift2.setFocusPainted(false);
+        cbShift2.setPreferredSize(new java.awt.Dimension(100, 40));
 
         cbShift3.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         cbShift3.setText("Ca1");
         cbShift3.setFocusPainted(false);
+        cbShift3.setPreferredSize(new java.awt.Dimension(100, 40));
 
         cbShift4.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         cbShift4.setText("Ca1");
         cbShift4.setFocusPainted(false);
+        cbShift4.setPreferredSize(new java.awt.Dimension(100, 40));
 
         javax.swing.GroupLayout pnInforLayout = new javax.swing.GroupLayout(pnInfor);
         pnInfor.setLayout(pnInforLayout);
@@ -243,29 +247,26 @@ public class NhanVienPanel extends javax.swing.JPanel {
                     .addComponent(lbPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbShift, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbWork, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnInforLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(cbWork1, 0, 654, Short.MAX_VALUE)
-                                .addComponent(tfPhoneNumber)
-                                .addComponent(tfName)
-                                .addComponent(tfSalary, javax.swing.GroupLayout.Alignment.TRAILING))
-                            .addGroup(pnInforLayout.createSequentialGroup()
-                                .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(257, 257, 257)))
-                        .addGap(0, 91, Short.MAX_VALUE))
+                        .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnInforLayout.createSequentialGroup()
-                        .addGap(5, 5, 5)
-                        .addComponent(cbShift3)
-                        .addGap(88, 88, 88)
-                        .addComponent(cbShift2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 189, Short.MAX_VALUE)
-                        .addComponent(cbShift1)
-                        .addGap(70, 70, 70)
-                        .addComponent(cbShift4)
-                        .addGap(123, 123, 123))))
+                        .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(pnInforLayout.createSequentialGroup()
+                                .addComponent(cbShift3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(66, 66, 66)
+                                .addComponent(cbShift2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(146, 146, 146)
+                                .addComponent(cbShift1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(cbShift4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cbWork1, javax.swing.GroupLayout.Alignment.LEADING, 0, 726, Short.MAX_VALUE)
+                            .addComponent(tfPhoneNumber, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tfSalary)
+                            .addComponent(tfName, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(0, 10, Short.MAX_VALUE))))
         );
         pnInforLayout.setVerticalGroup(
             pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -395,6 +396,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         setComboBox();
         setTable();
         seCheckBox();
+        setbtAdd();
     }
     
     private void setComboBox() {
@@ -550,6 +552,12 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private void seCheckBox() {
         
     }
+
+    private void setbtAdd() {
+        btAdd.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL+"\\addE.png"));
+    }
+
+    
 
     
 }

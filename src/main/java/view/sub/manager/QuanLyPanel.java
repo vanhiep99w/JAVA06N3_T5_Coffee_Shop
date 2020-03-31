@@ -98,6 +98,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
         pnCenterIn = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setEnabled(false);
         setLayout(new java.awt.BorderLayout());
 
         pn_Top.setBackground(new java.awt.Color(255, 255, 255));

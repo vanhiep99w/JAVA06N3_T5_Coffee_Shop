@@ -6,15 +6,6 @@
 package view.sub.data;
 
 
-import java.awt.CardLayout;
-import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JPanel;
-import javax.swing.OverlayLayout;
-import view.sub.data.sub.ChartPanel;
-import view.sub.data.sub.OverviewPanel;
-import view.sub.data.sub.StatisticPanel;
 
 
 /**
@@ -24,14 +15,11 @@ import view.sub.data.sub.StatisticPanel;
 public class ThongKePanel extends javax.swing.JPanel {
 
     
-    private final CardLayout cardLayout;
+    
     
     
     public ThongKePanel() {
-        initComponents();
-        setComponents();
-        cardLayout =(CardLayout) pnRight.getLayout();
-        setEvents();
+       
     }
 
     /**
@@ -43,170 +31,24 @@ public class ThongKePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pnLeft = new javax.swing.JPanel();
-        btStatistic = new javax.swing.JButton();
-        btOverview = new javax.swing.JButton();
-        btChart = new javax.swing.JButton();
-        pnRight = new javax.swing.JPanel();
-
         setBackground(new java.awt.Color(255, 255, 255));
-
-        pnLeft.setBackground(new java.awt.Color(255, 255, 255));
-
-        btStatistic.setBackground(new java.awt.Color(247, 186, 80));
-        btStatistic.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_database_50px.png")); // NOI18N
-        btStatistic.setBorderPainted(false);
-        btStatistic.setFocusPainted(false);
-
-        btOverview.setBackground(new java.awt.Color(219, 98, 79));
-        btOverview.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_page_50px.png")); // NOI18N
-        btOverview.setBorderPainted(false);
-        btOverview.setFocusPainted(false);
-
-        btChart.setBackground(new java.awt.Color(71, 179, 156));
-        btChart.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_bar_chart_50px.png")); // NOI18N
-        btChart.setBorderPainted(false);
-        btChart.setFocusPainted(false);
-
-        javax.swing.GroupLayout pnLeftLayout = new javax.swing.GroupLayout(pnLeft);
-        pnLeft.setLayout(pnLeftLayout);
-        pnLeftLayout.setHorizontalGroup(
-            pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(btStatistic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btOverview, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
-            .addComponent(btChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        pnLeftLayout.setVerticalGroup(
-            pnLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnLeftLayout.createSequentialGroup()
-                .addComponent(btOverview, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(btChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        pnRight.setBackground(new java.awt.Color(204, 204, 0));
-        pnRight.setPreferredSize(new java.awt.Dimension(1378, 0));
-        pnRight.setLayout(new java.awt.CardLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnLeft, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
-                .addComponent(pnRight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 1495, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnLeft, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnRight, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 745, Short.MAX_VALUE)
+            .addGap(0, 745, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btChart;
-    private javax.swing.JButton btOverview;
-    private javax.swing.JButton btStatistic;
-    private javax.swing.JPanel pnLeft;
-    private javax.swing.JPanel pnRight;
     // End of variables declaration//GEN-END:variables
 
-    private void setComponents() {
-        setpnRight();
-        setpnLeft();
-    }
-
-    private void setEvents() {
-        btOverviewEvent();
-        btChartEvent();
-        btStatisticEvent();
-    }
-
-    private void btOverviewEvent() {
-        btOverview.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {   
-                cardLayout.show(pnRight, btOverview.getActionCommand());
-                
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btOverview.setBackground(new Color(200,98,79));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btOverview.setBackground(new Color(219,98,79));
-            }
-            
-            
-            
-        });
-    }
-
-    private void btChartEvent() {
-        btChart.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                
-                cardLayout.show(pnRight, btChart.getActionCommand());
-                
-            }
-            
-               @Override
-            public void mouseEntered(MouseEvent e) {
-                btChart.setBackground(new Color(40,179,156));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btChart.setBackground(new Color(71,179,156));
-            } 
-            
-        });
-    }
-
-    private void btStatisticEvent() {
-        btStatistic.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
-                
-                cardLayout.show(pnRight, btStatistic.getActionCommand());
-                System.out.println(btStatistic.getActionCommand());
-                
-            }
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                btStatistic.setBackground(new Color(230,186,80));
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                btStatistic.setBackground(new Color(247,186,80));
-            }
-                    
-        });
-    }
-
-    private void setpnRight() {
-        OverviewPanel overviewPanel = new OverviewPanel();
-        ChartPanel chartPanel = new ChartPanel();
-        StatisticPanel statisticPanel = new StatisticPanel();
-        
-        pnRight.add(overviewPanel,btOverview.getActionCommand());
-        pnRight.add(chartPanel, btChart.getActionCommand());
-        pnRight.add(statisticPanel, btStatistic.getActionCommand());
-    }
-
-    private void setpnLeft() {
-        btChart.setActionCommand("chart");
-        btOverview.setActionCommand("overview");
-        btStatistic.setActionCommand("statistic");
-    }
+ 
     
 }

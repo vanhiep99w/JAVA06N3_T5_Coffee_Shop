@@ -106,7 +106,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnCenter = new javax.swing.JPanel();
         pnMain = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         pnButton.setBackground(new java.awt.Color(39, 130, 192));
@@ -238,6 +238,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnCenter.setLayout(new java.awt.BorderLayout());
 
         pnMain.setMinimumSize(new java.awt.Dimension(1420, 745));
+        pnMain.setPreferredSize(new java.awt.Dimension(1420, 745));
         pnMain.setLayout(new java.awt.CardLayout());
         pnCenter.add(pnMain, java.awt.BorderLayout.CENTER);
 

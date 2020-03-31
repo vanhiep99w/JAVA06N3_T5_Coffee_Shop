@@ -10,6 +10,8 @@ import entities.TableStatus;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JButton;
+import util.ImageUtils;
+import util.URL_Factory;
 
 /**
  *
@@ -34,8 +36,11 @@ public class TableButton extends JButton {
     }
 
     private void setButton() {
+        this.setHorizontalTextPosition(JButton.CENTER);
+        this.setVerticalTextPosition(JButton.CENTER);
         this.setText(table.getName());
         this.setFont(font);
+        this.setForeground(new Color(227, 120, 4));
         this.setActionCommand("");
         this.setBorderPainted(false);
         
@@ -44,36 +49,33 @@ public class TableButton extends JButton {
     public void setColor() {
         if (table.getStatus().getId() == TableStatus.EMPTY) {//empty
             this.setBackground(Color.white);
-            // this.setContentAreaFilled(false);
-            // this.setOpaque(true);
+            
         }
         if (table.getStatus().getId() == TableStatus.FULL) {//Full
             this.setBackground(Color.cyan);
-            // this.setContentAreaFilled(false);
-            // this.setOpaque(true);
+            
         }
         if (table.getStatus().getId() == TableStatus.ORDERED) {//Ordered 
             this.setBackground(Color.pink);
-            // this.setContentAreaFilled(false);
-            // this.setOpaque(true);
+            this.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL+"\\ordered.png"));
         }
     }
     
     public void setColorEnter() {
         if (table.getStatus().getId() == TableStatus.EMPTY) {//empty
             this.setBackground(Color.LIGHT_GRAY);
-            // this.setContentAreaFilled(false);
-            // this.setOpaque(true);
+             this.setContentAreaFilled(false);
+             this.setOpaque(true);
         }
         if (table.getStatus().getId() == TableStatus.FULL) {//Full
             this.setBackground(Color.BLUE);
-            // this.setContentAreaFilled(false);
-            // this.setOpaque(true);
+             this.setContentAreaFilled(false);
+             this.setOpaque(true);
         }
         if (table.getStatus().getId() == TableStatus.ORDERED) {//Ordered 
             this.setBackground(Color.red);
-            // this.setContentAreaFilled(false);
-            // this.setOpaque(true);
+             this.setContentAreaFilled(false);
+             this.setOpaque(true);
         }
     }
 

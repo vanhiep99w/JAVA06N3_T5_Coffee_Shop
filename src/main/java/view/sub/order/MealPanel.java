@@ -182,7 +182,7 @@ public class MealPanel extends javax.swing.JPanel {
         if(product == null || "".equals(product.getImage())){
             lbIcon.setIcon(defaultIcon);
         }else{
-            lbIcon.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\products\\" + product.getImage()));
+            lbIcon.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + product.getImage(), 100, 100));
         }
     }
 
