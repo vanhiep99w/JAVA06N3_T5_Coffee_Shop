@@ -94,4 +94,29 @@ public class BillDaoImpl implements BillDao {
         return listBill;
     }
 
+    @Override
+    public Float getSumOfDay(String day) {
+        Float sum = 0f;
+        String query = "select sum(coffee_shop.bill.sum) as sumofday from "
+                + "coffee_shop.bill where coffee_shop.bill.time_bill like ?;";
+        try {
+            preStatement = connection.prepareStatement(query);
+            preStatement.setString(1, day+"%");
+            resultSet = preStatement.executeQuery();
+            while (resultSet.next()) {
+                sum = resultSet.getFloat("sumofday");
+            }          
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                resultSet.close();
+                preStatement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ProductOrderDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return sum;
+    }
+
 }

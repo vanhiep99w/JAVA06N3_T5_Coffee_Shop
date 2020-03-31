@@ -32,8 +32,19 @@ public class TablePanel extends JPanel {
     private final List<Order> orderings;
 
     public TablePanel() {
-        gridLayout = new GridLayout(5, 4);
+        gridLayout = new GridLayout(0, 4);
         tables = tableService.getAll();
+        btTables = new TableButton[tables.size()];
+        orderService = new OrderServiceImpl();
+        orderings = orderService.getAll(TableStatus.FULL);
+        initComponents();
+        initEvents();
+        
+    }
+    
+    public TablePanel(String nameTable) {
+        gridLayout = new GridLayout(0, 4);
+        tables = tableService.getSearch(nameTable);
         btTables = new TableButton[tables.size()];
         orderService = new OrderServiceImpl();
         orderings = orderService.getAll(TableStatus.FULL);

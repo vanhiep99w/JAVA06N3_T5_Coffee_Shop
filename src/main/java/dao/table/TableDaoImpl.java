@@ -60,7 +60,7 @@ public class TableDaoImpl implements TableDao {
         } finally {
             try {
                 statement.close();
-                resultSet.close();                
+                resultSet.close();
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
@@ -119,7 +119,7 @@ public class TableDaoImpl implements TableDao {
             result = (preStatement.executeUpdate() == 0) ? false : true;
         } catch (SQLException ex) {
             Logger.getLogger(TableDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
-        }finally{
+        } finally {
             try {
                 preStatement.close();
             } catch (SQLException ex) {
@@ -127,7 +127,38 @@ public class TableDaoImpl implements TableDao {
             }
         }
 
-        return result; 
+        return result;
+    }
+
+    @Override
+    public List<Table> getSearch(String name_Table) {
+        final List<Table> tables = new ArrayList<Table>();
+        String query = "SELECT t.*,s.status FROM coffee_shop.table t\n"
+                + "left join coffee_shop.table_status s\n"
+                + "on t.id_table_status = s.id_table_status where t.name_table like ? order by t.name_table;";
+
+        try {
+            preStatement = connection.prepareStatement(query);
+            preStatement.setString(1, "%" + name_Table + "%");
+            resultSet = preStatement.executeQuery();
+            while (resultSet.next()) {
+                Table table = setData(resultSet);
+                tables.add(table);
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } finally {
+            try {
+                resultSet.close();
+                preStatement.close();
+
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        return tables;
     }
 
 }
