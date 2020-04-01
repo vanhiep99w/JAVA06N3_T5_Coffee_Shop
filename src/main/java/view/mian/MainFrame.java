@@ -40,7 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
 
         initComponents();
-        setResizable(true);
+        //setResizable(true);
         setIcon();
         initMainPanelComponent();
         initTablePanel();
@@ -106,10 +106,14 @@ public class MainFrame extends javax.swing.JFrame {
         pnCenter = new javax.swing.JPanel();
         pnMain = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setMinimumSize(new java.awt.Dimension(1420, 832));
+        setPreferredSize(new java.awt.Dimension(1420, 832));
         setResizable(false);
 
         pnButton.setBackground(new java.awt.Color(39, 130, 192));
+        pnButton.setMinimumSize(new java.awt.Dimension(1400, 87));
+        pnButton.setPreferredSize(new java.awt.Dimension(1400, 87));
 
         btDatMon.setBackground(new java.awt.Color(75, 198, 242));
         btDatMon.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -169,7 +173,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(otherInforPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lbCalendar, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(549, Short.MAX_VALUE))
+                .addContainerGap(415, Short.MAX_VALUE))
         );
         otherInforPanelLayout.setVerticalGroup(
             otherInforPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,7 +227,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnTop.setLayout(pnTopLayout);
         pnTopLayout.setHorizontalGroup(
             pnTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1420, Short.MAX_VALUE)
         );
         pnTopLayout.setVerticalGroup(
             pnTopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -237,8 +241,8 @@ public class MainFrame extends javax.swing.JFrame {
         pnCenter.setBackground(new java.awt.Color(39, 130, 192));
         pnCenter.setLayout(new java.awt.BorderLayout());
 
-        pnMain.setMinimumSize(new java.awt.Dimension(1420, 745));
-        pnMain.setPreferredSize(new java.awt.Dimension(1420, 745));
+        pnMain.setMinimumSize(new java.awt.Dimension(1400, 745));
+        pnMain.setPreferredSize(new java.awt.Dimension(1400, 745));
         pnMain.setLayout(new java.awt.CardLayout());
         pnCenter.add(pnMain, java.awt.BorderLayout.CENTER);
 

@@ -745,7 +745,7 @@ public class AddMealDialog extends javax.swing.JDialog {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                button.setBackground(new Color(212, 212, 165));
+                button.setBackground(new Color(233, 210, 159));
             }
 
             @Override
@@ -774,7 +774,7 @@ public class AddMealDialog extends javax.swing.JDialog {
 
             @Override
             public void mouseEntered(MouseEvent e) {
-                button.setBackground(new Color(212, 212, 165));
+                button.setBackground(new Color(230, 213, 185));
             }
 
             @Override
@@ -832,15 +832,14 @@ public class AddMealDialog extends javax.swing.JDialog {
         tfSearch.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    String searchString = tfSearch.getText();
-                    String regex = "\\s*";
+
+                String searchString = tfSearch.getText();
+                String regex = "\\s*";
                     if (!searchString.matches(regex)) {
                         products.clear();
                         products.addAll(productService.getAll(searchString));
                         UpdateComponet_pnProduct();
                     }
-                }
             }
         });
 

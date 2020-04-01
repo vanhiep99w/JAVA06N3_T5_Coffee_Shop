@@ -56,6 +56,12 @@ public class ThongKePanel extends javax.swing.JPanel {
         btStaWeek = new javax.swing.JButton();
         btStaMonth = new javax.swing.JButton();
 
+        setPreferredSize(new java.awt.Dimension(1420, 745));
+
+        pnChart.setBackground(new java.awt.Color(204, 255, 153));
+        pnChart.setForeground(new java.awt.Color(255, 153, 153));
+        pnChart.setMinimumSize(new java.awt.Dimension(1243, 615));
+        pnChart.setPreferredSize(new java.awt.Dimension(1243, 615));
         pnChart.setLayout(new javax.swing.OverlayLayout(pnChart));
 
         lbStatistic.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
@@ -73,7 +79,6 @@ public class ThongKePanel extends javax.swing.JPanel {
         btStaMonth.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         btStaMonth.setText("Theo tháng");
 
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -82,7 +87,7 @@ public class ThongKePanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 99, Short.MAX_VALUE)
+                        .addGap(0, 93, Short.MAX_VALUE)
                         .addComponent(lbStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 1309, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -103,7 +108,7 @@ public class ThongKePanel extends javax.swing.JPanel {
                         .addComponent(btStaWeek, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btStaMonth, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 498, Short.MAX_VALUE))
+                        .addGap(0, 494, Short.MAX_VALUE))
                     .addComponent(pnChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -115,7 +120,6 @@ public class ThongKePanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-
     private javax.swing.JButton btStaMonth;
     private javax.swing.JButton btStaWeek;
     private javax.swing.JLabel lbStatistic;

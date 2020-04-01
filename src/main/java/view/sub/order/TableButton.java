@@ -11,6 +11,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import javax.swing.JButton;
+import util.ImageUtils;
+import util.URL_Factory;
 
 
 /**
@@ -20,9 +22,8 @@ import javax.swing.JButton;
 public class TableButton extends JButton {
 
     private final Table table;
-    private final Font font = new Font("Tahoma", 1, 30);
+    private final Font font = new Font("Tahoma", 1, 29);
 
-    ;
 
     public TableButton() {
         table = new Table();
@@ -39,8 +40,9 @@ public class TableButton extends JButton {
         this.setHorizontalTextPosition(JButton.CENTER);
         this.setVerticalTextPosition(JButton.CENTER);
         this.setText(table.getName());
+        this.setFocusPainted(false);
         this.setFont(font);
-        this.setForeground(new Color(227, 120, 4));
+        this.setForeground(new Color(223, 240, 254));
         this.setActionCommand("");
         this.setPreferredSize(new Dimension(150, 150));
         this.setBorderPainted(false);
@@ -48,39 +50,29 @@ public class TableButton extends JButton {
     }
 
     public void setColor() {
-        if (table.getStatus().getId() == TableStatus.EMPTY) {//empty
-            this.setBackground(Color.white);
-            this.setContentAreaFilled(false);
-            this.setOpaque(true);
+        this.setBackground(new Color(170, 207, 207));
+        if (table.getStatus().getId() == TableStatus.EMPTY) {//empty 
+
+            this.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\empty.png"));
+
         }
         if (table.getStatus().getId() == TableStatus.FULL) {//Full
-            this.setBackground(Color.cyan);
-            this.setContentAreaFilled(false);
-            this.setOpaque(true);
+            
+            this.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\full.png"));
+
         }
-        if (table.getStatus().getId() == TableStatus.ORDERED) {//Ordered 
-            this.setBackground(Color.pink);
-            this.setContentAreaFilled(false);
-            this.setOpaque(true);
+        if (table.getStatus().getId() == TableStatus.ORDERED) {//Ordered '
+            
+            this.setForeground(new Color(74, 72, 231));
+            this.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\ordered.png"));
+
         }
     }
     
     public void setColorEnter() {
-        if (table.getStatus().getId() == TableStatus.EMPTY) {//empty
-            this.setBackground(Color.LIGHT_GRAY);
-             this.setContentAreaFilled(false);
-             this.setOpaque(true);
-        }
-        if (table.getStatus().getId() == TableStatus.FULL) {//Full
-            this.setBackground(Color.BLUE);
-             this.setContentAreaFilled(false);
-             this.setOpaque(true);
-        }
-        if (table.getStatus().getId() == TableStatus.ORDERED) {//Ordered 
-            this.setBackground(Color.red);
-             this.setContentAreaFilled(false);
-             this.setOpaque(true);
-        }
+        
+        this.setBackground(new Color(103, 155, 155));
+
     }
 
     public Table getTable() {

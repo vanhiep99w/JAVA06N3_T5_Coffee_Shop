@@ -101,4 +101,9 @@ public class ShiftDaoImpl implements ShiftDao {
         return shifts;
     }
 
+    @Override
+    public boolean setShift(int idEmployee, List<Shift> shifts) {
+        return false;
+    }
+
 }

@@ -58,7 +58,7 @@ public class TablePanel extends JPanel {
     }
 
     private void initComponents() {
-        setSize(500, 500);
+        //setSize(500, 500);
         setLayout(gridLayout);
         gridLayout.setHgap(20);
         gridLayout.setVgap(20);

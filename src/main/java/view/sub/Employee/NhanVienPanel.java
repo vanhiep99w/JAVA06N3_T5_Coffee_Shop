@@ -15,7 +15,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.DefaultButtonModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -38,6 +37,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form NhanVienPanel
+     * Edit shift chưa được làm cần phát triển sau
      */
     private static final WorkService workService;
     private static final EmployeeService employeeService;
@@ -46,6 +46,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private final List<Work> works;
     private final List<Employee> employees; 
     private final Employee selectedEmployee;
+    private final List<Shift> selectedShift;
     private final List<Shift> allShifts;
     private final List<Shift> employeeShift;
 
@@ -68,6 +69,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         allShifts = shiftService.getAll();
         selectedEmployee = new Employee();
         employeeShift = new ArrayList<>();
+        selectedShift = new ArrayList<>();
         initComponents();
         setComponent();
         setEvent();
@@ -164,7 +166,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
                     .addComponent(cbWork, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
                     .addComponent(btAdd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnButton, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)
+                .addComponent(pnButton, javax.swing.GroupLayout.DEFAULT_SIZE, 597, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -215,25 +217,39 @@ public class NhanVienPanel extends javax.swing.JPanel {
         lbShift.setFont(new java.awt.Font("Tahoma", 1, 26)); // NOI18N
         lbShift.setText("      Ca       :");
 
-        cbShift1.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
-        cbShift1.setText("Ca1");
+        cbShift1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        cbShift1.setText("Ca3( 15r- 19r)");
         cbShift1.setFocusPainted(false);
+        cbShift1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_select_none_40px.png")); // NOI18N
         cbShift1.setPreferredSize(new java.awt.Dimension(100, 40));
+        cbShift1.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
 
-        cbShift2.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
-        cbShift2.setText("Ca1");
+        cbShift2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        cbShift2.setText("Ca2( 11r- 15r)");
         cbShift2.setFocusPainted(false);
+        cbShift2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_select_none_40px.png")); // NOI18N
         cbShift2.setPreferredSize(new java.awt.Dimension(100, 40));
+        cbShift2.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
 
-        cbShift3.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
-        cbShift3.setText("Ca1");
+        cbShift3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        cbShift3.setText("Ca1( 7- 11r)");
         cbShift3.setFocusPainted(false);
+        cbShift3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_select_none_40px.png")); // NOI18N
         cbShift3.setPreferredSize(new java.awt.Dimension(100, 40));
+        cbShift3.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
+        cbShift3.setVerifyInputWhenFocusTarget(false);
+        cbShift3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbShift3ActionPerformed(evt);
+            }
+        });
 
-        cbShift4.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
-        cbShift4.setText("Ca1");
+        cbShift4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        cbShift4.setText("Ca4( 19r- 23)");
         cbShift4.setFocusPainted(false);
+        cbShift4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_select_none_40px.png")); // NOI18N
         cbShift4.setPreferredSize(new java.awt.Dimension(100, 40));
+        cbShift4.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
 
         javax.swing.GroupLayout pnInforLayout = new javax.swing.GroupLayout(pnInfor);
         pnInfor.setLayout(pnInforLayout);
@@ -247,26 +263,25 @@ public class NhanVienPanel extends javax.swing.JPanel {
                     .addComponent(lbPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbShift, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbWork, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnInforLayout.createSequentialGroup()
-                        .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnInforLayout.createSequentialGroup()
-                        .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(pnInforLayout.createSequentialGroup()
-                                .addComponent(cbShift3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(66, 66, 66)
-                                .addComponent(cbShift2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(146, 146, 146)
-                                .addComponent(cbShift1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cbShift4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(cbWork1, javax.swing.GroupLayout.Alignment.LEADING, 0, 726, Short.MAX_VALUE)
-                            .addComponent(tfPhoneNumber, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(tfSalary)
-                            .addComponent(tfName, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(0, 10, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnInforLayout.createSequentialGroup()
+                        .addComponent(cbShift3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbShift2, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbShift1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbShift4, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(tfSalary, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cbWork1, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(tfPhoneNumber, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tfName))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnInforLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(301, 301, 301))
         );
         pnInforLayout.setVerticalGroup(
             pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -290,13 +305,13 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 .addGap(32, 32, 32)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbShift, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbShift1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbShift2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbShift4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbShift3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbShift4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
+                    .addComponent(cbShift1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0))
+                .addGap(29, 29, 29))
         );
 
         pnInforLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cbWork1, lbWork});
@@ -344,7 +359,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 .addComponent(btRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(263, Short.MAX_VALUE))
+                .addContainerGap(281, Short.MAX_VALUE))
         );
 
         pnLeftLayout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btEdit, btRemove, jButton3});
@@ -361,6 +376,10 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private void btConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btConfirmActionPerformed
+
+    private void cbShift3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbShift3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbShift3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -395,7 +414,8 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private void setComponent() {
         setComboBox();
         setTable();
-        seCheckBox();
+        setEnableChecBox(false);
+        setCheckBox();
         setbtAdd();
     }
     
@@ -438,6 +458,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         setbtEditEvent();
         setbtConfirmEvent();
         setbtRemoveEvent();
+        
     }
 
     private void setTableEvent() {
@@ -446,14 +467,15 @@ public class NhanVienPanel extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
                 int selectedIndex = tbEmployee.getSelectedRow();
-                //System.out.println(selectedIndex);
                 Employee employee = (Employee) tableModel.getValueAt(selectedIndex, 0);
-                System.out.println(employee.getName());
                 selectedEmployee.copy(employee);
-                //System.out.println(selectedEmployee.getId());
+                employeeShift.clear();
+                employeeShift.addAll(shiftService.getAll(selectedEmployee.getId()));
+                setCheckBox();
+                setSelectedCheckbox();
                 tfName.setText(employee.getName());
                 tfPhoneNumber.setText(employee.getPhone());
-
+                
                 cbWork1.setSelectedItem(employee.getWork());
                 btEdit.setEnabled(true);
                 btRemove.setEnabled(true);
@@ -500,6 +522,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 if (btEdit.isEnabled()) {
                     tfName.setEditable(true);
                     tfPhoneNumber.setEditable(true);
+                    setEnableChecBox(true);
                     btConfirm.setEnabled(true);
                     cbWork1.setEnabled(true);
                     btRemove.setEnabled(false);
@@ -518,11 +541,11 @@ public class NhanVienPanel extends javax.swing.JPanel {
                     tfPhoneNumber.setEditable(false);
                     btConfirm.setEnabled(false);
                     cbWork1.setEnabled(false);
-
+                    setEnableChecBox(false);
                     selectedEmployee.setName(tfName.getText());
                     selectedEmployee.setPhone(tfPhoneNumber.getText());
                     selectedEmployee.setWork((Work) cbWork1.getSelectedItem());
-
+                    shiftService.setShift(selectedEmployee.getId(), selectedShift);
                     employeeService.update(selectedEmployee);
                 }
             }
@@ -548,14 +571,43 @@ public class NhanVienPanel extends javax.swing.JPanel {
     public static DefaultTableModel getTableModel() {
         return tableModel;
     }
+    
+    public void setEnableChecBox(boolean chosse){
+        cbShift1.setEnabled(chosse);
+        cbShift2.setEnabled(chosse);
+        cbShift3.setEnabled(chosse);
+        cbShift4.setEnabled(chosse);
+    }
 
-    private void seCheckBox() {
-        
+    private void setCheckBox() {
+        cbShift1.setSelected(false);
+        cbShift2.setSelected(false);
+        cbShift3.setSelected(false);
+        cbShift4.setSelected(false);
     }
 
     private void setbtAdd() {
         btAdd.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL+"\\addE.png"));
     }
+    
+    private void setSelectedCheckbox(){
+        employeeShift.forEach(t -> {
+            String shiftID = t.getId()+"";
+            if("1".equals(shiftID)){
+                cbShift1.setSelected(true);
+            }if("2".equals(shiftID)){
+                cbShift2.setSelected(true);
+            }if("3".equals(shiftID)){
+                cbShift3.setSelected(true);
+            }if("4".equals(shiftID)){
+                cbShift4.setSelected(true);
+            }
+        });
+    }
+
+    
+    
+   
 
     
 

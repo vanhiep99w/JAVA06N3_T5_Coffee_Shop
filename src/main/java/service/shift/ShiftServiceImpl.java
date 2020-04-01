@@ -31,5 +31,10 @@ public class ShiftServiceImpl implements ShiftService{
     public List<Shift> getAll(Integer idEmployee) {
         return ShiftDao.getAll(idEmployee);
     }
+
+    @Override
+    public boolean setShift(int idEmployee, List<Shift> shifts) {
+        return ShiftDao.setShift(idEmployee, shifts);
+    }
     
 }
