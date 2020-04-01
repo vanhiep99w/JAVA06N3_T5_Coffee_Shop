@@ -120,6 +120,7 @@ public class ThongKePanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+
     private javax.swing.JButton btStaMonth;
     private javax.swing.JButton btStaWeek;
     private javax.swing.JLabel lbStatistic;

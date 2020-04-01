@@ -50,6 +50,7 @@ public class TableButton extends JButton {
     }
 
     public void setColor() {
+
         this.setBackground(new Color(170, 207, 207));
         if (table.getStatus().getId() == TableStatus.EMPTY) {//empty 
 
@@ -65,6 +66,7 @@ public class TableButton extends JButton {
             
             this.setForeground(new Color(74, 72, 231));
             this.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\ordered.png"));
+
 
         }
     }
