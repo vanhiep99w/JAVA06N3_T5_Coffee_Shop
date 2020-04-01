@@ -8,16 +8,10 @@ package view.sub.order;
 import entities.Order;
 import entities.Table;
 import entities.TableStatus;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 import javax.swing.JPanel;
 import service.order.OrderService;
 import service.order.OrderServiceImpl;
@@ -64,7 +58,7 @@ public class TablePanel extends JPanel {
     }
 
     private void initComponents() {
-        setSize(500, 500);
+        //setSize(500, 500);
         setLayout(gridLayout);
         gridLayout.setHgap(20);
         gridLayout.setVgap(20);

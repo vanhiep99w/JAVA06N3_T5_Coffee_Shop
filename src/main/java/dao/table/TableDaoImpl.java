@@ -16,13 +16,16 @@ import java.util.logging.Logger;
 
 public class TableDaoImpl implements TableDao {
 
-    private final Connection connection;
+    private static final Connection connection;
     private Statement statement;
     private PreparedStatement preStatement;
     private ResultSet resultSet;
+    static{
+        connection = ConnectDB.getInstance().getConnection();
+    }
 
     public TableDaoImpl() {
-        connection = ConnectDB.getInstance().getConnection();
+        
     }
 
     private Table setData(ResultSet resultSet) throws SQLException {

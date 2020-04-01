@@ -5,7 +5,12 @@
  */
 package view.sub.order;
 
+import com.sun.tools.javac.comp.Enter;
 import entities.Product;
+import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
 import util.ImageUtils;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -38,7 +43,7 @@ public class MealPanel extends javax.swing.JPanel {
         this.product = product;
         initComponents();
         setComponents();
-        
+        setEvent();
     }
 
     public Product getProduct() {
@@ -74,19 +79,20 @@ public class MealPanel extends javax.swing.JPanel {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setPreferredSize(new java.awt.Dimension(326, 115));
+        setPreferredSize(new java.awt.Dimension(326, 114));
 
         lbIcon.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lbIcon.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         lbIcon.setIconTextGap(0);
 
+        lbName.setBackground(new java.awt.Color(150, 240, 254));
         lbName.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         lbName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbName.setOpaque(true);
 
+        lbPrice.setBackground(new java.awt.Color(255, 255, 255));
         lbPrice.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         lbPrice.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lbPrice.setOpaque(true);
+        lbPrice.setPreferredSize(new java.awt.Dimension(153, 57));
 
         btMinus.setBorder(null);
         btMinus.setBorderPainted(false);
@@ -112,50 +118,41 @@ public class MealPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(lbIcon, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btMinus, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btPlus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btMinus, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {btMinus, btPlus});
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {lbName, lbPrice});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbIcon, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(5, 5, 5)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(btMinus, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE)
-                            .addComponent(lbPrice, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addComponent(lbIcon, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE)
                 .addGap(1, 1, 1))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btPlus, javax.swing.GroupLayout.DEFAULT_SIZE, 56, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lbPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btMinus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
-
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {btMinus, btPlus});
-
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMinusActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btMinusActionPerformed
 
     private void btPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPlusActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btPlusActionPerformed
+
+    private void btMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMinusActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btMinusActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -182,7 +179,7 @@ public class MealPanel extends javax.swing.JPanel {
         if(product == null || "".equals(product.getImage())){
             lbIcon.setIcon(defaultIcon);
         }else{
-            lbIcon.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + product.getImage() ));
+            lbIcon.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + product.getImage(), 100, 100));
         }
     }
 
@@ -192,17 +189,16 @@ public class MealPanel extends javax.swing.JPanel {
     }
 
     private void setlbName() {
-        if(product == null){
+        if(product == null || "".equals(product.getName())){
             lbName.setText("Product");
-        }else{
-            
+        }else{ 
             lbName.setText(product.getName());
         }
     }
 
     private void setlbPrice() {
         String defaultString = "0.000 vnđ";
-        if(product == null){
+        if(product == null ){
             lbPrice.setText(defaultString);
         }else{
             lbPrice.setText(product.getPrice() + " vnđ");
@@ -214,5 +210,23 @@ public class MealPanel extends javax.swing.JPanel {
     }
     public JButton getbtMinus(){
         return btMinus;
+    }
+
+    private void setEvent() {
+        Arrays.stream(this.getComponents()).forEach(t -> {
+            t.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    MealPanel.this.setBackground(new Color(238,236,177));
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    MealPanel.this.setBackground(new Color(240,240,240));
+                }
+                
+                
+            });
+        });
     }
 }

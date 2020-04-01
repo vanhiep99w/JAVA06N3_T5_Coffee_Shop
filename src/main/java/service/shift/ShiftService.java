@@ -13,5 +13,10 @@ import java.util.List;
  * @author Admin
  */
 public interface ShiftService {
+
     public List<Shift> getAll();
+
+    public List<Shift> getAll(Integer idEmployee);
+    
+    public boolean setShift(int idEmployee, List<Shift> shifts );
 }

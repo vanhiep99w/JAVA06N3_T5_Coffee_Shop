@@ -41,9 +41,10 @@ public class QuanLyPanel extends javax.swing.JPanel {
     private final TitledBorder TitledBorder;
     private final ProductService productService;
     private final FlowLayout flowLayout = new FlowLayout();
-    private List<Product> products;
+    private static List<Product> products;
     private Product selectedProduct;
     private static JButton btSelected;
+    
 
     public QuanLyPanel() {
         initComponents();
@@ -77,7 +78,6 @@ public class QuanLyPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         pn_Top = new javax.swing.JPanel();
-        pnTopLeft = new javax.swing.JPanel();
         pnTopRight = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         pn_Left = new javax.swing.JPanel();
@@ -98,20 +98,19 @@ public class QuanLyPanel extends javax.swing.JPanel {
         pnCenterIn = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setEnabled(false);
+        setMinimumSize(new java.awt.Dimension(1470, 643));
+        setPreferredSize(new java.awt.Dimension(1470, 643));
         setLayout(new java.awt.BorderLayout());
 
         pn_Top.setBackground(new java.awt.Color(255, 255, 255));
         pn_Top.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
         pn_Top.setLayout(new java.awt.BorderLayout());
 
-        pnTopLeft.setBackground(new java.awt.Color(255, 255, 255));
-        pnTopLeft.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 5, 5, new java.awt.Color(51, 153, 255)));
-        pnTopLeft.setPreferredSize(new java.awt.Dimension(290, 40));
-        pnTopLeft.setLayout(new java.awt.CardLayout());
-        pn_Top.add(pnTopLeft, java.awt.BorderLayout.LINE_START);
-
         pnTopRight.setBackground(new java.awt.Color(255, 255, 255));
         pnTopRight.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 5, 0, new java.awt.Color(51, 153, 255)), javax.swing.BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        pnTopRight.setMinimumSize(new java.awt.Dimension(1150, 68));
+        pnTopRight.setPreferredSize(new java.awt.Dimension(1150, 68));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Cambria", 1, 36)); // NOI18N
@@ -126,18 +125,19 @@ public class QuanLyPanel extends javax.swing.JPanel {
         pn_Left.setBackground(new java.awt.Color(255, 255, 255));
         pn_Left.setBorder(javax.swing.BorderFactory.createCompoundBorder(javax.swing.BorderFactory.createMatteBorder(0, 10, 5, 5, new java.awt.Color(51, 153, 255)), javax.swing.BorderFactory.createEmptyBorder(10, 0, 0, 0)));
         pn_Left.setForeground(new java.awt.Color(0, 153, 204));
-        pn_Left.setPreferredSize(new java.awt.Dimension(290, 575));
+        pn_Left.setPreferredSize(new java.awt.Dimension(260, 575));
         pn_Left.setLayout(new java.awt.GridLayout(10, 1));
 
         btTatCaCacMon.setBackground(new java.awt.Color(255, 255, 255));
-        btTatCaCacMon.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btTatCaCacMon.setFont(new java.awt.Font("Cambria Math", 1, 26)); // NOI18N
         btTatCaCacMon.setForeground(new java.awt.Color(0, 153, 204));
         btTatCaCacMon.setText("Tất cả các món");
         btTatCaCacMon.setBorderPainted(false);
         btTatCaCacMon.setFocusPainted(false);
         btTatCaCacMon.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         btTatCaCacMon.setMaximumSize(new java.awt.Dimension(500, 56));
-        btTatCaCacMon.setPreferredSize(new java.awt.Dimension(300, 56));
+        btTatCaCacMon.setMinimumSize(new java.awt.Dimension(256, 56));
+        btTatCaCacMon.setPreferredSize(new java.awt.Dimension(256, 56));
         btTatCaCacMon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btTatCaCacMonActionPerformed(evt);
@@ -146,63 +146,69 @@ public class QuanLyPanel extends javax.swing.JPanel {
         pn_Left.add(btTatCaCacMon);
 
         btDoUongCoga.setBackground(new java.awt.Color(255, 255, 255));
-        btDoUongCoga.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btDoUongCoga.setFont(new java.awt.Font("Cambria Math", 1, 26)); // NOI18N
         btDoUongCoga.setForeground(new java.awt.Color(0, 153, 204));
         btDoUongCoga.setText("Đồ uống có ga");
         btDoUongCoga.setBorderPainted(false);
         btDoUongCoga.setFocusPainted(false);
         btDoUongCoga.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btDoUongCoga.setPreferredSize(new java.awt.Dimension(262, 56));
+        btDoUongCoga.setMinimumSize(new java.awt.Dimension(256, 56));
+        btDoUongCoga.setPreferredSize(new java.awt.Dimension(256, 56));
         pn_Left.add(btDoUongCoga);
 
         btTraSua.setBackground(new java.awt.Color(255, 255, 255));
-        btTraSua.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btTraSua.setFont(new java.awt.Font("Cambria Math", 1, 26)); // NOI18N
         btTraSua.setForeground(new java.awt.Color(0, 153, 204));
         btTraSua.setText("Trà sữa");
         btTraSua.setBorderPainted(false);
         btTraSua.setFocusPainted(false);
         btTraSua.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btTraSua.setPreferredSize(new java.awt.Dimension(262, 56));
+        btTraSua.setMinimumSize(new java.awt.Dimension(256, 56));
+        btTraSua.setPreferredSize(new java.awt.Dimension(256, 56));
         pn_Left.add(btTraSua);
 
         btBanhNgot.setBackground(new java.awt.Color(255, 255, 255));
-        btBanhNgot.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btBanhNgot.setFont(new java.awt.Font("Cambria Math", 1, 26)); // NOI18N
         btBanhNgot.setForeground(new java.awt.Color(0, 153, 204));
         btBanhNgot.setText("Bánh ngọt");
         btBanhNgot.setBorderPainted(false);
         btBanhNgot.setFocusPainted(false);
         btBanhNgot.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btBanhNgot.setPreferredSize(new java.awt.Dimension(262, 56));
+        btBanhNgot.setMinimumSize(new java.awt.Dimension(256, 56));
+        btBanhNgot.setPreferredSize(new java.awt.Dimension(256, 56));
         pn_Left.add(btBanhNgot);
 
         btNuocEp.setBackground(new java.awt.Color(255, 255, 255));
-        btNuocEp.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btNuocEp.setFont(new java.awt.Font("Cambria Math", 1, 26)); // NOI18N
         btNuocEp.setForeground(new java.awt.Color(0, 153, 204));
         btNuocEp.setText("Nước ép");
         btNuocEp.setBorderPainted(false);
         btNuocEp.setFocusPainted(false);
         btNuocEp.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btNuocEp.setPreferredSize(new java.awt.Dimension(262, 56));
+        btNuocEp.setMinimumSize(new java.awt.Dimension(256, 56));
+        btNuocEp.setPreferredSize(new java.awt.Dimension(256, 56));
         pn_Left.add(btNuocEp);
 
         btSinhTo.setBackground(new java.awt.Color(255, 255, 255));
-        btSinhTo.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btSinhTo.setFont(new java.awt.Font("Cambria Math", 1, 26)); // NOI18N
         btSinhTo.setForeground(new java.awt.Color(0, 153, 204));
         btSinhTo.setText("Sinh tố");
         btSinhTo.setBorderPainted(false);
         btSinhTo.setFocusPainted(false);
         btSinhTo.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btSinhTo.setPreferredSize(new java.awt.Dimension(262, 56));
+        btSinhTo.setMinimumSize(new java.awt.Dimension(256, 56));
+        btSinhTo.setPreferredSize(new java.awt.Dimension(256, 56));
         pn_Left.add(btSinhTo);
 
         btCoffee.setBackground(new java.awt.Color(255, 255, 255));
-        btCoffee.setFont(new java.awt.Font("Cambria Math", 1, 28)); // NOI18N
+        btCoffee.setFont(new java.awt.Font("Cambria Math", 1, 26)); // NOI18N
         btCoffee.setForeground(new java.awt.Color(0, 153, 204));
         btCoffee.setText("Coffee");
         btCoffee.setBorderPainted(false);
         btCoffee.setFocusPainted(false);
         btCoffee.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        btCoffee.setPreferredSize(new java.awt.Dimension(262, 56));
+        btCoffee.setMinimumSize(new java.awt.Dimension(256, 56));
+        btCoffee.setPreferredSize(new java.awt.Dimension(256, 56));
         pn_Left.add(btCoffee);
 
         add(pn_Left, java.awt.BorderLayout.LINE_START);
@@ -211,6 +217,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
 
         pn_CenterBottom.setBackground(new java.awt.Color(255, 255, 255));
         pn_CenterBottom.setBorder(javax.swing.BorderFactory.createMatteBorder(5, 0, 5, 5, new java.awt.Color(51, 153, 255)));
+        pn_CenterBottom.setPreferredSize(new java.awt.Dimension(1150, 60));
 
         btThem.setBackground(new java.awt.Color(0, 153, 0));
         btThem.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
@@ -253,15 +260,19 @@ public class QuanLyPanel extends javax.swing.JPanel {
 
         pn_CenterTop.setBackground(new java.awt.Color(255, 255, 255));
         pn_CenterTop.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        pn_CenterTop.setMinimumSize(new java.awt.Dimension(1150, 450));
         pn_CenterTop.setLayout(new javax.swing.OverlayLayout(pn_CenterTop));
 
         jScrollPane1.setBorder(null);
         jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        jScrollPane1.setPreferredSize(new java.awt.Dimension(1060, 450));
+        jScrollPane1.setMinimumSize(new java.awt.Dimension(1000, 450));
+        jScrollPane1.setPreferredSize(new java.awt.Dimension(1000, 450));
 
-        pnCenterIn.setBackground(new java.awt.Color(255, 255, 255));
-        pnCenterIn.setPreferredSize(new java.awt.Dimension(1210, 600));
-        pnCenterIn.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 10, 5));
+        pnCenterIn.setBackground(new java.awt.Color(255, 153, 51));
+        pnCenterIn.setPreferredSize(new java.awt.Dimension(1150, 900));
+        java.awt.FlowLayout flowLayout1 = new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 30, 0);
+        flowLayout1.setAlignOnBaseline(true);
+        pnCenterIn.setLayout(flowLayout1);
         jScrollPane1.setViewportView(pnCenterIn);
 
         pn_CenterTop.add(jScrollPane1);
@@ -293,8 +304,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
     private javax.swing.JButton btXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel pnCenterIn;
-    private javax.swing.JPanel pnTopLeft;
+    private static javax.swing.JPanel pnCenterIn;
     private javax.swing.JPanel pnTopRight;
     private javax.swing.JPanel pn_Center;
     private javax.swing.JPanel pn_CenterBottom;
@@ -306,22 +316,29 @@ public class QuanLyPanel extends javax.swing.JPanel {
     private void initEvent() {
         pnLeftHighLightButtonsEvents();
     }
+    
+    private JButton setProtmButton( Product product){
+        JButton button = new JButton();
+        button.setOpaque(false);
+        button.setFont(new Font("Camboria", Font.PLAIN, 12));
+        button.setForeground(Color.blue);
+        button.setFocusPainted(false);
+        button.setPreferredSize(new Dimension(147, 140));
+        button.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + product.getImage(), 100, 100));
+        button.setVerticalTextPosition(BOTTOM);
+        button.setHorizontalTextPosition(CENTER);
+        button.setText(product.getName());
+        button.setActionCommand(product.getId() + "");
+        return button;
+    }
 
     private void initCenterInComponent(List<Product> products) {
         pnCenterIn.removeAll();
         products.forEach(new Consumer<Product>() {
             @Override
             public void accept(Product p) {
-                JButton button = new JButton();
-                button.setContentAreaFilled(false);
-                button.setFont(new Font("Camboria", Font.PLAIN, 12));
-                button.setForeground(Color.blue);
-                button.setFocusPainted(false);
-                button.setPreferredSize(new Dimension(140, 140));
-                button.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + p.getImage(), 100, 100));
-                button.setVerticalTextPosition(BOTTOM);
-                button.setHorizontalTextPosition(CENTER);
-                setButton(button, p);
+                
+                JButton button = setProtmButton(p);
                 pnCenterIn.add(button);
             }
         });
@@ -330,9 +347,9 @@ public class QuanLyPanel extends javax.swing.JPanel {
         pnCenterEvent();
     }
 
-    private void setButton(JButton button, Product p) {
-        button.setText(p.getName());
-        button.setActionCommand(p.getId() + "");
+    public void addComponentToPnCenterIn(){
+       products = productService.getAll();
+       initCenterInComponent(products);
     }
 
     private void pnLeftHighLightButtonsEvents() {
@@ -355,7 +372,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
 
                     @Override
                     public void mouseExited(MouseEvent e) {
-                        button.setFont(new Font("Cambria Math", Font.BOLD, 28));
+                        button.setFont(new Font("Cambria Math", Font.BOLD, 26));
                     }
 
                 });
@@ -513,7 +530,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
         btThem.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                final ManagerFrom managerForm = new ManagerFrom();
+                final ManagerFrom managerForm = new ManagerFrom(QuanLyPanel.this);
                 managerForm.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
                 managerForm.setVisible(true);
             }

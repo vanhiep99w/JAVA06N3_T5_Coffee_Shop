@@ -5,8 +5,7 @@
  */
 package view.sub.order;
 
-import dao.bill.BillDao;
-import dao.bill.BillDaoImpl;
+
 import entities.Bill;
 import entities.BillToPrint;
 import entities.Order;
@@ -59,8 +58,6 @@ public class DatMonPanel extends javax.swing.JPanel {
     InformationPanel informationPanel = new InformationPanel();
     ProductOrderTableModel productOrderTableModel;
     AddMealDialog addMealDialog;
-    private final TableService tableService;
-    private final ProductOrderService productOrderService;
     private final BillService billService;
     TableButton[] buttonTables;
     JTable tableOrdered;
@@ -68,6 +65,13 @@ public class DatMonPanel extends javax.swing.JPanel {
     JButton btnPay;
     String nameTable;
     private TableButton selectedButton;
+    private static final TableService tableService;
+    private static final ProductOrderService productOrderService;
+    static{
+        tableService = new TableServiceImpl();
+        productOrderService = new ProductOrderServiceImpl();
+    }
+    
     final String imageDirURL = URL_Factory.IMAGE_FOLDER_URL;
     private final Locale localeVN = new Locale("vi", "VN");
     private final NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
@@ -78,9 +82,9 @@ public class DatMonPanel extends javax.swing.JPanel {
      * Creates new form DatMonPanel
      */
     public DatMonPanel() {
-        tableService = new TableServiceImpl();
+       
         billService = new BillServiceImpl();
-        productOrderService = new ProductOrderServiceImpl();
+
         initComponents();
         setPnLeft();
         setPnRight();
@@ -103,8 +107,12 @@ public class DatMonPanel extends javax.swing.JPanel {
         tfSearchTable = new javax.swing.JTextField();
         btnAll = new javax.swing.JButton();
 
+        setBackground(new java.awt.Color(255, 255, 255));
+        setPreferredSize(new java.awt.Dimension(1420, 745));
+
         pnRight.setLayout(new javax.swing.OverlayLayout(pnRight));
 
+        pnLeft.setBackground(new java.awt.Color(255, 255, 255));
         jpLeft.setViewportView(pnLeft);
 
         tfSearchTable.setFont(new java.awt.Font("Dialog", 2, 18)); // NOI18N
@@ -122,15 +130,14 @@ public class DatMonPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(tfSearchTable, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
+                        .addComponent(tfSearchTable, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAll, javax.swing.GroupLayout.DEFAULT_SIZE, 123, Short.MAX_VALUE)
-                        .addGap(1213, 1213, 1213))
+                        .addComponent(btnAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(1223, 1223, 1223))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jpLeft)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(pnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 820, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(pnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,8 +166,7 @@ public class DatMonPanel extends javax.swing.JPanel {
 
     private void setPnLeft() {
         pnLeft.add(tablePanel);
-        //InformationPanel informationPanel = new InformationPanel();
-        //pnLeft.add(informationPanel);
+        
     }
 
     private void setPnRight() {
@@ -367,6 +373,7 @@ public class DatMonPanel extends javax.swing.JPanel {
 
     private void writeBill(List<BillToPrint> l, Integer id_Order) throws IOException {
         //System.out.println(l.size());
+        
         List<Float> listSum = new ArrayList<>();
 
 // Create new Paragraph
@@ -375,9 +382,12 @@ public class DatMonPanel extends javax.swing.JPanel {
         runParagraph(ParagraphAlignment.LEFT, "Nguyễn Đình Trọng - Liên Chiểu - TP Đà Nẵng", 10, false, false);
 
         XWPFTable table = document.createTable();
+        
+        
         table.getCTTbl().addNewTblPr().addNewTblW().setW(BigInteger.valueOf(10000));
 
         XWPFTableRow tableRowOne = table.getRow(0);
+ 
         tableRowOne.getCell(0).setText("Món");
         tableRowOne.addNewTableCell().setText("Số lượng");
         tableRowOne.addNewTableCell().setText("Thành tiền");
@@ -403,7 +413,7 @@ public class DatMonPanel extends javax.swing.JPanel {
         FileOutputStream out = new FileOutputStream(new File("bill\\" + id_Order + "_bill.docx"));
         document.write(out);
         out.close();
-        document.close();
+        //document.close();
         System.out.println("successully");
     }
 
