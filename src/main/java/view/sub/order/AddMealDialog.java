@@ -839,6 +839,10 @@ public class AddMealDialog extends javax.swing.JDialog {
                         products.clear();
                         products.addAll(productService.getAll(searchString));
                         UpdateComponet_pnProduct();
+                    }if("".equals(searchString)){
+                        products.clear();
+                        products.addAll(productService.getAll());
+                        UpdateComponet_pnProduct();
                     }
             }
         });

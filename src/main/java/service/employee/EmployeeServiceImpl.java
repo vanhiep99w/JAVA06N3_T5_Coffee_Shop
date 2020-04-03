@@ -8,6 +8,7 @@ package service.employee;
 import dao.employee.EmployeeDao;
 import dao.employee.EmployeeDaoImpl;
 import entities.Employee;
+import entities.Shift;
 import java.util.List;
 
 /**
@@ -45,8 +46,10 @@ public class EmployeeServiceImpl implements EmployeeService{
     }
 
     @Override
-    public boolean add(Employee newEmployee) {
+    public Employee add(Employee newEmployee) {
         return employeeDao.add(newEmployee);
     }
+
+    
     
 }

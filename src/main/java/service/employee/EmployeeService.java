@@ -6,6 +6,7 @@
 package service.employee;
 
 import entities.Employee;
+import entities.Shift;
 import java.util.List;
 
 /**
@@ -13,9 +14,16 @@ import java.util.List;
  * @author Admin
  */
 public interface EmployeeService {
+
     public List<Employee> getAll();
+
     public List<Employee> getALl(Integer workID);
+
     public boolean update(Employee newEmployee);
+
     public boolean remove(Integer idEmployee);
-    public boolean add(Employee newEmployee);
+
+    public Employee add(Employee newEmployee);
+    
+    
 }

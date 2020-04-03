@@ -6,6 +6,7 @@
 package dao.employee;
 
 import entities.Employee;
+import entities.Shift;
 import java.util.List;
 
 /**
@@ -13,9 +14,17 @@ import java.util.List;
  * @author Admin
  */
 public interface EmployeeDao {
-    public List <Employee> getAll();
-    public List <Employee> getAll(Integer workID);
+
+    public List<Employee> getAll();
+
+    public List<Employee> getAll(Integer workID);
+
     public boolean update(Employee newEmployee);
+
     public boolean remove(Integer idEmployee);
-    public boolean add(Employee newEmployee);
+
+    //return newEmployee with newIDd
+    public Employee add(Employee newEmployee);
+    
+    
 }

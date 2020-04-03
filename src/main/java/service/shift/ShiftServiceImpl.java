@@ -33,8 +33,13 @@ public class ShiftServiceImpl implements ShiftService{
     }
 
     @Override
-    public boolean setShift(int idEmployee, List<Shift> shifts) {
-        return ShiftDao.setShift(idEmployee, shifts);
+    public boolean insertShift(List<Shift> shifts, Integer idEmployee) {
+        return ShiftDao.insertShift(shifts, idEmployee);
+    }
+
+    @Override
+    public boolean deleteShift(Integer idEmployee) {
+        return ShiftDao.deleteShift(idEmployee);
     }
     
 }

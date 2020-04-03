@@ -7,15 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
 import connection.ConnectDB;
-import dao.employee.EmployeeDaoImpl;
 import entities.Category;
-import entities.Employee;
 import entities.Product;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+
 
 public class ProductDaoImpl implements ProductDao {
 

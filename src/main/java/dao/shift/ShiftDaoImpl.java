@@ -6,6 +6,7 @@
 package dao.shift;
 
 import connection.ConnectDB;
+import dao.employee.EmployeeDaoImpl;
 import entities.Shift;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,8 +16,10 @@ import java.sql.Statement;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringJoiner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -102,8 +105,55 @@ public class ShiftDaoImpl implements ShiftDao {
     }
 
     @Override
-    public boolean setShift(int idEmployee, List<Shift> shifts) {
-        return false;
+    public boolean insertShift(List<Shift> shifts, Integer idEmployee) {
+       
+        boolean result = false;
+        String query = " INSERT INTO coffee_shop.shift_employee VALUES" ;
+        query += shifts.stream()
+                .map(t ->new StringJoiner(",", "(", ")").add(t.getId()+"").add(idEmployee+"").toString())
+                .collect(Collectors.joining(","));
+        
+        try {
+            statement = connection.createStatement();
+            int count = statement.executeUpdate(query);
+            result = (count == 0)? false : true;
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(ShiftDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                statement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ShiftDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public boolean deleteShift(Integer idEmployee) {
+        
+        boolean result = false;
+
+        String query = "delete from coffee_shop.shift_employee s \n"
+                + "where s.id_employee = ?;";
+        try {
+            preStatement = connection.prepareCall(query);
+            preStatement.setInt(1, idEmployee);
+
+            result = (preStatement.executeUpdate() == 0) ? false : true;
+        } catch (SQLException ex) {
+            Logger.getLogger(ShiftDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                preStatement.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(ShiftDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return result;
+    
     }
 
 }

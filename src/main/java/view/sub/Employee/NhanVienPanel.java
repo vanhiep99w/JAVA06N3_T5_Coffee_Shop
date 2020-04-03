@@ -15,6 +15,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -45,7 +47,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private static final ShiftService shiftService;
     private final List<Work> works;
     private final List<Employee> employees; 
-    private final Employee selectedEmployee;
+    private static final Employee selectedEmployee;
     private final List<Shift> selectedShift;
     private final List<Shift> allShifts;
     private final List<Shift> employeeShift;
@@ -54,6 +56,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         workService = new WorkServiceImpl();
         employeeService = new EmployeeServiceImpl();
         shiftService = new ShiftServiceImpl();
+        selectedEmployee = new Employee();
         tableModel = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -67,7 +70,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         works = workService.getAll();
         employees = employeeService.getAll();
         allShifts = shiftService.getAll();
-        selectedEmployee = new Employee();
+        
         employeeShift = new ArrayList<>();
         selectedShift = new ArrayList<>();
         initComponents();
@@ -102,9 +105,9 @@ public class NhanVienPanel extends javax.swing.JPanel {
         cbWork1 = new javax.swing.JComboBox<>();
         btConfirm = new javax.swing.JButton();
         lbShift = new javax.swing.JLabel();
-        cbShift1 = new javax.swing.JCheckBox();
-        cbShift2 = new javax.swing.JCheckBox();
         cbShift3 = new javax.swing.JCheckBox();
+        cbShift2 = new javax.swing.JCheckBox();
+        cbShift1 = new javax.swing.JCheckBox();
         cbShift4 = new javax.swing.JCheckBox();
         pnLeft = new javax.swing.JPanel();
         btEdit = new javax.swing.JButton();
@@ -217,12 +220,12 @@ public class NhanVienPanel extends javax.swing.JPanel {
         lbShift.setFont(new java.awt.Font("Tahoma", 1, 26)); // NOI18N
         lbShift.setText("      Ca       :");
 
-        cbShift1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        cbShift1.setText("Ca3( 15r- 19r)");
-        cbShift1.setFocusPainted(false);
-        cbShift1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_select_none_40px.png")); // NOI18N
-        cbShift1.setPreferredSize(new java.awt.Dimension(100, 40));
-        cbShift1.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
+        cbShift3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        cbShift3.setText("Ca3( 15r- 19r)");
+        cbShift3.setFocusPainted(false);
+        cbShift3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_select_none_40px.png")); // NOI18N
+        cbShift3.setPreferredSize(new java.awt.Dimension(100, 40));
+        cbShift3.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
 
         cbShift2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         cbShift2.setText("Ca2( 11r- 15r)");
@@ -231,16 +234,16 @@ public class NhanVienPanel extends javax.swing.JPanel {
         cbShift2.setPreferredSize(new java.awt.Dimension(100, 40));
         cbShift2.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
 
-        cbShift3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        cbShift3.setText("Ca1( 7- 11r)");
-        cbShift3.setFocusPainted(false);
-        cbShift3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_select_none_40px.png")); // NOI18N
-        cbShift3.setPreferredSize(new java.awt.Dimension(100, 40));
-        cbShift3.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
-        cbShift3.setVerifyInputWhenFocusTarget(false);
-        cbShift3.addActionListener(new java.awt.event.ActionListener() {
+        cbShift1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        cbShift1.setText("Ca1( 7- 11r)");
+        cbShift1.setFocusPainted(false);
+        cbShift1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_select_none_40px.png")); // NOI18N
+        cbShift1.setPreferredSize(new java.awt.Dimension(100, 40));
+        cbShift1.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
+        cbShift1.setVerifyInputWhenFocusTarget(false);
+        cbShift1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cbShift3ActionPerformed(evt);
+                cbShift1ActionPerformed(evt);
             }
         });
 
@@ -266,11 +269,11 @@ public class NhanVienPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnInforLayout.createSequentialGroup()
-                        .addComponent(cbShift3, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbShift1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cbShift2, javax.swing.GroupLayout.DEFAULT_SIZE, 204, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(cbShift1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cbShift3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cbShift4, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(tfSalary, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -286,30 +289,30 @@ public class NhanVienPanel extends javax.swing.JPanel {
         pnInforLayout.setVerticalGroup(
             pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnInforLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addGap(37, 37, 37)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(tfName, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbPhoneNumber))
-                .addGap(32, 32, 32)
+                .addGap(37, 37, 37)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbName, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGap(37, 37, 37)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cbWork1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lbWork, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGap(37, 37, 37)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(tfSalary, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
+                .addGap(37, 37, 37)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbShift, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbShift2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbShift4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbShift3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbShift1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
+                    .addComponent(cbShift1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbShift3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
                 .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
         );
@@ -377,9 +380,9 @@ public class NhanVienPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btConfirmActionPerformed
 
-    private void cbShift3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbShift3ActionPerformed
+    private void cbShift1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbShift1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cbShift3ActionPerformed
+    }//GEN-LAST:event_cbShift1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -405,7 +408,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
     private javax.swing.JPanel pnCenter;
     private javax.swing.JPanel pnInfor;
     private javax.swing.JPanel pnLeft;
-    private javax.swing.JTable tbEmployee;
+    public static javax.swing.JTable tbEmployee;
     private javax.swing.JTextField tfName;
     private javax.swing.JTextField tfPhoneNumber;
     private javax.swing.JTextField tfSalary;
@@ -460,28 +463,31 @@ public class NhanVienPanel extends javax.swing.JPanel {
         setbtRemoveEvent();
         
     }
-
-    private void setTableEvent() {
+    
+   
+    public void setTableEvent() {
+        
 
         tbEmployee.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 int selectedIndex = tbEmployee.getSelectedRow();
-                Employee employee = (Employee) tableModel.getValueAt(selectedIndex, 0);
+              
+                Employee employee = (Employee) tbEmployee.getValueAt(selectedIndex, 0);
                 selectedEmployee.copy(employee);
                 employeeShift.clear();
                 employeeShift.addAll(shiftService.getAll(selectedEmployee.getId()));
                 setCheckBox();
                 setSelectedCheckbox();
-                tfName.setText(employee.getName());
-                tfPhoneNumber.setText(employee.getPhone());
-                
-                cbWork1.setSelectedItem(employee.getWork());
+                tfName.setText(selectedEmployee.getName());
+                tfPhoneNumber.setText(selectedEmployee.getPhone());
+                cbWork1.setSelectedItem(selectedEmployee.getWork());
                 btEdit.setEnabled(true);
                 btRemove.setEnabled(true);
-
+                
             }
         });
+        
     }
 
     private void setComboBoxEvent() {
@@ -503,6 +509,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
 
     private void setTableData() {
         employees.forEach(t -> tableModel.addRow(new Object[]{t}));
+        
     }
 
     private void setbtAddEvent() {
@@ -510,7 +517,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
             @Override
             public void mousePressed(MouseEvent e) {
 
-                new AddDialog(true).setVisible(true);
+                new AddDialog(true, NhanVienPanel.this).setVisible(true);
             }
         });
     }
@@ -544,12 +551,43 @@ public class NhanVienPanel extends javax.swing.JPanel {
                     setEnableChecBox(false);
                     selectedEmployee.setName(tfName.getText());
                     selectedEmployee.setPhone(tfPhoneNumber.getText());
-                    selectedEmployee.setWork((Work) cbWork1.getSelectedItem());
-                    shiftService.setShift(selectedEmployee.getId(), selectedShift);
+                    selectedEmployee.setWork((Work) cbWork1.getSelectedItem());                  
                     employeeService.update(selectedEmployee);
+                    shiftService.deleteShift(selectedEmployee.getId());
+                    getSeletedShift();
+                    shiftService.insertShift(selectedShift, selectedEmployee.getId());
+                    int count = tbEmployee.getRowCount();
+                    for(int i =0 ;i < count ;i++){
+                        tableModel.removeRow(0);
+                    }
+                    employees.clear();
+                    employees.addAll(employeeService.getAll());
+                    setTableData();
+
                 }
             }
         });
+    }
+    
+     private void getSeletedShift(){
+        selectedShift.clear();
+        if(cbShift1.isSelected()){
+            Shift shift = new Shift();
+            shift.setId(1);
+            selectedShift.add(shift);
+        }if(cbShift2.isSelected()){
+            Shift shift = new Shift();
+            shift.setId(2);
+            selectedShift.add(shift);
+        }if(cbShift3.isSelected()){
+            Shift shift = new Shift();
+            shift.setId(3);
+            selectedShift.add(shift);
+        }if(cbShift4.isSelected()){
+            Shift shift = new Shift();
+            shift.setId(4);
+            selectedShift.add(shift);
+        }
     }
 
     private void setbtRemoveEvent() {
@@ -573,16 +611,16 @@ public class NhanVienPanel extends javax.swing.JPanel {
     }
     
     public void setEnableChecBox(boolean chosse){
-        cbShift1.setEnabled(chosse);
-        cbShift2.setEnabled(chosse);
         cbShift3.setEnabled(chosse);
+        cbShift2.setEnabled(chosse);
+        cbShift1.setEnabled(chosse);
         cbShift4.setEnabled(chosse);
     }
 
     private void setCheckBox() {
-        cbShift1.setSelected(false);
-        cbShift2.setSelected(false);
         cbShift3.setSelected(false);
+        cbShift2.setSelected(false);
+        cbShift1.setSelected(false);
         cbShift4.setSelected(false);
     }
 
@@ -605,8 +643,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         });
     }
 
-    
-    
+   
    
 
     

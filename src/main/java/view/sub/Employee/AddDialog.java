@@ -6,18 +6,23 @@
 package view.sub.employee;
 
 import entities.Employee;
+import entities.Shift;
 import entities.Work;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import render.comboboxbutton.work.ButtonRender;
 import service.employee.EmployeeService;
 import service.employee.EmployeeServiceImpl;
+import service.shift.ShiftService;
+import service.shift.ShiftServiceImpl;
 import service.work.WorkService;
 import service.work.WorkServiceImpl;
+
 
 /**
  *
@@ -32,19 +37,27 @@ public class AddDialog extends javax.swing.JDialog {
     private final List<Work> works ;
     private static final WorkService workService;
     private static final EmployeeService employeeService;
+    private final NhanVienPanel parent;
+    private static final ShiftService shiftService;
+    private final List<Shift> shifts;
     static {
         workService = new WorkServiceImpl();
         employeeService = new EmployeeServiceImpl();
+        shiftService = new ShiftServiceImpl();
     }
     
     public AddDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
+        shifts = new ArrayList<>();
+        this.parent = null;
         works = workService.getAll();
         initComponents();      
     }
 
-    public AddDialog(boolean modal) {
+    public AddDialog(boolean modal, NhanVienPanel parent) {
         works = workService.getAll();
+        this.parent = parent;
+        shifts = new ArrayList<>();
         setModal(modal);
         initComponents();
         setCombobox();
@@ -71,10 +84,10 @@ public class AddDialog extends javax.swing.JDialog {
         btConfirm = new javax.swing.JButton();
         lbShift = new javax.swing.JLabel();
         btExit = new javax.swing.JLabel();
-        cbShift3 = new javax.swing.JCheckBox();
+        cbShift2 = new javax.swing.JCheckBox();
         cbShift4 = new javax.swing.JCheckBox();
-        cbShift5 = new javax.swing.JCheckBox();
-        cbShift6 = new javax.swing.JCheckBox();
+        cbShift3 = new javax.swing.JCheckBox();
+        cbShift1 = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setUndecorated(true);
@@ -116,33 +129,38 @@ public class AddDialog extends javax.swing.JDialog {
 
         btExit.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\exit.png")); // NOI18N
 
-        cbShift3.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
-        cbShift3.setText("Ca1");
-        cbShift3.setFocusPainted(false);
-        cbShift3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
-        cbShift3.setOpaque(false);
-        cbShift3.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
+        cbShift2.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
+        cbShift2.setText("Ca2");
+        cbShift2.setFocusPainted(false);
+        cbShift2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
+        cbShift2.setOpaque(false);
+        cbShift2.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
 
         cbShift4.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
-        cbShift4.setText("Ca1");
+        cbShift4.setText("Ca4");
         cbShift4.setFocusPainted(false);
         cbShift4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
         cbShift4.setOpaque(false);
         cbShift4.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
 
-        cbShift5.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
-        cbShift5.setText("Ca1");
-        cbShift5.setFocusPainted(false);
-        cbShift5.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
-        cbShift5.setOpaque(false);
-        cbShift5.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
+        cbShift3.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
+        cbShift3.setText("Ca3");
+        cbShift3.setFocusPainted(false);
+        cbShift3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
+        cbShift3.setOpaque(false);
+        cbShift3.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
 
-        cbShift6.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
-        cbShift6.setText("Ca1");
-        cbShift6.setFocusPainted(false);
-        cbShift6.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
-        cbShift6.setOpaque(false);
-        cbShift6.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
+        cbShift1.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
+        cbShift1.setText("Ca1");
+        cbShift1.setFocusPainted(false);
+        cbShift1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
+        cbShift1.setOpaque(false);
+        cbShift1.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
+        cbShift1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbShift1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnInforLayout = new javax.swing.GroupLayout(pnInfor);
         pnInfor.setLayout(pnInforLayout);
@@ -164,13 +182,13 @@ public class AddDialog extends javax.swing.JDialog {
                             .addComponent(tfName))
                         .addGap(102, 102, 102))
                     .addGroup(pnInforLayout.createSequentialGroup()
-                        .addComponent(cbShift6)
+                        .addComponent(cbShift1)
                         .addGap(94, 94, 94)
                         .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnInforLayout.createSequentialGroup()
-                                .addComponent(cbShift3)
+                                .addComponent(cbShift2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(cbShift5)
+                                .addComponent(cbShift3)
                                 .addGap(62, 62, 62))
                             .addGroup(pnInforLayout.createSequentialGroup()
                                 .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -200,10 +218,10 @@ public class AddDialog extends javax.swing.JDialog {
                 .addGap(37, 37, 37)
                 .addGroup(pnInforLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbShift, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbShift3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbShift2, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cbShift4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbShift5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cbShift6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbShift3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbShift1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
                 .addComponent(btConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29))
@@ -229,6 +247,10 @@ public class AddDialog extends javax.swing.JDialog {
     private void btConfirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btConfirmActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btConfirmActionPerformed
+
+    private void cbShift1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbShift1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbShift1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -275,10 +297,10 @@ public class AddDialog extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btConfirm;
     private javax.swing.JLabel btExit;
+    private javax.swing.JCheckBox cbShift1;
+    private javax.swing.JCheckBox cbShift2;
     private javax.swing.JCheckBox cbShift3;
     private javax.swing.JCheckBox cbShift4;
-    private javax.swing.JCheckBox cbShift5;
-    private javax.swing.JCheckBox cbShift6;
     private javax.swing.JComboBox<String> cbWork1;
     private javax.swing.JLabel lbName;
     private javax.swing.JLabel lbPhoneNumber;
@@ -303,20 +325,27 @@ public class AddDialog extends javax.swing.JDialog {
        btConfirm.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                Employee newEmployee = new Employee();
-                newEmployee.setName(tfName.getText());
-                newEmployee.setPhone(tfPhoneNumber.getText());
-                newEmployee.setWork((Work)cbWork1.getSelectedItem());
-                
-                boolean result = employeeService.add(newEmployee);
-                if(result){
-                    JOptionPane.showMessageDialog(null, "Thêm thành công.");
-                    NhanVienPanel.getTableModel().addRow(new Object[]{newEmployee});
-                    Exit();
+                if(!("".equals(tfName.getText()) || "".equals(tfPhoneNumber.getText()))){
+                    Employee newEmployee = new Employee();
+                    newEmployee.setName(tfName.getText());
+                    newEmployee.setPhone(tfPhoneNumber.getText());
+                    newEmployee.setWork((Work)cbWork1.getSelectedItem());
+                    getSeletedShift();
+                    newEmployee.copy(employeeService.add(newEmployee));
+                    shiftService.insertShift(shifts, newEmployee.getId());
+                    if(newEmployee != null){
+                        JOptionPane.showMessageDialog(null, "Thêm thành công.");
+                        NhanVienPanel.getTableModel().addRow(new Object[]{newEmployee});
+                        Exit();
                     
+                    }else{
+                        JOptionPane.showMessageDialog(null, "Thêm thất bại.");
+                    }
                 }else{
-                    JOptionPane.showMessageDialog(null, "Thêm thất bại.");
+                    JOptionPane.showMessageDialog(null, "Nhâp đầy đủ thông tin !");
                 }
+                
+                //parent.setTableEvent();
             } 
         });
     }
@@ -328,6 +357,27 @@ public class AddDialog extends javax.swing.JDialog {
                 Exit();
             }  
         });
+    }
+    
+    private void getSeletedShift(){
+        
+        if(cbShift1.isSelected()){
+            Shift shift = new Shift();
+            shift.setId(1);
+            shifts.add(shift);
+        }if(cbShift2.isSelected()){
+            Shift shift = new Shift();
+            shift.setId(2);
+            shifts.add(shift);
+        }if(cbShift3.isSelected()){
+            Shift shift = new Shift();
+            shift.setId(3);
+            shifts.add(shift);
+        }if(cbShift4.isSelected()){
+            Shift shift = new Shift();
+            shift.setId(4);
+            shifts.add(shift);
+        }
     }
 
     private void setCombobox() {

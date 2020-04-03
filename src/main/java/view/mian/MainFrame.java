@@ -40,7 +40,6 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
 
         initComponents();
-        //setResizable(true);
         setIcon();
         initMainPanelComponent();
         initTablePanel();
@@ -108,7 +107,6 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(1420, 832));
-        setPreferredSize(new java.awt.Dimension(1420, 832));
         setResizable(false);
 
         pnButton.setBackground(new java.awt.Color(39, 130, 192));
@@ -122,6 +120,7 @@ public class MainFrame extends javax.swing.JFrame {
         btDatMon.setBorderPainted(false);
         btDatMon.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btDatMon.setFocusPainted(false);
+        btDatMon.setSelected(true);
 
         btThongKe.setBackground(new java.awt.Color(75, 198, 242));
         btThongKe.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

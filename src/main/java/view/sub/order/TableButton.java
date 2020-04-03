@@ -53,12 +53,12 @@ public class TableButton extends JButton {
 
         this.setBackground(new Color(170, 207, 207));
         if (table.getStatus().getId() == TableStatus.EMPTY) {//empty 
-
+            this.setForeground(new Color(223, 240, 254));
             this.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\empty.png"));
 
         }
         if (table.getStatus().getId() == TableStatus.FULL) {//Full
-            
+            this.setForeground(new Color(223, 240, 254));
             this.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\full.png"));
 
         }
