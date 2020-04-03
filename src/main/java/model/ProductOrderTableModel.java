@@ -36,6 +36,7 @@ public class ProductOrderTableModel extends AbstractTableModel {
     private NumberFormat currencyVN = NumberFormat.getCurrencyInstance(localeVN);
 
     public ProductOrderTableModel() {
+        
     }
 
     public ProductOrderTableModel(JTable tbProductOrder, Integer idOrder) {

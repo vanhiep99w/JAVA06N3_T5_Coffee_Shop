@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 /**
  *
  * @author Admin
@@ -186,19 +187,28 @@ public class EmployeeDaoImpl implements EmployeeDao{
     }
 
     @Override
-    public boolean add(Employee newEmployee) {
-        boolean result = false;
+    public Employee add(Employee newEmployee) {
         
         String query = "insert into coffee_shop.employee "
                         + "(employee.name_employee, employee.phone, employee.id_work)\n" 
                         + "value(?,?,?) ;";
         try {
-            preStatement = connection.prepareCall(query);
+            preStatement = connection.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             preStatement.setString(1, newEmployee.getName());
             preStatement.setString(2, newEmployee.getPhone());
             preStatement.setInt(3, newEmployee.getWork().getId());
             
-            result = (preStatement.executeUpdate() == 0) ? false : true;
+            int count = preStatement.executeUpdate();
+            if(count == 0){
+                newEmployee = null;
+            }else{
+                    resultSet = preStatement.getGeneratedKeys();
+                    
+                    resultSet.next();
+                    
+                    newEmployee.setId(resultSet.getInt(1));
+            }
+            
         } catch (SQLException ex) {
             Logger.getLogger(EmployeeDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
         }finally{
@@ -208,7 +218,10 @@ public class EmployeeDaoImpl implements EmployeeDao{
                 Logger.getLogger(EmployeeDaoImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return result;
+        return newEmployee;
     }
+
+   
+    
     
 }

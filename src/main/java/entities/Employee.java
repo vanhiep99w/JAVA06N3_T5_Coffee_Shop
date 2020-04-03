@@ -88,6 +88,11 @@ public class Employee {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+        return this.id + " " + this.name;
+    }
     
     
     

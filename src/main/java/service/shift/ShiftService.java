@@ -18,5 +18,7 @@ public interface ShiftService {
 
     public List<Shift> getAll(Integer idEmployee);
     
-    public boolean setShift(int idEmployee, List<Shift> shifts );
+    public boolean insertShift(List<Shift> shifts, Integer idEmployee);
+    
+    public boolean  deleteShift(Integer idEmployee);
 }

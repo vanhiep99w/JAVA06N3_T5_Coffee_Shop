@@ -56,7 +56,7 @@ public class DatMonPanel extends javax.swing.JPanel {
 
     TablePanel tablePanel = new TablePanel();
     InformationPanel informationPanel = new InformationPanel();
-    ProductOrderTableModel productOrderTableModel;
+    ProductOrderTableModel productOrderTableModel = new ProductOrderTableModel();
     AddMealDialog addMealDialog;
     private final BillService billService;
     TableButton[] buttonTables;
@@ -84,11 +84,11 @@ public class DatMonPanel extends javax.swing.JPanel {
     public DatMonPanel() {
        
         billService = new BillServiceImpl();
-
         initComponents();
         setPnLeft();
         setPnRight();
         initEvents();
+        tableOrdered.setModel(productOrderTableModel);
 
     }
 
@@ -104,10 +104,9 @@ public class DatMonPanel extends javax.swing.JPanel {
         pnRight = new javax.swing.JPanel();
         jpLeft = new javax.swing.JScrollPane();
         pnLeft = new javax.swing.JPanel();
-        tfSearchTable = new javax.swing.JTextField();
-        btnAll = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
+        setMinimumSize(new java.awt.Dimension(1420, 745));
         setPreferredSize(new java.awt.Dimension(1420, 745));
 
         pnRight.setLayout(new javax.swing.OverlayLayout(pnRight));
@@ -115,53 +114,33 @@ public class DatMonPanel extends javax.swing.JPanel {
         pnLeft.setBackground(new java.awt.Color(255, 255, 255));
         jpLeft.setViewportView(pnLeft);
 
-        tfSearchTable.setFont(new java.awt.Font("Dialog", 2, 18)); // NOI18N
-        tfSearchTable.setForeground(new java.awt.Color(204, 204, 204));
-        tfSearchTable.setText("Nhập bàn cần tìm kiếm");
-
-        btnAll.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        btnAll.setText("All");
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(tfSearchTable, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(1223, 1223, 1223))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jpLeft)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(pnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addComponent(jpLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 700, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pnRight, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnRight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jpLeft, javax.swing.GroupLayout.PREFERRED_SIZE, 765, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(pnRight, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tfSearchTable)
-                    .addComponent(btnAll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGap(11, 11, 11)
+                        .addComponent(jpLeft, javax.swing.GroupLayout.DEFAULT_SIZE, 719, Short.MAX_VALUE)))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAll;
     private javax.swing.JScrollPane jpLeft;
     private javax.swing.JPanel pnLeft;
     private javax.swing.JPanel pnRight;
-    private javax.swing.JTextField tfSearchTable;
     // End of variables declaration//GEN-END:variables
 
     private void setPnLeft() {
@@ -211,7 +190,6 @@ public class DatMonPanel extends javax.swing.JPanel {
                         order.setId_Order(0);
                         order.setTable(selectedTable);
                         new AddMealDialog(DatMonPanel.this, true, order).setVisible(true);
-                        //labelOrderStatus.setIcon(ImageUtils.loadImageIcon(imageDirURL + "\\table_empty.png", 60, 60));
                         btnPay.setEnabled(false);
                     }
                     if (idStatus == TableStatus.ORDERED) {
@@ -219,7 +197,6 @@ public class DatMonPanel extends javax.swing.JPanel {
                         order.setId_Order(0);
                         order.setTable(selectedTable);
                         new AddMealDialog(DatMonPanel.this, true, order).setVisible(true);
-                        //labelOrderStatus.setIcon(ImageUtils.loadImageIcon(imageDirURL + "\\table_order.png", 60, 60));
                         btnPay.setEnabled(false);
                     }
                     if (idStatus == TableStatus.FULL) {
@@ -259,20 +236,20 @@ public class DatMonPanel extends javax.swing.JPanel {
     }
 
     private void tfSearchEvent() {
-        tfSearchTable.addMouseListener(new MouseAdapter() {
+        InformationPanel.tfSearchTable.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                tfSearchTable.setText("");
-                tfSearchTable.setFont(new Font("Dialog", 1, 18));
-                tfSearchTable.setForeground(Color.BLACK);
+                InformationPanel.tfSearchTable.setText("");
+                InformationPanel.tfSearchTable.setFont(new Font("Dialog", 1, 18));
+                InformationPanel.tfSearchTable.setForeground(Color.BLACK);
             }
 
         });
-        tfSearchTable.addKeyListener(new KeyAdapter() {
+        InformationPanel.tfSearchTable.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    String searchTableString = tfSearchTable.getText();
+                    String searchTableString = InformationPanel.tfSearchTable.getText();
                     tablePanel = new TablePanel(searchTableString);
                     pnLeft.removeAll();
                     pnLeft.add(tablePanel);
@@ -285,7 +262,7 @@ public class DatMonPanel extends javax.swing.JPanel {
     }
 
     private void btAllEvent() {
-        btnAll.addMouseListener(new MouseAdapter() {
+        InformationPanel.btnAll.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 tablePanel = new TablePanel();
@@ -294,9 +271,9 @@ public class DatMonPanel extends javax.swing.JPanel {
                 initEventTableOfTablePanel();
                 pnLeft.repaint();
                 pnLeft.revalidate();
-                tfSearchTable.setText("Nhập bàn cần tìm kiếm");
-                tfSearchTable.setFont(new Font("Dialog", 2, 18));
-                tfSearchTable.setForeground(new Color(204, 204, 204));
+                InformationPanel.tfSearchTable.setText("Nhập bàn cần tìm kiếm");
+                InformationPanel.tfSearchTable.setFont(new Font("Dialog", 2, 18));
+                InformationPanel.tfSearchTable.setForeground(new Color(204, 204, 204));
             }
 
         });
