@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import render.comboboxbutton.work.ButtonRender;
@@ -223,23 +224,17 @@ public class NhanVienPanel extends javax.swing.JPanel {
         cbShift3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         cbShift3.setText("Ca3( 15r- 19r)");
         cbShift3.setFocusPainted(false);
-        cbShift3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_select_none_40px.png")); // NOI18N
         cbShift3.setPreferredSize(new java.awt.Dimension(100, 40));
-        cbShift3.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
 
         cbShift2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         cbShift2.setText("Ca2( 11r- 15r)");
         cbShift2.setFocusPainted(false);
-        cbShift2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_select_none_40px.png")); // NOI18N
         cbShift2.setPreferredSize(new java.awt.Dimension(100, 40));
-        cbShift2.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
 
         cbShift1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         cbShift1.setText("Ca1( 7- 11r)");
         cbShift1.setFocusPainted(false);
-        cbShift1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_select_none_40px.png")); // NOI18N
         cbShift1.setPreferredSize(new java.awt.Dimension(100, 40));
-        cbShift1.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
         cbShift1.setVerifyInputWhenFocusTarget(false);
         cbShift1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -250,9 +245,7 @@ public class NhanVienPanel extends javax.swing.JPanel {
         cbShift4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         cbShift4.setText("Ca4( 19r- 23)");
         cbShift4.setFocusPainted(false);
-        cbShift4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_select_none_40px.png")); // NOI18N
         cbShift4.setPreferredSize(new java.awt.Dimension(100, 40));
-        cbShift4.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\icons8_checked_checkbox_40px.png")); // NOI18N
 
         javax.swing.GroupLayout pnInforLayout = new javax.swing.GroupLayout(pnInfor);
         pnInfor.setLayout(pnInforLayout);
@@ -622,6 +615,15 @@ public class NhanVienPanel extends javax.swing.JPanel {
         cbShift2.setSelected(false);
         cbShift1.setSelected(false);
         cbShift4.setSelected(false);
+        setCheckBoxIcon(cbShift1);
+        setCheckBoxIcon(cbShift2);
+        setCheckBoxIcon(cbShift3);
+        setCheckBoxIcon(cbShift4);
+    }
+    
+    private void setCheckBoxIcon(JCheckBox cb){
+        cb.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL+"\\unselect.png"));
+        cb.setSelectedIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL+"\\selected.png"));
     }
 
     private void setbtAdd() {
