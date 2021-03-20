@@ -206,7 +206,7 @@ public class DatMonPanel extends javax.swing.JPanel {
                         productOrderTableModel = new ProductOrderTableModel(tableOrdered, idOrder);
                         productOrderTableModel.loadDataTable();
                         productOrderTableModel.cssForTable();
-                        labelOrderStatus.setIcon(ImageUtils.loadImageIcon(imageDirURL + "\\table_full.png", 60, 60));
+                        labelOrderStatus.setIcon(ImageUtils.loadImageIcon(imageDirURL + "table_full.png", 60, 60));
                         labelSum.setText(currencyVN.format(sumOfBill(productOrderService.getSum(idOrder)) * 110 / 100));
                         btnPay.setEnabled(true);
                         labelTableName.setText("Bàn " + nameTable);
@@ -310,7 +310,7 @@ public class DatMonPanel extends javax.swing.JPanel {
                 //update layout
                 selectedButton.setColor();
                 labelTableName.setText("Bàn " + nameTable);
-                labelOrderStatus.setIcon(ImageUtils.loadImageIcon(imageDirURL + "\\table_empty.png", 60, 60));
+                labelOrderStatus.setIcon(ImageUtils.loadImageIcon(imageDirURL + "table_empty.png", 60, 60));
                 labelSum.setText("");
                 productOrderTableModel = new ProductOrderTableModel(tableOrdered, 0);
                 productOrderTableModel.loadDataTable();
@@ -332,7 +332,7 @@ public class DatMonPanel extends javax.swing.JPanel {
             productOrderTableModel.loadDataTable();
             productOrderTableModel.cssForTable();
             labelTableName.setText("Bàn " + nameTable);
-            labelOrderStatus.setIcon(ImageUtils.loadImageIcon(imageDirURL + "\\table_full.png", 60, 60));
+            labelOrderStatus.setIcon(ImageUtils.loadImageIcon(imageDirURL + "table_full.png", 60, 60));
             labelSum.setText(currencyVN.format(sumOfBill(productOrderService.getSum(idOrder)) * 110 / 100));
             selectedButton.setActionCommand(idOrder + "");
         }
@@ -387,7 +387,7 @@ public class DatMonPanel extends javax.swing.JPanel {
         runParagraph(ParagraphAlignment.CENTER, "\nXIN CẢM ƠN QUÝ KHÁCH ", 12, true, true);
 
         // Write the Document in file system
-        FileOutputStream out = new FileOutputStream(new File("bill\\" + id_Order + "_bill.docx"));
+        FileOutputStream out = new FileOutputStream(new File("bill" + id_Order + "_bill.docx"));
         document.write(out);
         out.close();
         //document.close();

@@ -324,7 +324,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
         button.setForeground(Color.blue);
         button.setFocusPainted(false);
         button.setPreferredSize(new Dimension(147, 140));
-        button.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + product.getImage(), 100, 100));
+        button.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL +  product.getImage(), 100, 100));
         button.setVerticalTextPosition(BOTTOM);
         button.setHorizontalTextPosition(CENTER);
         button.setText(product.getName());
@@ -427,7 +427,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
     }
 
     private void btDoUongCoGaEvent() {
-        btDoUongCoga.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + "DOUONG.png"));
+        btDoUongCoga.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL +  "DOUONG.png"));
         btDoUongCoga.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -440,7 +440,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
     }
 
     private void btTraSuaEvent() {
-        btTraSua.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + "TRASUA.png"));
+        btTraSua.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL +  "TRASUA.png"));
         btTraSua.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -453,7 +453,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
     }
 
     private void btBanhNgotEvent() {
-        btBanhNgot.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + "BANHNGOT.png"));
+        btBanhNgot.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL +  "BANHNGOT.png"));
         btBanhNgot.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -466,7 +466,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
     }
 
     private void btNuocEpRvent() {
-        btNuocEp.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + "NUOCEP.png"));
+        btNuocEp.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL +  "NUOCEP.png"));
         btNuocEp.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -480,7 +480,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
     }
 
     private void btSinhToEvent() {
-        btSinhTo.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + "SINHTO.png"));
+        btSinhTo.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "SINHTO.png"));
         btSinhTo.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -493,7 +493,7 @@ public class QuanLyPanel extends javax.swing.JPanel {
     }
 
     private void btCoffeeEvent() {
-        btCoffee.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + "CAFFEE.png"));
+        btCoffee.setIcon(new ImageIcon(URL_Factory.IMAGE_FOLDER_URL +  "CAFFEE.png"));
         btCoffee.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {

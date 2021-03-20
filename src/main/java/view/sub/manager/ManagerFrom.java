@@ -62,7 +62,7 @@ public class ManagerFrom extends javax.swing.JFrame {
         btUpload.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                JFileChooser fc = new JFileChooser("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop");
+                JFileChooser fc = new JFileChooser(URL_Factory.CURRENT_PROJECT_URL);
                 if (fc.showDialog(null, "UPLOAD") == JFileChooser.APPROVE_OPTION) {
                     selectedFile = fc.getSelectedFile();
                     final String ext = FilenameUtils.getExtension(selectedFile.getName());
@@ -208,7 +208,7 @@ public class ManagerFrom extends javax.swing.JFrame {
 
         lbImage.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        btUpload.setIcon(new javax.swing.ImageIcon("D:\\JAVA\\coffe_DT5\\JAVA06N3_T5_Coffee_Shop\\images\\plus.png")); // NOI18N
+        btUpload.setIcon(new javax.swing.ImageIcon(URL_Factory.IMAGE_FOLDER_URL+ "plus.png")); // NOI18N
         btUpload.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btUpload.setFocusPainted(false);
 

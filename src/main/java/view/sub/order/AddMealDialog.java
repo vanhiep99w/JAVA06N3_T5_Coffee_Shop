@@ -689,10 +689,10 @@ public class AddMealDialog extends javax.swing.JDialog {
     private void setIcon() {
         final String imageDirURL = URL_Factory.IMAGE_FOLDER_URL;
 
-        btLeft.setIcon(ImageUtils.loadImage(imageDirURL + "\\left.png"));
-        btRight.setIcon(ImageUtils.loadImage(imageDirURL + "\\right.png"));
-        lbSearch.setIcon(ImageUtils.loadImage(imageDirURL + "\\search.png"));
-        btReverse.setIcon(ImageUtils.loadImage(imageDirURL + "\\reverse.png"));
+        btLeft.setIcon(ImageUtils.loadImage(imageDirURL + "left.png"));
+        btRight.setIcon(ImageUtils.loadImage(imageDirURL + "right.png"));
+        lbSearch.setIcon(ImageUtils.loadImage(imageDirURL + "search.png"));
+        btReverse.setIcon(ImageUtils.loadImage(imageDirURL + "reverse.png"));
     }
 
     private void setpnBotton() {

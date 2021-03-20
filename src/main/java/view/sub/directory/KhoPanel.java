@@ -51,6 +51,6 @@ public class KhoPanel extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void setComponent() {
-        lbImage.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\help.jpg", 1420, 725));
+        lbImage.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + "help.jpg", 1420, 725));
     }
 }

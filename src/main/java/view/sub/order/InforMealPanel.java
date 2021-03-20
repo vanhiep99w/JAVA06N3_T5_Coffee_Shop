@@ -220,7 +220,7 @@ public class InforMealPanel extends javax.swing.JPanel {
     }
 
     private void setIcon() {
-        btRemove.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\close2.png"));
+        btRemove.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "close2.png"));
     }
 
     private void setlbName() {

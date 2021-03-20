@@ -5,7 +5,6 @@
  */
 package view.sub.order;
 
-import com.sun.tools.javac.comp.Enter;
 import entities.Product;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -29,7 +28,7 @@ public class MealPanel extends javax.swing.JPanel {
     
     private final Product product;
     
-    private final ImageIcon defaultIcon = ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\food.png");
+    private final ImageIcon defaultIcon = ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "food.png");
     
     
     public MealPanel() {
@@ -171,15 +170,15 @@ public class MealPanel extends javax.swing.JPanel {
 
     private void setIcon() {
         setlbIcon();
-        btMinus.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\minus.png"));
-        btPlus.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "\\plus.png"));
+        btMinus.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "minus.png"));
+        btPlus.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL + "plus.png"));
     }
 
     private void setlbIcon() {
         if(product == null || "".equals(product.getImage())){
             lbIcon.setIcon(defaultIcon);
         }else{
-            lbIcon.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL + "\\" + product.getImage(), 100, 100));
+            lbIcon.setIcon(ImageUtils.loadImageIcon(URL_Factory.IMAGE_FOLDER_URL +  product.getImage(), 100, 100));
         }
     }
 

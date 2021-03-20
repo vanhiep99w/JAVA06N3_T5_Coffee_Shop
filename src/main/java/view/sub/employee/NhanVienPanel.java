@@ -622,12 +622,12 @@ public class NhanVienPanel extends javax.swing.JPanel {
     }
     
     private void setCheckBoxIcon(JCheckBox cb){
-        cb.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL+"\\unselect.png"));
-        cb.setSelectedIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL+"\\selected.png"));
+        cb.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL+"unselect.png"));
+        cb.setSelectedIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL+"selected.png"));
     }
 
     private void setbtAdd() {
-        btAdd.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL+"\\addE.png"));
+        btAdd.setIcon(ImageUtils.loadImage(URL_Factory.IMAGE_FOLDER_URL+"addE.png"));
     }
     
     private void setSelectedCheckbox(){

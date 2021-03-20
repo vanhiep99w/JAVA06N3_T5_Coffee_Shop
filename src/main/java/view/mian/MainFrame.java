@@ -350,12 +350,12 @@ public class MainFrame extends javax.swing.JFrame {
     private void setIcon() {
         final String imageDirectoryPath = URL_Factory.IMAGE_FOLDER_URL;
 
-        btDatMon.setIcon(ImageUtils.loadImage(imageDirectoryPath + "\\icons8_food_40px.png"));
-        btThongKe.setIcon(ImageUtils.loadImage(imageDirectoryPath + "\\icons8_activity_history_40px.png"));
-        btKho.setIcon(ImageUtils.loadImage(imageDirectoryPath + "\\icons8_online_store_40px.png"));
-        btQuanLy.setIcon(ImageUtils.loadImage(imageDirectoryPath + "\\icons8_chart_40px.png"));
-        btNhanVien.setIcon(ImageUtils.loadImage(imageDirectoryPath + "\\icons8_manager_40px.png"));
-        btTroGiup.setIcon(ImageUtils.loadImage(imageDirectoryPath + "\\icons8_help_40px.png"));
+        btDatMon.setIcon(ImageUtils.loadImage(imageDirectoryPath + "icons8_food_40px.png"));
+        btThongKe.setIcon(ImageUtils.loadImage(imageDirectoryPath + "icons8_activity_history_40px.png"));
+        btKho.setIcon(ImageUtils.loadImage(imageDirectoryPath + "icons8_online_store_40px.png"));
+        btQuanLy.setIcon(ImageUtils.loadImage(imageDirectoryPath + "icons8_chart_40px.png"));
+        btNhanVien.setIcon(ImageUtils.loadImage(imageDirectoryPath + "icons8_manager_40px.png"));
+        btTroGiup.setIcon(ImageUtils.loadImage(imageDirectoryPath + "icons8_help_40px.png"));
 
     }
 

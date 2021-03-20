@@ -11,6 +11,8 @@ public enum Config {
 	private final String path = URL_Factory.CONFIG_FILE_URL;
 
 	String getValue() {
+
+		System.out.println(path);
 		conPro = new ConfigurationProvider(path);
 		return (conPro == null) ? null : conPro.getProperties().getProperty(this.toString());
 	}

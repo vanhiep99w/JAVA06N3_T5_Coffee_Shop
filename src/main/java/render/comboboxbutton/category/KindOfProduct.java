@@ -25,7 +25,7 @@ public enum KindOfProduct {
     }
     
     public ImageIcon getIcon(){
-        return util.ImageUtils.loadImage(sourcePath+"\\"+this.toString()+".png");
+        return util.ImageUtils.loadImage(sourcePath+this.toString()+".png");
     }
     public String getText(){
         return this.text;

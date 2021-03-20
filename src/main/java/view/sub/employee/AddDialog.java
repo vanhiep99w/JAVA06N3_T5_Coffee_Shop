@@ -22,6 +22,7 @@ import service.shift.ShiftService;
 import service.shift.ShiftServiceImpl;
 import service.work.WorkService;
 import service.work.WorkServiceImpl;
+import util.URL_Factory;
 
 
 /**
@@ -127,35 +128,35 @@ public class AddDialog extends javax.swing.JDialog {
         lbShift.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         lbShift.setText("      Ca      :");
 
-        btExit.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\exit.png")); // NOI18N
+        btExit.setIcon(new javax.swing.ImageIcon(URL_Factory.IMAGE_FOLDER_URL+ "exit.png")); // NOI18N
 
         cbShift2.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         cbShift2.setText("Ca2");
         cbShift2.setFocusPainted(false);
-        cbShift2.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
+        cbShift2.setIcon(new javax.swing.ImageIcon(URL_Factory.IMAGE_FOLDER_URL+ "unchecked.png")); // NOI18N
         cbShift2.setOpaque(false);
-        cbShift2.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
+        cbShift2.setSelectedIcon(new javax.swing.ImageIcon(URL_Factory.IMAGE_FOLDER_URL+"checked.png")); // NOI18N
 
         cbShift4.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         cbShift4.setText("Ca4");
         cbShift4.setFocusPainted(false);
-        cbShift4.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
+        cbShift4.setIcon(new javax.swing.ImageIcon(URL_Factory.IMAGE_FOLDER_URL+"unchecked.png")); // NOI18N
         cbShift4.setOpaque(false);
-        cbShift4.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
+        cbShift4.setSelectedIcon(new javax.swing.ImageIcon(URL_Factory.IMAGE_FOLDER_URL+"checked.png")); // NOI18N
 
         cbShift3.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         cbShift3.setText("Ca3");
         cbShift3.setFocusPainted(false);
-        cbShift3.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
+        cbShift3.setIcon(new javax.swing.ImageIcon(URL_Factory.IMAGE_FOLDER_URL+"unchecked.png")); // NOI18N
         cbShift3.setOpaque(false);
-        cbShift3.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
+        cbShift3.setSelectedIcon(new javax.swing.ImageIcon(URL_Factory.IMAGE_FOLDER_URL+"checked.png")); // NOI18N
 
         cbShift1.setFont(new java.awt.Font("Tahoma", 0, 26)); // NOI18N
         cbShift1.setText("Ca1");
         cbShift1.setFocusPainted(false);
-        cbShift1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\unchecked.png")); // NOI18N
+        cbShift1.setIcon(new javax.swing.ImageIcon(URL_Factory.IMAGE_FOLDER_URL+"unchecked.png")); // NOI18N
         cbShift1.setOpaque(false);
-        cbShift1.setSelectedIcon(new javax.swing.ImageIcon("C:\\Users\\Admin\\Desktop\\coffe_shop\\images\\checked.png")); // NOI18N
+        cbShift1.setSelectedIcon(new javax.swing.ImageIcon(URL_Factory.IMAGE_FOLDER_URL+"checked.png")); // NOI18N
         cbShift1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbShift1ActionPerformed(evt);

@@ -16,7 +16,7 @@ public class URL_Factory {
     
     public static final String CURRENT_PROJECT_URL = new File("").getAbsolutePath();
     
-    public static final String CONFIG_FILE_URL = URL_Factory.CURRENT_PROJECT_URL + "\\other_file\\config.properties";
+    public static final String CONFIG_FILE_URL = URL_Factory.CURRENT_PROJECT_URL +File.separator +"other_file"+File.separator+"config.properties";
     
-    public static final String IMAGE_FOLDER_URL = URL_Factory.CURRENT_PROJECT_URL + "\\images";
+    public static final String IMAGE_FOLDER_URL = URL_Factory.CURRENT_PROJECT_URL + File.separator+ "images"+File.separator;
 }
